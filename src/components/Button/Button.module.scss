@@ -1,0 +1,18 @@
+@import "../../constants";
+
+.button {
+  width: 136px;
+  height: 46px;
+  top: 665px;
+  left: 982px;
+  border-radius: 16px 4px 16px 4px;
+  background-color: $color-primary;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.5);
+  font-family: Helvetica;
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: 18px;
+  font-style: normal;
+  text-decoration: none;
+  text-align: left;
+}
