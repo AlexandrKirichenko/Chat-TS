@@ -7,12 +7,7 @@ import {
     InMemoryCache,
     ApolloProvider,
 } from "@apollo/client";
-
-
-const client = new ApolloClient({
-    uri: 'https://test-chat-be.herokuapp.com/graphql',
-    cache: new InMemoryCache()
-});
+import {client} from './client'
 
 ReactDOM.render(
     <ApolloProvider client={client}>
