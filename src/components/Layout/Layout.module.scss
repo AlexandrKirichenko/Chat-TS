@@ -1,13 +1,7 @@
 @import '../../constants';
 
-.wrap {
-  max-width: 1570px;
-  background: $color-background-layout;
-  margin: 0 auto;
   .container {
-    max-width: 1440px;
-    height:100vh;
-    margin: 0 65px;
+    width: 94%;
+    margin: 0 auto;
     background: $color-background;
   }
-}

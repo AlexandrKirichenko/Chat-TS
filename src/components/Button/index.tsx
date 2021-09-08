@@ -1,18 +1,17 @@
 import React from "react";
 import "./Button.module.scss";
-import s from "./Button.module.scss";
-import cn from "classnames";
+import style from "./Button.module.scss";
+import classnames from 'classnames';
 
 interface ButtonProps {
-    id: string;
     buttonName: string;
-    color ?: string;
+    color : "primary" | "secondary";
 }
 
-const Button:React.FC<ButtonProps> = ({id,buttonName, color=""}) => {
+const Button:React.FC<ButtonProps> = ({color="primary", children}) => {
     return (
-        <div className={s.wrap}>
-          <button className={cn(s.button, s[color])}>{buttonName}</button>
+        <div className={style.wrap}>
+            <button className={classnames(style.button, style[color])}>{children}</button>
         </div>
     )
 }
