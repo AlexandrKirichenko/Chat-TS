@@ -26,7 +26,6 @@ function App() {
                 <Avatar size={"large"} img={""} name={"Alex"}/>
                 <Avatar size={"medium"} img={""} name={"Alex"}/>
             </Layout>
-        
         </>
     );
 }
