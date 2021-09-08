@@ -1,25 +1,32 @@
-import React from 'react';
-import './Input.module.scss';
-import s from './Input.module.scss'
+import React from "react";
+import "./Input.module.scss";
+import s from "./Input.module.scss";
+import cn from "classnames";
 
 interface InputProps {
-    type: 'email' | 'text';
-    className: string;
+    type: "email" | "text" | "password";
+    size?: "large";
     value: string;
     id: string;
-    description: string;
+    name: string;
 }
 
-const Input:React.FC<InputProps> = ({type, className, value, id,description}) => {
+const Input:React.FC<InputProps> = ({type, size="",  value, id,name}) => {
     return (
         <div className={s.wrap}>
-            <div className={s.description}>{description}</div>
+            <label className={s.label} htmlFor={name}>
+                {name}
+            </label>
             <input
                 type={type}
                 id={id}
-                className={s.className}
+                className={cn(s.input, s[size])}
                 value={value}
+                name={name}
+                placeholder={`Enter your ${name.toLowerCase()}`}
+                // onChange={handleChange}
             />
+            {/*<div>Error</div>*/}
         </div>
     
     )

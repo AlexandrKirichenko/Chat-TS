@@ -1,0 +1,36 @@
+@import "../../constants";
+
+.wrap {
+  display: flex;
+  flex-direction:column;
+  .input {
+    width: 553px;
+    height: 48px;
+    border-radius: 16px 4px 16px 4px;
+    border: 1px solid #01C5C4;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.5);
+    font-weight: 400;
+    font-size: 18px;
+  }
+  .large {
+    width: 959px;
+    height: 81px;
+  }
+}
+
+
+
+.label {
+  font-family: $font-family-main;
+  color: $color-text;
+  font-weight: 400;
+  font-size: 12px;
+  font-style: normal;
+  text-decoration: none;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.className {
+
+}
