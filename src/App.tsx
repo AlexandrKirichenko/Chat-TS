@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "./App.css";
 import Layout from "./components/Layout";
-import Avatar from "./components/Avatar ";
+import Avatar from "./components/Avatar";
 import Input from "./components/Input";
 import Button from "./components/Button";
 
