@@ -6,18 +6,19 @@ import classnames from 'classnames';
 
 interface InputProps {
     type: "email" | "text" | "password";
-    size?: string;
     value: string;
     id: string;
     name: string;
-    errorMsg?: string;
-    setInputValueCb(value: string): void;
+    errorMessage?: string;
+    setInputValue(value: string): void;
+    autoComplete: "on" | "off";
+    errorcolor ?: any;
 }
 
-const Input: React.FC<InputProps> = ({type, size = "", value, id, name, setInputValueCb, errorMsg = null}) => {
+const Input: React.FC<InputProps> = ({type="email",errorcolor, value, id, name, setInputValue, errorMessage,autoComplete="off"}) => {
     const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        setInputValueCb(value);
+        setInputValue(value);
     }
     
     return (
@@ -28,16 +29,15 @@ const Input: React.FC<InputProps> = ({type, size = "", value, id, name, setInput
             <input
                 type={type}
                 id={id}
-                className={classnames(style.input, style[size])}
+                className={classnames(style.input,{errorMessage} ? style[errorcolor]: null )}
                 value={value}
                 name={name}
                 placeholder={`Enter your ${name.toLowerCase()}`}
                 onChange={handleChangeValue}
-                autoComplete="off"
+                autoComplete={autoComplete}
             />
-            {errorMsg ? <div className={style.errorMsg}>{errorMsg}</div>: null}
+            {errorMessage ? <div className={style.errorMessage}>{errorMessage}</div>: null}
         </div>
-    
     )
 }
 

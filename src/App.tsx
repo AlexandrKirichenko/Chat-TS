@@ -10,7 +10,8 @@ const INPUT_TEST_ERROR  = 'Error'
 
 function App() {
     const [inputValue, setInputValue] = useState('');
-    
+    // const [inputDirty, setEmailDirty] =useState(false)
+    // const [emailError, setEmailError] =useState('Email cant be empty')
     return (
         <>
             <Layout>
@@ -20,8 +21,18 @@ function App() {
                     type={"text"}
                     id={"b34234"}
                     name={"Password"}
-                    setInputValueCb={setInputValue}
-                    errorMsg={INPUT_TEST_ERROR}
+                    setInputValue={setInputValue}
+                    errorMessage={INPUT_TEST_ERROR}
+                    autoComplete={"off"}
+                    errorcolor={'errorcolor'}
+                />
+                <Input
+                    value={inputValue}
+                    type={"text"}
+                    id={"b34234"}
+                    name={"Password"}
+                    setInputValue={setInputValue}
+                    autoComplete={"off"}
                 />
                 <Button buttonName={"Register"} color={"primary"}> Login </Button>
                 <Button buttonName={"Login"} color={"secondary"}> Registration </Button>

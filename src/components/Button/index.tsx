@@ -10,9 +10,7 @@ interface ButtonProps {
 
 const Button:React.FC<ButtonProps> = ({color="primary", children}) => {
     return (
-        <div className={style.wrap}>
             <button className={classnames(style.button, style[color])}>{children}</button>
-        </div>
     )
 }
 

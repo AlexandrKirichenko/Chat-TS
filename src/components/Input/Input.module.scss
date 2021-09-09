@@ -5,12 +5,15 @@
   flex-direction:column;
   font-weight: 400;
   .input {
-    height: 48px;
+    height: 46px;
     border-radius: $border-radius;
     border: 1px solid $color-input-border;
     box-shadow: $box-shadow;
     font-size: 18px;
     outline: none;
+    &.errorcolor {
+      border: 1px solid $color-error;
+    }
   }
 }
 
@@ -24,7 +27,7 @@
   color: $color-text;
 }
 
-.errorMsg {
+.errorMessage{
   font-family: $font-family-main;
   color: $color-error;
   font-size: 14px;
