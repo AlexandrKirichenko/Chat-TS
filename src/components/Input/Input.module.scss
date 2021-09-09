@@ -3,12 +3,12 @@
 .wrap {
   display: flex;
   flex-direction:column;
+  font-weight: 400;
   .input {
     height: 48px;
     border-radius: $border-radius;
     border: 1px solid $color-input-border;
     box-shadow: $box-shadow;
-    font-weight: 400;
     font-size: 18px;
     outline: none;
   }
@@ -19,7 +19,6 @@
 
 .label {
   font-family: $font-family-main;
-  font-weight: 400;
   font-size: 12px;
   font-style: normal;
   text-decoration: none;
@@ -30,7 +29,6 @@
 .errorMsg {
   font-family: $font-family-main;
   color: $color-error;
-  font-weight: 400;
   font-size: 14px;
   margin-top: 10px;
 }

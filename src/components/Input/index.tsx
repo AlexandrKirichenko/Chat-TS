@@ -11,7 +11,6 @@ interface InputProps {
     id: string;
     name: string;
     errorMsg?: string;
-    
     setInputValueCb(value: string): void;
 }
 

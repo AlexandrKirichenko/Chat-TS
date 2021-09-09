@@ -3,10 +3,9 @@ import style from './Avatar.module.scss';
 import classnames from 'classnames';
 
 interface AvatarProps {
-    size: 'medium' | 'large';
+    size: string;
     img: string;
     name: string;
-
 }
 
 const Avatar: React.FC<AvatarProps> = ({img, name, size=""}) => {

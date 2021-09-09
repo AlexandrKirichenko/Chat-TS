@@ -23,19 +23,11 @@
       transition: .3s ease-in-out;
     }
   }
-}
-.primary {
-  background-color: $color-primary;
-  &:hover {
-    background-color: $color-primay-light;
-    transition: .3s ease-in-out;
-  }
-}
-
-.secondary {
-  background: $color-secondary;
-  &:hover {
-    background-color: $color-secondary-light;
-    transition: .3s ease-in-out;
+  &.secondary {
+    background: $color-secondary;
+    &:hover {
+      background-color: $color-secondary-light;
+      transition: .3s ease-in-out;
+    }
   }
 }

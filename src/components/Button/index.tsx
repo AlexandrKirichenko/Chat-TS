@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 interface ButtonProps {
     buttonName: string;
-    color : "primary" | "secondary";
+    color : string;
 }
 
 const Button:React.FC<ButtonProps> = ({color="primary", children}) => {

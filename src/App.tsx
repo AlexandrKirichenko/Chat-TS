@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import "./App.css";
 import Layout from "./components/Layout";
+import Registration from './pages/Registration'
 import Avatar from "./components/Avatar ";
 import Input from "./components/Input";
 import Button from "./components/Button";
@@ -13,6 +14,7 @@ function App() {
     return (
         <>
             <Layout>
+                {/*<Registration />*/}
                 <Input
                     value={inputValue}
                     type={"text"}
