@@ -1,0 +1,22 @@
+@import "../../constants";
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  background: $color-background;
+  font-family: $font-family-main;
+  font-weight: 400;
+}
+
+.header {
+  color: $color-text;
+  font-size: 36px;
+}
+
+.registration {
+  font-family: $font-family-main;
+  color: $primary;
+  font-size: 16px;
+  font-style: normal;
+  text-decoration: none;
+}

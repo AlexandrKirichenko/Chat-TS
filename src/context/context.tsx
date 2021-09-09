@@ -1,23 +1,14 @@
 import React, {createContext, useState} from 'react'
 
-interface IContext{
-    children: React.ReactNode;
-    props: any;
-}
-export const AuthContext = createContext<IContext>({children, ...props}) => {
-    const [inputValue, setInputValue] = useState('');
+// interface IContext{
+//
+// }
+// export const AuthContext = createContext<IContext>() => {
+//
+// };
 
-    return (
-        <AuthContext.Provider value={{
-            inputValue: inputValue,
-            setInputValue: setInputValue
-        }}{...props}
-        >
-            {children}
-        </AuthContext.Provider>
-    )
-};
+// export const AuthContext = createContext<AuthContext | null>(null);
 
-export default AuthContext;
+
 
 

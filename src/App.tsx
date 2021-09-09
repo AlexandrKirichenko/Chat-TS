@@ -5,25 +5,30 @@ import Registration from './pages/Registration'
 import Avatar from "./components/Avatar ";
 import Input from "./components/Input";
 import Button from "./components/Button";
-import {AuthContext} from './context/context'
+// import {AuthContext} from './context/context'
 
 const INPUT_TEST_ERROR  = 'Error'
+
+export interface IContext {
+    inputValue: string ;
+    setInputValue(value: string): void;
+}
+
+export const AuthContext = React.createContext<IContext | null>(null);
 
 function App() {
     const [inputValue, setInputValue] = useState('');
     // const [inputDirty, setEmailDirty] =useState(false)
     // const [emailError, setEmailError] =useState('Email cant be empty')
+    const AuthContextData = { inputValue, setInputValue };
     return (
         <>
-            <AuthContext.Porvider value={{
-                inputValue,
-                setInputValue: setInputValue
-            }}>
+            <AuthContext.Provider value={AuthContextData}>
                 <Layout>
-                    {/*<Registration />*/}
+                    <Registration />
                     <Input
                         value={inputValue}
-                        type={"text"}
+                        type={"email"}
                         id={"b34234"}
                         name={"Password"}
                         setInputValue={setInputValue}
@@ -44,7 +49,7 @@ function App() {
                     <Avatar size={"large"} img={""} name={"Alex"}/>
                     <Avatar size={"medium"} img={""} name={"Alex"}/>
                 </Layout>
-            </AuthContext.Porvider>
+            </AuthContext.Provider >
         </>
     );
 }

@@ -21,7 +21,7 @@ const Input: React.FC<InputProps> = ({type="email",errorcolor, value, id, name, 
     
     const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        setInputValue(value);
+        setInternalValue(value);
     }
     
     useEffect(()=>{
