@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./Input.module.scss";
 import style from "./Input.module.scss";
 import classnames from 'classnames';
@@ -10,17 +10,26 @@ interface InputProps {
     id: string;
     name: string;
     errorMessage?: string;
-    setInputValue(value: string): void;
+    setInputValue?: (value: string) => void;
     autoComplete: "on" | "off";
     errorcolor ?: any;
 }
 
 const Input: React.FC<InputProps> = ({type="email",errorcolor, value, id, name, setInputValue, errorMessage,autoComplete="off"}) => {
+   
+    const [internalValue, setInternalValue] = useState<string>(value);
+    
     const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setInputValue(value);
     }
     
+    useEffect(()=>{
+        if(setInputValue) {
+            setInputValue(internalValue);
+        }
+        
+    }, [internalValue]);
     return (
         <div className={style.wrap}>
             <label className={style.label} htmlFor={name}>

@@ -13,14 +13,23 @@ const Registration:React.FC<any> = () => {
     const [inputValue, setInputValue] = useState('');
   return (
       <>
-          {/*<Input*/}
-          {/*    value={inputValue}*/}
-          {/*    type={"text"}*/}
-          {/*    id={"b34234"}*/}
-          {/*    name={"Password"}*/}
-          {/*    setInputValueCb={setInputValue}*/}
-          {/*    errorMsg={INPUT_TEST_ERROR}*/}
-          {/*/>*/}
+          <Input
+              value={inputValue}
+              type={"text"}
+              id={"b34234"}
+              name={"Password"}
+              setInputValue={setInputValue}
+              autoComplete={"off"}
+          />
+          <Input
+              value={inputValue}
+              type={"text"}
+              id={"b34234"}
+              name={"Password"}
+              setInputValue={setInputValue}
+              autoComplete={"off"}
+          />
+         
       </>
   )
 }
