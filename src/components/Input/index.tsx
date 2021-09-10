@@ -9,6 +9,7 @@ interface InputProps {
     value: string;
     id: string;
     name: string;
+    size?: "small" | "large";
     errorMessage?: string;
     setInputValue?: (value: string) => void;
     autoComplete: "on" | "off";
@@ -17,7 +18,7 @@ interface InputProps {
     inputWasChanged?: boolean;
 }
 
-const Input: React.FC<InputProps> = ({type="email",errorcolor,inputError,inputWasChanged="false", value, id, name, setInputValue, errorMessage,autoComplete="off"}) => {
+const Input: React.FC<InputProps> = ({type="email",errorcolor,size="large",inputError,inputWasChanged="false", value, id, name, setInputValue, errorMessage,autoComplete="off"}) => {
    
     const [internalValue, setInternalValue] = useState<string>(value);
     
@@ -26,6 +27,7 @@ const Input: React.FC<InputProps> = ({type="email",errorcolor,inputError,inputWa
         setInternalValue(value);
     }
     
+    // var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     // const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     //     switch (e.target.name) {
     //         case "name":
@@ -52,7 +54,7 @@ const Input: React.FC<InputProps> = ({type="email",errorcolor,inputError,inputWa
                 type={type}
                 id={id}
                 // className={classnames(style.input,{inputError} ? style[errorcolor]: null )}
-                className={style.input}
+                className={classnames(style.input, style[size])}
                 value={value}
                 name={name}
                 placeholder={`Enter your ${name.toLowerCase()}`}

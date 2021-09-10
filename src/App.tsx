@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import "./App.css";
 import Layout from "./components/Layout";
-import Registration from './pages/Registration'
+import Registration from './pages/Registration';
+import Login from './pages/Login';
 import Avatar from "./components/Avatar ";
 import Input from "./components/Input";
 import Button from "./components/Button";
@@ -41,6 +42,8 @@ function App() {
             <AuthContext.Provider value={AuthContextData}>
                 <Layout>
                     <Registration />
+                    <Login />
+                    {/*<Login />*/}
                     {/*<Input*/}
                     {/*    value={inputValue}*/}
                     {/*    type={"email"}*/}
@@ -51,10 +54,10 @@ function App() {
                     {/*    autoComplete={"off"}*/}
                     {/*    errorcolor={'errorcolor'}*/}
                     {/*/>*/}
-                    <Button color={"primary"}> Login </Button>
-                    <Button color={"secondary"}> Registration </Button>
-                    <Avatar size={"large"} img={""} name={"Alex"}/>
-                    <Avatar size={"medium"} img={""} name={"Alex"}/>
+                    {/*<Button color={"primary"}> Login </Button>*/}
+                    {/*<Button color={"secondary"}> Registration </Button>*/}
+                    {/*<Avatar size={"large"} img={""} name={"Alex"}/>*/}
+                    {/*<Avatar size={"medium"} img={""} name={"Alex"}/>*/}
                 </Layout>
             </AuthContext.Provider >
         </>

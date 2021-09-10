@@ -1,6 +1,8 @@
+import {FormikConfig, useFormik} from 'formik'
 import React, {useContext } from 'react'
 import "./Login.module.scss";
-import Input from "../../components/Input"
+import * as yup from 'yup';
+import Input from "../../components/Input";
 import style from "./Registration.module.scss";
 import classnames from 'classnames';
 import Button from "../../components/Button";
@@ -8,48 +10,88 @@ import {AuthContext} from '../../App';
 
 const INPUT_TEST_ERROR  = 'Error'
 
-const Registration:React.FC = () => {
+
+export interface UserCredentials {
+    name: string;
+    password: string;
+}
+
+const Login: React.FC = () => {
     const context = useContext(AuthContext);
+    
+    const validationSchema = yup.object({
+        name: yup
+            .string()
+            .required(),
+        password: yup
+            .string()
+            .required()
+            .min(8)
+            .max(30),
+    });
+    const formikConfig: FormikConfig<UserCredentials> = {
+        enableReinitialize: false,
+        initialValues: {
+            name: '',
+            password: '',
+        },
+        onSubmit: (values) => {
+            const massage = `name: ${values.name}; password: ${values.password}`;
+            alert(massage);
+        },
+        validationSchema
+    };
+    const formik = useFormik<UserCredentials>(formikConfig);
+    
     if (context === null) {
         return null;
     }
-    const  { name, setName, password, setPassword,nameWasChanged,passwordWasChanged,nameError,passwordError} = context;
-    // const [name, setName] = useState('');
-    // const [password, setPassword] = useState('');
+    const {name, setName, password, setPassword, nameError, nameWasChanged, passwordWasChanged} = context;
     
-    const handleSubmitForm = (e: React.SyntheticEvent) => {
-        e.preventDefault();
-        const massage = `name: ${name}; password: ${password}`;
-        alert(massage);
-    }
+    // const handleSubmitForm = (e: React.SyntheticEvent) => {
+    //     // e.preventDefault();
+    //     // const massage = `name: ${name}; password: ${password}`;
+    //     // alert(massage);
+    // }
+    
+    
+    // const formik = useFormik<UserCredentials>(formikConfig);
+    
     
     return (
-        <form onSubmit={handleSubmitForm}>
+        <form noValidate onSubmit={formik.handleSubmit}>
             <Input
-                value={name}
                 type={"text"}
                 id={"form-name-input"}
-                name={"name"}
-                setInputValue={setName}
                 autoComplete={"off"}
-                inputWasChanged={nameWasChanged}
-                inputError={nameError}
-               
+                inputError={''}
+                setInputValue={val => formik.getFieldProps('name').onChange({
+                    target: {
+                        value: val,
+                        name: formik.getFieldProps('name').name
+                    },
+                })}
+                {...formik.getFieldProps('name')}
             />
+            {formik.errors.name ? formik.errors.name : ''}
             <Input
-                value={password}
                 type={"password"}
                 id={"form-password-input"}
-                name={"Password"}
-                setInputValue={setPassword}
                 autoComplete={"off"}
-                inputWasChanged={passwordWasChanged}
-                inputError={passwordError}
-                
+                setInputValue={val => formik.getFieldProps('password').onChange({
+                    target: {
+                        value: val,
+                        name: formik.getFieldProps('password').name
+                    },
+                })}
+                inputError={''}
+                {...formik.getFieldProps('password')}
             />
-            <Button />
+            {formik.errors.password ? formik.errors.password : ''}
+            
+            <button type={"submit"}>SUBMIT</button>
         </form>
     )
 }
 
-export default Registration;
+export default Login;
