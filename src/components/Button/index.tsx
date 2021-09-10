@@ -5,11 +5,12 @@ import classnames from 'classnames';
 
 interface ButtonProps {
     color?: string;
+    type: 'button' | 'submit';
 }
 
-const Button:React.FC<ButtonProps> = ({color="primary", children}) => {
+const Button:React.FC<ButtonProps> = ({color="primary", children,type="submit"}) => {
     return (
-            <button className={classnames(style.button, style[color])}>{children}</button>
+            <button type={type} className={classnames(style.button, style[color])}>{children}</button>
     )
 }
 

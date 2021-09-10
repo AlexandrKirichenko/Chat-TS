@@ -1,11 +1,10 @@
-import React, {useState} from "react";
-import "./App.css";
-import Layout from "./components/Layout";
-import Registration from './pages/Registration';
-import Login from './pages/Login';
-import Avatar from "./components/Avatar ";
-import Input from "./components/Input";
-import Button from "./components/Button";
+import React, {useState} from 'react'
+import {BrowserRouter as Router, Route,Switch} from 'react-router-dom'
+import './App.css'
+import Layout from './components/Layout'
+import Login from './pages/Login'
+import Registration from './pages/Registration'
+import Button from './components/Button'
 // import {AuthContext} from './context/context'
 
 const INPUT_TEST_ERROR  = 'Error'
@@ -41,8 +40,16 @@ function App() {
         <>
             <AuthContext.Provider value={AuthContextData}>
                 <Layout>
-                    <Registration />
-                    <Login />
+                    <Router>
+                        <Switch>
+                            <Route exact path="/"><Login/></Route>
+                            <Route path="/regisration"><Registration/></Route>
+                        </Switch>
+                        
+                        {/*<Registration/>*/}
+                        {/*<Login/>*/}
+                        {/*<Button type={"submit"} color={"primary"}> Login </Button>*/}
+                    </Router>
                     {/*<Login />*/}
                     {/*<Input*/}
                     {/*    value={inputValue}*/}
@@ -54,7 +61,7 @@ function App() {
                     {/*    autoComplete={"off"}*/}
                     {/*    errorcolor={'errorcolor'}*/}
                     {/*/>*/}
-                    {/*<Button color={"primary"}> Login </Button>*/}
+                  
                     {/*<Button color={"secondary"}> Registration </Button>*/}
                     {/*<Avatar size={"large"} img={""} name={"Alex"}/>*/}
                     {/*<Avatar size={"medium"} img={""} name={"Alex"}/>*/}

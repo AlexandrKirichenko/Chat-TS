@@ -88,8 +88,8 @@ const Login: React.FC = () => {
                 {...formik.getFieldProps('password')}
             />
             {formik.errors.password ? formik.errors.password : ''}
-            
-            <button type={"submit"}>SUBMIT</button>
+    
+            <Button type={"submit"} color={"primary"}> Login </Button>
         </form>
     )
 }
