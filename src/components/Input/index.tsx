@@ -13,17 +13,27 @@ interface InputProps {
     setInputValue?: (value: string) => void;
     autoComplete: "on" | "off";
     errorcolor?: any;
-    nameError?: string;
-    nameWasChanged: "true" | "false";
+    inputError: string;
+    inputWasChanged?: boolean;
+    setInputWasChanged?: boolean;
 }
 
-const Input: React.FC<InputProps> = ({type="email",errorcolor,nameError,nameWasChanged="false", value, id, name, setInputValue, errorMessage,autoComplete="off"}) => {
+const Input: React.FC<InputProps> = ({type="email",errorcolor,inputError,inputWasChanged="false", value, id, name,setInputWasChanged, setInputValue, errorMessage,autoComplete="off"}) => {
    
     const [internalValue, setInternalValue] = useState<string>(value);
     
     const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setInternalValue(value);
+    }
+    
+    const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+        switch (e.target.name) {
+            case "name":
+                setInputWasChanged(true)
+            case "password":
+                setInputWasChanged(true)
+        }
     }
     
     useEffect(()=>{
@@ -40,14 +50,16 @@ const Input: React.FC<InputProps> = ({type="email",errorcolor,nameError,nameWasC
             <input
                 type={type}
                 id={id}
-                className={classnames(style.input,{nameError} ? style[errorcolor]: null )}
+                // className={classnames(style.input,{inputError} ? style[errorcolor]: null )}
+                className={style.input}
                 value={value}
                 name={name}
                 placeholder={`Enter your ${name.toLowerCase()}`}
                 onChange={handleChangeValue}
                 autoComplete={autoComplete}
+                onBlur={e => handleBlur(e)}
             />
-            {(nameWasChanged && nameError) && <div className={style.errorMessage}>{errorMessage}</div>}
+            {(inputWasChanged && inputError) && <div style={{color: 'orangered'}} className={style.errorMessage}>{errorMessage}</div>}
         </div>
     )
 }

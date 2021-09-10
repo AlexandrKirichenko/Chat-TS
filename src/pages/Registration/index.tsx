@@ -13,7 +13,7 @@ const Registration:React.FC = () => {
     if (context === null) {
         return null;
     }
-    const  { name, setName, password, setPassword,nameError } = context;
+    const  { name, setName, password, setPassword,nameError,nameWasChanged,passwordWasChanged} = context;
     
     const handleSubmitForm = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -30,15 +30,18 @@ const Registration:React.FC = () => {
                 name={"name"}
                 setInputValue={setName}
                 autoComplete={"off"}
-                nameError={nameError}
+                inputError={nameError}
+                inputWasChanged={nameWasChanged}
             />
             <Input
                 value={password}
                 type={"password"}
                 id={"form-password-input"}
-                name={"Password"}
+                name={"password"}
                 setInputValue={setPassword}
                 autoComplete={"off"}
+                inputError={nameError}
+                inputWasChanged={passwordWasChanged}
             />
             <Button children={'Login'}/>
         </form>

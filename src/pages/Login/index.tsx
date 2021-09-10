@@ -13,7 +13,7 @@ const Registration:React.FC = () => {
     if (context === null) {
         return null;
     }
-    const  { name, setName, password, setPassword } = context;
+    const  { name, setName, password, setPassword,nameWasChanged,passwordWasChanged,nameError,passwordError} = context;
     // const [name, setName] = useState('');
     // const [password, setPassword] = useState('');
     
@@ -32,6 +32,9 @@ const Registration:React.FC = () => {
                 name={"name"}
                 setInputValue={setName}
                 autoComplete={"off"}
+                inputWasChanged={nameWasChanged}
+                inputError={nameError}
+                setInputWasChanged={nameWasChanged}
             />
             <Input
                 value={password}
@@ -40,6 +43,9 @@ const Registration:React.FC = () => {
                 name={"Password"}
                 setInputValue={setPassword}
                 autoComplete={"off"}
+                inputWasChanged={passwordWasChanged}
+                inputError={passwordError}
+                setInputWasChanged={passwordWasChanged}
             />
             <Button />
         </form>

@@ -17,11 +17,11 @@ export interface IAuthContext {
     nameError: string;
     setNameError(value: string): void;
     nameWasChanged: boolean;
-    setNameWasChanged(value: boolean): boolean;
+    setNameWasChanged?(value: boolean): void;
     passwordError: string;
-    setPasswordError(value: boolean): boolean;
-    passwordWasChanged: boolean;
-    setPasswordWasChanged(value: boolean): boolean;
+    setPasswordError(value: string): void;
+    passwordWasChanged?: boolean;
+    setPasswordWasChanged?(value: boolean): void;
 }
 
 export const AuthContext = React.createContext<IAuthContext | null>(null);
