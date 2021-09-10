@@ -15,10 +15,9 @@ interface InputProps {
     errorcolor?: any;
     inputError: string;
     inputWasChanged?: boolean;
-    setInputWasChanged?: boolean;
 }
 
-const Input: React.FC<InputProps> = ({type="email",errorcolor,inputError,inputWasChanged="false", value, id, name,setInputWasChanged, setInputValue, errorMessage,autoComplete="off"}) => {
+const Input: React.FC<InputProps> = ({type="email",errorcolor,inputError,inputWasChanged="false", value, id, name, setInputValue, errorMessage,autoComplete="off"}) => {
    
     const [internalValue, setInternalValue] = useState<string>(value);
     
@@ -27,14 +26,16 @@ const Input: React.FC<InputProps> = ({type="email",errorcolor,inputError,inputWa
         setInternalValue(value);
     }
     
-    const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-        switch (e.target.name) {
-            case "name":
-                setInputWasChanged(true)
-            case "password":
-                setInputWasChanged(true)
-        }
-    }
+    // const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     switch (e.target.name) {
+    //         case "name":
+    //             setNameWasChanged(true)
+    //         break
+    //         case "password":
+    //             setPasswordWasChanged(true)
+    //             break
+    //     }
+    // }
     
     useEffect(()=>{
         if(setInputValue) {
@@ -57,7 +58,7 @@ const Input: React.FC<InputProps> = ({type="email",errorcolor,inputError,inputWa
                 placeholder={`Enter your ${name.toLowerCase()}`}
                 onChange={handleChangeValue}
                 autoComplete={autoComplete}
-                onBlur={e => handleBlur(e)}
+                // onBlur={e => handleBlur}
             />
             {(inputWasChanged && inputError) && <div style={{color: 'orangered'}} className={style.errorMessage}>{errorMessage}</div>}
         </div>

@@ -34,7 +34,7 @@ const Registration:React.FC = () => {
                 autoComplete={"off"}
                 inputWasChanged={nameWasChanged}
                 inputError={nameError}
-                setInputWasChanged={nameWasChanged}
+               
             />
             <Input
                 value={password}
@@ -45,7 +45,7 @@ const Registration:React.FC = () => {
                 autoComplete={"off"}
                 inputWasChanged={passwordWasChanged}
                 inputError={passwordError}
-                setInputWasChanged={passwordWasChanged}
+                
             />
             <Button />
         </form>
