@@ -6,18 +6,14 @@ import classnames from 'classnames';
 import Button from "../../components/Button";
 import {AuthContext} from '../../App';
 
-
 const INPUT_TEST_ERROR  = 'Error'
 
-
 const Registration:React.FC = () => {
-    const AuthContext = useContext(AuthContext);
-    if (AuthContext === null) {
+    const context = useContext(AuthContext);
+    if (context === null) {
         return null;
     }
-    const AuthContextData = { inputValue, setInputValue };
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
+    const  { name, setName, password, setPassword,nameError } = context;
     
     const handleSubmitForm = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -34,16 +30,17 @@ const Registration:React.FC = () => {
                 name={"name"}
                 setInputValue={setName}
                 autoComplete={"off"}
+                nameError={nameError}
             />
             <Input
                 value={password}
-                type={"text"}
+                type={"password"}
                 id={"form-password-input"}
                 name={"Password"}
                 setInputValue={setPassword}
                 autoComplete={"off"}
             />
-            <button type={'submit'}>submit</button>
+            <Button children={'Login'}/>
         </form>
     )
 }

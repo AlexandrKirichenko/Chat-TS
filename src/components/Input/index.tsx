@@ -12,10 +12,12 @@ interface InputProps {
     errorMessage?: string;
     setInputValue?: (value: string) => void;
     autoComplete: "on" | "off";
-    errorcolor ?: any;
+    errorcolor?: any;
+    nameError?: string;
+    nameWasChanged: "true" | "false";
 }
 
-const Input: React.FC<InputProps> = ({type="email",errorcolor, value, id, name, setInputValue, errorMessage,autoComplete="off"}) => {
+const Input: React.FC<InputProps> = ({type="email",errorcolor,nameError,nameWasChanged="false", value, id, name, setInputValue, errorMessage,autoComplete="off"}) => {
    
     const [internalValue, setInternalValue] = useState<string>(value);
     
@@ -38,14 +40,14 @@ const Input: React.FC<InputProps> = ({type="email",errorcolor, value, id, name, 
             <input
                 type={type}
                 id={id}
-                className={classnames(style.input,{errorMessage} ? style[errorcolor]: null )}
+                className={classnames(style.input,{nameError} ? style[errorcolor]: null )}
                 value={value}
                 name={name}
                 placeholder={`Enter your ${name.toLowerCase()}`}
                 onChange={handleChangeValue}
                 autoComplete={autoComplete}
             />
-            {errorMessage ? <div className={style.errorMessage}>{errorMessage}</div>: null}
+            {(nameWasChanged && nameError) && <div className={style.errorMessage}>{errorMessage}</div>}
         </div>
     )
 }

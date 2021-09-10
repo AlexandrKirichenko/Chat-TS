@@ -4,8 +4,7 @@ import style from "./Button.module.scss";
 import classnames from 'classnames';
 
 interface ButtonProps {
-    buttonName: string;
-    color : string;
+    color?: string;
 }
 
 const Button:React.FC<ButtonProps> = ({color="primary", children}) => {
