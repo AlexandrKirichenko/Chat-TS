@@ -10,7 +10,6 @@ import {AuthContext} from '../../App';
 
 const INPUT_TEST_ERROR  = 'Error'
 
-
 export interface UserCredentials {
     name: string;
     password: string;
@@ -22,6 +21,7 @@ const Login: React.FC = () => {
     const validationSchema = yup.object({
         name: yup
             .string()
+            .matches(/^([^0-9]*)$/, "Name should not contain numbers")
             .required(),
         password: yup
             .string()
@@ -42,22 +42,13 @@ const Login: React.FC = () => {
         validationSchema
     };
     const formik = useFormik<UserCredentials>(formikConfig);
+ 
     
     if (context === null) {
         return null;
     }
     const {name, setName, password, setPassword, nameError, nameWasChanged, passwordWasChanged} = context;
-    
-    // const handleSubmitForm = (e: React.SyntheticEvent) => {
-    //     // e.preventDefault();
-    //     // const massage = `name: ${name}; password: ${password}`;
-    //     // alert(massage);
-    // }
-    
-    
-    // const formik = useFormik<UserCredentials>(formikConfig);
-    
-    
+
     return (
         <form noValidate onSubmit={formik.handleSubmit}>
             <Input
@@ -73,7 +64,7 @@ const Login: React.FC = () => {
                 })}
                 {...formik.getFieldProps('name')}
             />
-            {formik.errors.name ? formik.errors.name : ''}
+            {formik.errors.name && formik.getFieldProps('name').value ? formik.errors.name : ''}
             <Input
                 type={"password"}
                 id={"form-password-input"}
@@ -87,7 +78,7 @@ const Login: React.FC = () => {
                 inputError={''}
                 {...formik.getFieldProps('password')}
             />
-            {formik.errors.password ? formik.errors.password : ''}
+            {formik.errors.password && formik.getFieldProps('password').value? formik.errors.password : ''}
     
             <Button type={"submit"} color={"primary"}> Login </Button>
         </form>

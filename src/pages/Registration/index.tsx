@@ -1,19 +1,18 @@
-import React, {useState, useContext} from 'react'
+import {FormikConfig, useFormik} from 'formik'
+import React, {useContext } from 'react'
 import "./Registration.module.scss";
-import Input from "../../components/Input"
+import * as yup from 'yup';
+import Input from "../../components/Input";
 import style from "./Registration.module.scss";
 import classnames from 'classnames';
 import Button from "../../components/Button";
 import {AuthContext} from '../../App';
-import * as yup from 'yup';
-import {FormikConfig, useFormik} from "formik";
-
-
-const INPUT_TEST_ERROR = 'Error'
 
 export interface UserCredentials {
     name: string;
     password: string;
+    confirmPassword: string;
+    email: string;
 }
 
 const Registration: React.FC = () => {
@@ -22,18 +21,28 @@ const Registration: React.FC = () => {
     const validationSchema = yup.object({
         name: yup
             .string()
-            .required(),
+            .matches(/^([^0-9]*)$/, "Name should not contain numbers")
+            .required()
+            .min(2),
         password: yup
             .string()
             .required()
             .min(8)
             .max(30),
-    });
+        email: yup
+            .string()
+            .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please enter your email address")
+            .required()
+    })
+    
     const formikConfig: FormikConfig<UserCredentials> = {
         enableReinitialize: false,
         initialValues: {
             name: '',
             password: '',
+            confirmPassword: '',
+            email: '',
+            
         },
         onSubmit: (values) => {
             const massage = `name: ${values.name}; password: ${values.password}`;
@@ -43,20 +52,11 @@ const Registration: React.FC = () => {
     };
     const formik = useFormik<UserCredentials>(formikConfig);
     
+    
     if (context === null) {
         return null;
     }
     const {name, setName, password, setPassword, nameError, nameWasChanged, passwordWasChanged} = context;
-    
-    // const handleSubmitForm = (e: React.SyntheticEvent) => {
-    //     // e.preventDefault();
-    //     // const massage = `name: ${name}; password: ${password}`;
-    //     // alert(massage);
-    // }
-    
-    
-    // const formik = useFormik<UserCredentials>(formikConfig);
-    
     
     return (
         <form noValidate onSubmit={formik.handleSubmit}>
@@ -65,6 +65,7 @@ const Registration: React.FC = () => {
                 id={"form-name-input"}
                 autoComplete={"off"}
                 inputError={''}
+                
                 setInputValue={val => formik.getFieldProps('name').onChange({
                     target: {
                         value: val,
@@ -73,7 +74,22 @@ const Registration: React.FC = () => {
                 })}
                 {...formik.getFieldProps('name')}
             />
-            {formik.errors.name ? formik.errors.name : ''}
+            {formik.errors.name && formik.getFieldProps('name').value ? formik.errors.name : ''}
+    
+            <Input
+                type={"text"}
+                id={"form-email-input"}
+                autoComplete={"off"}
+                inputError={''}
+                setInputValue={val => formik.getFieldProps('email').onChange({
+                    target: {
+                        value: val,
+                        name: formik.getFieldProps('email').name
+                    },
+                })}
+                {...formik.getFieldProps('email')}
+            />
+            {formik.errors.email && formik.getFieldProps('email').value ? formik.errors.email : ''}
             <Input
                 type={"password"}
                 id={"form-password-input"}
@@ -87,114 +103,26 @@ const Registration: React.FC = () => {
                 inputError={''}
                 {...formik.getFieldProps('password')}
             />
-            {formik.errors.password ? formik.errors.password : ''}
+            {formik.errors.password && formik.getFieldProps('password').value? formik.errors.password : ''}
     
+            <Input
+                type={"password"}
+                id={"form-confirmPassword-input"}
+                autoComplete={"off"}
+                setInputValue={val => formik.getFieldProps('confirmPassword').onChange({
+                    target: {
+                        value: val,
+                        name: formik.getFieldProps('confirmPassword').name
+                    },
+                })}
+                inputError={''}
+                {...formik.getFieldProps('confirmPassword')}
+            />
+            {formik.errors.password && formik.getFieldProps('password').value? formik.errors.password : ''}
+            
             <Button type={"submit"} color={"primary"}> Login </Button>
         </form>
     )
 }
 
 export default Registration;
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, {useState, useContext } from 'react'
-// import "./Registration.module.scss";
-// import Avatar from '../../components/Avatar ';
-// import Input from "../../components/Input";
-// import style from "./Registration.module.scss";
-// import classnames from 'classnames';
-// import Button from "../../components/Button";
-// import {AuthContext} from '../../App';
-//
-// const INPUT_TEST_ERROR  = 'Error'
-//
-// const Registration:React.FC = () => {
-//     const context = useContext(AuthContext);
-//     if (context === null) {
-//         return null;
-//     }
-//     const  { name, setName, password, setPassword,nameError,nameWasChanged,passwordWasChanged} = context;
-//
-//     const handleSubmitForm = (e: React.SyntheticEvent) => {
-//         e.preventDefault();
-//         const massage = `name: ${name}; password: ${password}`;
-//         alert(massage);
-//     }
-//
-//     return (
-//         <div className={style.wrap}>
-//             <form onSubmit={handleSubmitForm}>
-//                 <Input
-//                     value={name}
-//                     type={"text"}
-//                     id={"form-name-input"}
-//                     name={"Login"}
-//                     setInputValue={setName}
-//                     autoComplete={"off"}
-//                     inputError={nameError}
-//                     inputWasChanged={nameWasChanged}
-//                 />
-//                 <Input
-//                     value={password}
-//                     type={"password"}
-//                     id={"form-password-input"}
-//                     name={"Email"}
-//                     setInputValue={setPassword}
-//                     autoComplete={"off"}
-//                     inputError={nameError}
-//                     inputWasChanged={passwordWasChanged}
-//                 />
-//                 <Input
-//                     value={name}
-//                     type={"text"}
-//                     id={"form-name-input"}
-//                     name={"Password"}
-//                     setInputValue={setName}
-//                     autoComplete={"off"}
-//                     inputError={nameError}
-//                     inputWasChanged={nameWasChanged}
-//                 />
-//                 <Input
-//                     value={password}
-//                     type={"password"}
-//                     id={"form-password-input"}
-//                     name={"Repeat password"}
-//                     setInputValue={setPassword}
-//                     autoComplete={"off"}
-//                     inputError={nameError}
-//                     inputWasChanged={passwordWasChanged}
-//                 />
-//                 <div className={style.avatar_wrap}>
-//                     <Avatar size={"large"} img={""} name={"Alex"}/>
-//                     <Input
-//                         value={password}
-//                         type={"password"}
-//                         id={"form-password-input"}
-//                         name={"url"}
-//                         setInputValue={setPassword}
-//                         autoComplete={"off"}
-//                         inputError={nameError}
-//                         inputWasChanged={passwordWasChanged}
-//                         size={'small'}
-//                     />
-//                 </div>
-//                 <Button children={'Login'}/>
-//
-//             </form>
-//         </div>
-//
-//     )
-// }
-//
-// export default Registration;
