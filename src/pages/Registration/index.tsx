@@ -58,8 +58,8 @@ const Registration: React.FC = () => {
             console.log(values);
             const massage = `name: ${values.name};email: ${values.email}, password: ${values.password}`;
             alert(massage);
-            setName(values.name);
-            setEmail(values.email);
+            // setName(values.name);
+            // setEmail(values.email);
         },
         validationSchema,
         
@@ -70,7 +70,7 @@ const Registration: React.FC = () => {
     if (context === null) {
         return null;
     }
-    const {name, setName, password, setPassword, nameError, nameWasChanged, passwordWasChanged} = context;
+    const {name, setName, password, setPassword} = context;
     
     return (
         <form noValidate onSubmit={formik.handleSubmit}>
@@ -78,18 +78,16 @@ const Registration: React.FC = () => {
                 type={"text"}
                 id={"form-name-input"}
                 autoComplete={"off"}
-                inputError={''}
-                
+                inputError={formik.errors.name && formik.touched.name ? formik.errors.name : ''}
                 {...formik.getFieldProps('name')}
+               
             />
-            {formik.errors.name && formik.touched.name ? formik.errors.name : ''}
             
             <Input
                 type={"text"}
                 id={"form-email-input"}
                 autoComplete={"off"}
                 inputError={''}
-                
                 {...formik.getFieldProps('email')}
             />
             {formik.errors.email && formik.touched.email ? formik.errors.email : ''}
@@ -97,16 +95,16 @@ const Registration: React.FC = () => {
                 type={"password"}
                 id={"form-password-input"}
                 autoComplete={"off"}
-                inputError={''}
-                {...formik.getFieldProps('password')}
+                
+                inputError = {formik.errors.password}
+                touched = {formik.touched.password}
             />
-            {formik.errors.password && formik.touched.password ? formik.errors.password : ''}
+            
             
             <Input
                 type={"password"}
                 id={"form-confirmPassword-input"}
                 autoComplete={"off"}
-                
                 inputError={''}
                 {...formik.getFieldProps('confirmPassword')}
             />
@@ -117,7 +115,6 @@ const Registration: React.FC = () => {
                 type={"text"}
                 id={"form-url-input"}
                 autoComplete={"off"}
-          
                 inputError={''}
                 size={"small"}
                 {...formik.getFieldProps('url')}

@@ -7,37 +7,24 @@ import Registration from './pages/Registration'
 import Button from './components/Button'
 // import {AuthContext} from './context/context'
 
-
-const [loginFormValues, setLoginFormValues] = useState<UserLoginCredentials | null>(null)
-const [registrationFormValues, setRegistrationFormValues] = useState<UserCredentials | null>(null)
+const INPUT_TEST_ERROR  = 'Error'
 
 export interface IAuthContext {
     name:string;
     setName(value: string): void;
     password:string;
     setPassword(value: string): void;
-}
-export interface UserRegistrationCredentials {
-    name: string;
-    password: string;
-    confirmPassword: string;
-    email: string;
-}
-
-export interface UserLoginCredentials {
-    name: string;
-    password: string;
+    
 }
 
 export const AuthContext = React.createContext<IAuthContext | null>(null);
 
-
 function App() {
-    
+    // const [inputValue, setInputValue] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    
-    const AuthContextData = {registrationFormValues, setRegistrationFormValues}
+
+    const AuthContextData = { name, setName,password, setPassword};
     return (
         <>
             <AuthContext.Provider value={AuthContextData}>

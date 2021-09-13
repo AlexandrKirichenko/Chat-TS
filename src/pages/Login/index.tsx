@@ -47,7 +47,7 @@ const Login: React.FC = () => {
     if (context === null) {
         return null;
     }
-    const {name, setName, password, setPassword, nameError, nameWasChanged, passwordWasChanged} = context;
+    const {name, setName, password, setPassword} = context;
 
     return (
         <form noValidate onSubmit={formik.handleSubmit}>
@@ -80,7 +80,7 @@ const Login: React.FC = () => {
                 
             />
             {formik.errors.name && formik.touched.name ? formik.errors.name : ''}
-    
+           
             <Button type={"submit"} color={"primary"}> Login </Button>
         </form>
     )
