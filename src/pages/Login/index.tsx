@@ -77,6 +77,7 @@ const Login: React.FC = () => {
                 })}
                 inputError={''}
                 {...formik.getFieldProps('password')}
+                
             />
             {formik.errors.password && formik.getFieldProps('password').value? formik.errors.password : ''}
     

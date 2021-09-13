@@ -43,7 +43,7 @@ function App() {
                     <Router>
                         <Switch>
                             <Route exact path="/"><Login/></Route>
-                            <Route path="/regisration"><Registration/></Route>
+                            <Route path="/registration"><Registration/></Route>
                         </Switch>
                         
                         {/*<Registration/>*/}

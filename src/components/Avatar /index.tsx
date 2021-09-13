@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 interface AvatarProps {
     size: string;
-    img: string;
+    img?: string;
     name: string;
 }
 

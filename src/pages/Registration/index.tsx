@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import Input from "../../components/Input";
 import style from "./Registration.module.scss";
 import classnames from 'classnames';
+import Avatar from '../../components/Avatar '
 import Button from "../../components/Button";
 import {AuthContext} from '../../App';
 
@@ -13,6 +14,8 @@ export interface UserCredentials {
     password: string;
     confirmPassword: string;
     email: string;
+    url: string;
+
 }
 
 const Registration: React.FC = () => {
@@ -27,7 +30,8 @@ const Registration: React.FC = () => {
         email: yup
             .string()
             .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please enter your email address")
-            .required(),
+            .required("Please enter your email address"),
+        
         password: yup
             .string()
             .required()
@@ -47,7 +51,8 @@ const Registration: React.FC = () => {
             password: '',
             confirmPassword: '',
             email: '',
-            
+            url: '',
+       
         },
         onSubmit: (values) => {
             const massage = `name: ${values.name};email: ${values.email}, password: ${values.password}`;
@@ -123,8 +128,23 @@ const Registration: React.FC = () => {
                 inputError={''}
                 {...formik.getFieldProps('confirmPassword')}
             />
-            {formik.errors.password && formik.getFieldProps('password').value? formik.errors.password : ''}
+            {formik.errors.confirmPassword && formik.getFieldProps('confirmPassword').value? formik.errors.confirmPassword : ''}
             
+            <Avatar img={""} name={"Alex"} size={"large"}/>
+            <Input
+                type={"text"}
+                id={"form-url-input"}
+                autoComplete={"off"}
+                setInputValue={val => formik.getFieldProps('url').onChange({
+                    target: {
+                        value: val,
+                        name: formik.getFieldProps('url').name
+                    },
+                })}
+                inputError={''}
+                size={"small"}
+                {...formik.getFieldProps('url')}
+            />
             <Button type={"submit"} color={"primary"}> Login </Button>
         </form>
     )
