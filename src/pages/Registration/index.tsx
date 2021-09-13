@@ -24,15 +24,20 @@ const Registration: React.FC = () => {
             .matches(/^([^0-9]*)$/, "Name should not contain numbers")
             .required()
             .min(2),
+        email: yup
+            .string()
+            .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please enter your email address")
+            .required(),
         password: yup
             .string()
             .required()
             .min(8)
             .max(30),
-        email: yup
-            .string()
-            .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please enter your email address")
+        confirmPassword: yup
+            .string().oneOf([yup.ref('password')], "Password mismatch" )
             .required()
+            .min(8)
+            .max(30),
     })
     
     const formikConfig: FormikConfig<UserCredentials> = {
@@ -45,7 +50,7 @@ const Registration: React.FC = () => {
             
         },
         onSubmit: (values) => {
-            const massage = `name: ${values.name}; password: ${values.password}`;
+            const massage = `name: ${values.name};email: ${values.email}, password: ${values.password}`;
             alert(massage);
         },
         validationSchema
