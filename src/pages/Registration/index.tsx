@@ -14,6 +14,7 @@ export interface UserCredentials {
     password: string;
     confirmPassword: string;
     email: string;
+    url?: string;
 }
 
 const Registration: React.FC = () => {
@@ -39,6 +40,9 @@ const Registration: React.FC = () => {
             .required()
             .min(8)
             .max(30),
+        url: yup
+            .string()
+            .notRequired()
     })
     
     const formikConfig: FormikConfig<UserCredentials> = {
@@ -54,6 +58,8 @@ const Registration: React.FC = () => {
             console.log(values);
             const massage = `name: ${values.name};email: ${values.email}, password: ${values.password}`;
             alert(massage);
+            setName(values.name);
+            setEmail(values.email);
         },
         validationSchema,
         
@@ -116,7 +122,7 @@ const Registration: React.FC = () => {
                 size={"small"}
                 {...formik.getFieldProps('url')}
             />
-    
+            {formik.errors.url && formik.touched.url ? formik.errors.url : ''}
     
             <Button type={"submit"} color={"primary"}> Login </Button>
         </form>

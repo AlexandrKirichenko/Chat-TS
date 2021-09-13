@@ -7,35 +7,37 @@ import Registration from './pages/Registration'
 import Button from './components/Button'
 // import {AuthContext} from './context/context'
 
-const INPUT_TEST_ERROR  = 'Error'
+
+const [loginFormValues, setLoginFormValues] = useState<UserLoginCredentials | null>(null)
+const [registrationFormValues, setRegistrationFormValues] = useState<UserCredentials | null>(null)
 
 export interface IAuthContext {
     name:string;
     setName(value: string): void;
     password:string;
     setPassword(value: string): void;
-    nameError: string;
-    setNameError(value: string): void;
-    nameWasChanged: boolean;
-    setNameWasChanged?(value: boolean): void;
-    passwordError: string;
-    setPasswordError(value: string): void;
-    passwordWasChanged?: boolean;
-    setPasswordWasChanged?(value: boolean): void;
+}
+export interface UserRegistrationCredentials {
+    name: string;
+    password: string;
+    confirmPassword: string;
+    email: string;
+}
+
+export interface UserLoginCredentials {
+    name: string;
+    password: string;
 }
 
 export const AuthContext = React.createContext<IAuthContext | null>(null);
 
+
 function App() {
-    // const [inputValue, setInputValue] = useState('');
+    
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [nameWasChanged, setNameWasChanged] =useState(false);
-    const [passwordWasChanged, setPasswordWasChanged] =useState(false);
-    const [nameError, setNameError] =useState('Email cant be empty');
-    const [passwordError, setPasswordError] =useState('Email cant be empty');
-    const AuthContextData = { name, setName,password, setPassword,nameWasChanged,setNameWasChanged,passwordWasChanged,
-        setPasswordWasChanged,nameError, setNameError, passwordError,setPasswordError};
+    
+    const AuthContextData = {registrationFormValues, setRegistrationFormValues}
     return (
         <>
             <AuthContext.Provider value={AuthContextData}>
@@ -46,25 +48,8 @@ function App() {
                             <Route path="/registration"><Registration/></Route>
                         </Switch>
                         
-                        {/*<Registration/>*/}
-                        {/*<Login/>*/}
-                        {/*<Button type={"submit"} color={"primary"}> Login </Button>*/}
                     </Router>
-                    {/*<Login />*/}
-                    {/*<Input*/}
-                    {/*    value={inputValue}*/}
-                    {/*    type={"email"}*/}
-                    {/*    id={"b34234"}*/}
-                    {/*    name={"Password"}*/}
-                    {/*    setInputValue={setInputValue}*/}
-                    {/*    errorMessage={INPUT_TEST_ERROR}*/}
-                    {/*    autoComplete={"off"}*/}
-                    {/*    errorcolor={'errorcolor'}*/}
-                    {/*/>*/}
                   
-                    {/*<Button color={"secondary"}> Registration </Button>*/}
-                    {/*<Avatar size={"large"} img={""} name={"Alex"}/>*/}
-                    {/*<Avatar size={"medium"} img={""} name={"Alex"}/>*/}
                 </Layout>
             </AuthContext.Provider >
         </>
