@@ -64,7 +64,7 @@ const Login: React.FC = () => {
                 })}
                 {...formik.getFieldProps('name')}
             />
-            {formik.errors.name && formik.getFieldProps('name').value ? formik.errors.name : ''}
+            {formik.errors.name && formik.touched.name ? formik.errors.name : ''}
             <Input
                 type={"password"}
                 id={"form-password-input"}
@@ -79,7 +79,7 @@ const Login: React.FC = () => {
                 {...formik.getFieldProps('password')}
                 
             />
-            {formik.errors.password && formik.getFieldProps('password').value? formik.errors.password : ''}
+            {formik.errors.name && formik.touched.name ? formik.errors.name : ''}
     
             <Button type={"submit"} color={"primary"}> Login </Button>
         </form>

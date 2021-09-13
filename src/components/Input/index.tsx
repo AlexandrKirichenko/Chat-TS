@@ -16,16 +16,14 @@ interface InputProps {
     errorcolor?: any;
     inputError: string;
     inputWasChanged?: boolean;
+    onBlur?: (value: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (value: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: React.FC<InputProps> = ({type="email",errorcolor,size="large",inputError,inputWasChanged="false", value, id, name, setInputValue, errorMessage,autoComplete="off"}) => {
-   
+const Input: React.FC<InputProps> = ({onChange,onBlur, type="email",errorcolor,size="large",inputError,inputWasChanged="false", value, id, name, setInputValue, errorMessage,autoComplete="off"}) => {
+    
     const [internalValue, setInternalValue] = useState<string>(value);
     
-    const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setInternalValue(value);
-    }
     
     // var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     // const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,9 +56,10 @@ const Input: React.FC<InputProps> = ({type="email",errorcolor,size="large",input
                 value={value}
                 name={name}
                 placeholder={`Enter your ${name.toLowerCase()}`}
-                onChange={handleChangeValue}
+                onChange={onChange}
                 autoComplete={autoComplete}
                 // onBlur={e => handleBlur}
+                onBlur={onBlur}
             />
             {(inputWasChanged && inputError) && <div style={{color: 'orangered'}} className={style.errorMessage}>{errorMessage}</div>}
         </div>

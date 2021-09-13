@@ -1,4 +1,7 @@
 import './Avatar.module.scss';
+import React from 'react'
+import Button from '../Button'
+import Input from '../Input'
 import style from './Avatar.module.scss';
 import classnames from 'classnames';
 
@@ -22,3 +25,4 @@ const Avatar: React.FC<AvatarProps> = ({img, name, size=""}) => {
 }
 
 export default Avatar;
+

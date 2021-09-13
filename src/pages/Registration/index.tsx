@@ -1,11 +1,11 @@
 import {FormikConfig, useFormik} from 'formik'
-import React, {useContext } from 'react'
+import React, {useContext} from 'react'
 import "./Registration.module.scss";
 import * as yup from 'yup';
+import Avatar from '../../components/Avatar '
 import Input from "../../components/Input";
 import style from "./Registration.module.scss";
 import classnames from 'classnames';
-import Avatar from '../../components/Avatar '
 import Button from "../../components/Button";
 import {AuthContext} from '../../App';
 
@@ -14,8 +14,6 @@ export interface UserCredentials {
     password: string;
     confirmPassword: string;
     email: string;
-    url: string;
-
 }
 
 const Registration: React.FC = () => {
@@ -30,15 +28,14 @@ const Registration: React.FC = () => {
         email: yup
             .string()
             .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please enter your email address")
-            .required("Please enter your email address"),
-        
+            .required(),
         password: yup
             .string()
             .required()
             .min(8)
             .max(30),
         confirmPassword: yup
-            .string().oneOf([yup.ref('password')], "Password mismatch" )
+            .string().oneOf([yup.ref('password')], "Password mismatch")
             .required()
             .min(8)
             .max(30),
@@ -51,14 +48,15 @@ const Registration: React.FC = () => {
             password: '',
             confirmPassword: '',
             email: '',
-            url: '',
-       
+            
         },
         onSubmit: (values) => {
+            console.log(values);
             const massage = `name: ${values.name};email: ${values.email}, password: ${values.password}`;
             alert(massage);
         },
-        validationSchema
+        validationSchema,
+        
     };
     const formik = useFormik<UserCredentials>(formikConfig);
     
@@ -76,75 +74,50 @@ const Registration: React.FC = () => {
                 autoComplete={"off"}
                 inputError={''}
                 
-                setInputValue={val => formik.getFieldProps('name').onChange({
-                    target: {
-                        value: val,
-                        name: formik.getFieldProps('name').name
-                    },
-                })}
                 {...formik.getFieldProps('name')}
             />
-            {formik.errors.name && formik.getFieldProps('name').value ? formik.errors.name : ''}
-    
+            {formik.errors.name && formik.touched.name ? formik.errors.name : ''}
+            
             <Input
                 type={"text"}
                 id={"form-email-input"}
                 autoComplete={"off"}
                 inputError={''}
-                setInputValue={val => formik.getFieldProps('email').onChange({
-                    target: {
-                        value: val,
-                        name: formik.getFieldProps('email').name
-                    },
-                })}
+                
                 {...formik.getFieldProps('email')}
             />
-            {formik.errors.email && formik.getFieldProps('email').value ? formik.errors.email : ''}
+            {formik.errors.email && formik.touched.email ? formik.errors.email : ''}
             <Input
                 type={"password"}
                 id={"form-password-input"}
                 autoComplete={"off"}
-                setInputValue={val => formik.getFieldProps('password').onChange({
-                    target: {
-                        value: val,
-                        name: formik.getFieldProps('password').name
-                    },
-                })}
                 inputError={''}
                 {...formik.getFieldProps('password')}
             />
-            {formik.errors.password && formik.getFieldProps('password').value? formik.errors.password : ''}
-    
+            {formik.errors.password && formik.touched.password ? formik.errors.password : ''}
+            
             <Input
                 type={"password"}
                 id={"form-confirmPassword-input"}
                 autoComplete={"off"}
-                setInputValue={val => formik.getFieldProps('confirmPassword').onChange({
-                    target: {
-                        value: val,
-                        name: formik.getFieldProps('confirmPassword').name
-                    },
-                })}
+                
                 inputError={''}
                 {...formik.getFieldProps('confirmPassword')}
             />
-            {formik.errors.confirmPassword && formik.getFieldProps('confirmPassword').value? formik.errors.confirmPassword : ''}
-            
+            {formik.errors.confirmPassword && formik.touched.confirmPassword ? formik.errors.confirmPassword : ''}
+    
             <Avatar img={""} name={"Alex"} size={"large"}/>
             <Input
                 type={"text"}
                 id={"form-url-input"}
                 autoComplete={"off"}
-                setInputValue={val => formik.getFieldProps('url').onChange({
-                    target: {
-                        value: val,
-                        name: formik.getFieldProps('url').name
-                    },
-                })}
+          
                 inputError={''}
                 size={"small"}
                 {...formik.getFieldProps('url')}
             />
+    
+    
             <Button type={"submit"} color={"primary"}> Login </Button>
         </form>
     )
