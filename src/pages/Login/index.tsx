@@ -52,11 +52,11 @@ const Login: React.FC = () => {
             <form noValidate onSubmit={formik.handleSubmit}>
                 <Input
                     type={"text"}
-                    id={"form-name-input"}
+                    id={"form-login-input"}
                     autoComplete={"off"}
                     inputError = {formik.errors.name}
                     touched = {formik.touched.name}
-                    {...formik.getFieldProps('name')}
+                    {...formik.getFieldProps('login')}
                 />
         
                 <Input
