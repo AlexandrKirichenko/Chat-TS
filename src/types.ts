@@ -30,7 +30,7 @@ export interface InputProps {
 
 
 export interface AvatarProps {
-    sizeAvatar: string;
+    sizeAvatar?: string;
     url?: string;
-    name: string;
+    nameAvatar: string;
 }

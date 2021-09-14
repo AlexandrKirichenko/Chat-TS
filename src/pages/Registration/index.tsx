@@ -104,8 +104,22 @@ const Registration: React.FC = () => {
                 {...formik.getFieldProps('confirmPassword')}
             />
             <AvatarInput
-                img={""}
-                name={"Alex"} sizeAvatar={"large"}
+                url={""}
+                nameAvatar={"Alex"}
+                sizeAvatar={"large"}
+                inputProps={
+                    type={"text"}
+                    id={"form-url-input"}
+                    autoComplete={"off"}
+                    inputError = {formik.errors.url}
+                    touched = {formik.touched.url}
+                    size={"small"}
+                    url={formik.getFieldProps('url').value}
+                    
+                }
+                
+                
+                
                 type={"text"}
                 id={"form-url-input"}
                 autoComplete={"off"}

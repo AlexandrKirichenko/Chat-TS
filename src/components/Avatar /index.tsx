@@ -6,13 +6,13 @@ import style from './Avatar.module.scss';
 import classnames from 'classnames';
 import {AvatarProps} from "../../types";
 
-const Avatar: React.FC<AvatarProps> = ({url, name, sizeAvatar=""}) => {
+const Avatar: React.FC<AvatarProps> = ({url, nameAvatar, sizeAvatar=""}) => {
     return(
         <div className={style.wrap}>
             {url && <img className={classnames(style.avatar, style[sizeAvatar])} alt="avatar" src={url}/>}
-            {url === "" && name !== "" && (
+            {url === "" && nameAvatar !== "" && (
                 <div className={classnames(style.avatar, style.text, style[sizeAvatar])}>
-                    {name.substring(0,2)}
+                    {nameAvatar.substring(0,2)}
                 </div>
             )}
         </div>
