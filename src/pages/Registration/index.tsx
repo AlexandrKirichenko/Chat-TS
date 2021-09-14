@@ -12,7 +12,6 @@ import {RegistrationUserCredentials} from "../../types";
 import Button from "../../components/Button";
 
 
-
 const Registration: React.FC = () => {
     const context = useContext(AuthContext);
     
@@ -24,7 +23,7 @@ const Registration: React.FC = () => {
             .min(2),
         email: yup
             .string()
-            .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please enter your email address")
+            .email()
             .required(),
         password: yup
             .string()
@@ -39,7 +38,7 @@ const Registration: React.FC = () => {
         url: yup
             .string()
             .notRequired()
-            .matches(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/, "Please enter correct url")
+            .url('Please enter correct url')
     })
     
     const formikConfig: FormikConfig<RegistrationUserCredentials> = {
@@ -49,7 +48,7 @@ const Registration: React.FC = () => {
             password: '',
             confirmPassword: '',
             email: '',
-            url:''
+            url: ''
         },
         onSubmit: (values) => {
             console.log(values);
@@ -66,32 +65,32 @@ const Registration: React.FC = () => {
         return null;
     }
     const {setRegistrationFormValues} = context;
-   
+  
     return (
         <form noValidate onSubmit={formik.handleSubmit}>
             <Input
                 type={"text"}
                 id={"form-name-input"}
                 autoComplete={"off"}
-                inputError = {formik.errors.name}
-                touched = {formik.touched.name}
+                inputError={formik.errors.name}
+                touched={formik.touched.name}
                 {...formik.getFieldProps('name')}
             />
-           
+            
             <Input
                 type={"text"}
                 id={"form-email-input"}
                 autoComplete={"off"}
-                inputError = {formik.errors.email}
-                touched = {formik.touched.email}
+                inputError={formik.errors.email}
+                touched={formik.touched.email}
                 {...formik.getFieldProps('email')}
             />
             <Input
                 type={"password"}
                 id={"form-password-input"}
                 autoComplete={"off"}
-                inputError = {formik.errors.password}
-                touched = {formik.touched.password}
+                inputError={formik.errors.password}
+                touched={formik.touched.password}
                 {...formik.getFieldProps('password')}
             />
             
@@ -99,46 +98,26 @@ const Registration: React.FC = () => {
                 type={"password"}
                 id={"form-confirmPassword-input"}
                 autoComplete={"off"}
-                inputError = {formik.errors.confirmPassword}
-                touched = {formik.touched.confirmPassword}
+                inputError={formik.errors.confirmPassword}
+                touched={formik.touched.confirmPassword}
                 {...formik.getFieldProps('confirmPassword')}
             />
             <AvatarInput
-                url={""}
-                nameAvatar={"Alex"}
-                sizeAvatar={"large"}
-                inputProps={
-                    type={"text"}
-                    id={"form-url-input"}
-                    autoComplete={"off"}
-                    inputError = {formik.errors.url}
-                    touched = {formik.touched.url}
-                    size={"small"}
-                    url={formik.getFieldProps('url').value}
-                    
-                }
-                
-                
-                
-                type={"text"}
-                id={"form-url-input"}
-                autoComplete={"off"}
-                inputError = {formik.errors.url}
-                touched = {formik.touched.url}
-                size={"small"}
-                url={formik.getFieldProps('url').value}
+                inputProps={{
+                    type: "text",
+                    id: "form-url-input",
+                    autoComplete: 'off',
+                    inputError: formik.errors.url,
+                    touched: formik.touched.url,
+                    size: 'small',
+                    ...formik.getFieldProps('url')
+                }}
+                avatarProps={{
+                    url: formik.getFieldProps('url').value,
+                    nameAvatar: formik.getFieldProps('name').value,
+                    sizeAvatar: "large"
+                }}
             />
-            {/*<Avatar url={""} name={"Alex"} size={"large"}/>*/}
-            {/*<Input*/}
-            {/*    type={"text"}*/}
-            {/*    id={"form-url-input"}*/}
-            {/*    autoComplete={"off"}*/}
-            {/*    inputError = {formik.errors.url}*/}
-            {/*    touched = {formik.touched.url}*/}
-            {/*    size={"small"}*/}
-            {/*    {...formik.getFieldProps('url')}*/}
-            {/*/>*/}
-            
             <Button type={"submit"} color={"primary"} disabled={!(formik.isValid && formik.dirty)}> Register </Button>
         </form>
     )

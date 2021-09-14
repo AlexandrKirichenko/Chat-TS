@@ -1,55 +1,25 @@
 import React from 'react'
 import Avatar from '../../components/Avatar '
 import Input from '../../components/Input'
-import {InputProps} from '../../types'
+import {AvatarProps, InputProps} from '../../types'
 import style from "./AvatarInput.module.scss";
 
 interface AvatarInputProps {
-    sizeAvatar?: string;
-    url?: string;
-    nameAvatar: string;
-    // inputProps: InputProps;
-    type: "email" | "text" | "password";
-    value: string;
-    id: string;
-    name: string;
-    size?: "small" | "large";
-    setInputValue?: (value: string) => void;
-    autoComplete: "on" | "off";
-    inputError: string | undefined;
-    touched?: boolean;
-    onBlur?: (value: React.ChangeEvent<HTMLInputElement>) => void;
-    onChange?: (value: React.ChangeEvent<HTMLInputElement>) => void;
+    inputProps: InputProps;
+    avatarProps: AvatarProps;
+    
     
 }
 
 const AvatarInput: React.FC<AvatarInputProps> = ({
-                                                     // inputProps
-                                                     nameAvatar,
-                                                     sizeAvatar = '',
-                                                     touched,
-                                                     type = 'email',
-                                                     size = 'large',
-                                                     inputError,
-                                                     id,
-                                                     name,
-                                                     autoComplete = 'off',
-                                                     url = ''
+                                                     avatarProps, inputProps
                                                  }) => {
     return (
         <>
-            <Avatar url={url} nameAvatar={nameAvatar} sizeAvatar={sizeAvatar}/>
-            <Input
-                type={type}
-                id={id}
-                autoComplete={autoComplete}
-                inputError={inputError}
-                touched={touched}
-                size={size}
-                url={url}
-            />
+            <Avatar {...avatarProps}/>
+            <Input {...inputProps} />
         </>
-)
+    )
 }
-    
-    export default AvatarInput
+
+export default AvatarInput
