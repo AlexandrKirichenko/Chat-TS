@@ -4,29 +4,39 @@ import './App.css'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import Registration from './pages/Registration'
-import Button from './components/Button'
-// import {AuthContext} from './context/context'
-
-const INPUT_TEST_ERROR  = 'Error'
+import {LoginUserCredentials, RegistrationUserCredentials} from "./types";
 
 export interface IAuthContext {
-    name:string;
-    setName(value: string): void;
-    password:string;
-    setPassword(value: string): void;
-    
+    loginFormValues:LoginUserCredentials| null,
+    setLoginFormValues: (values: LoginUserCredentials)=> void | null;
+    registrationFormValues: RegistrationUserCredentials | null,
+    setRegistrationFormValues: (values: RegistrationUserCredentials)=> void | null;
 }
 
 export const AuthContext = React.createContext<IAuthContext | null>(null);
 
 function App() {
-    // const [inputValue, setInputValue] = useState('');
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
-
-    const AuthContextData = { name, setName,password, setPassword};
+    
+    const [loginFormValues, setLoginFormValues] = useState<LoginUserCredentials | null>(null)
+    const [registrationFormValues, setRegistrationFormValues] = useState<RegistrationUserCredentials | null>(null)
+    
+    const AuthContextData = {loginFormValues, setLoginFormValues, registrationFormValues, setRegistrationFormValues}
+    
     return (
         <>
+            <div>
+                <div>
+                    Vlues from context:
+                </div>
+                <div>
+                    loginFormValues: {JSON.stringify(loginFormValues)}
+                </div>
+                <div>
+                    registrationFormValues: {JSON.stringify(registrationFormValues)}
+                </div>
+                <br/>
+                <br/>
+            </div>
             <AuthContext.Provider value={AuthContextData}>
                 <Layout>
                     <Router>
@@ -34,9 +44,7 @@ function App() {
                             <Route exact path="/"><Login/></Route>
                             <Route path="/registration"><Registration/></Route>
                         </Switch>
-                        
                     </Router>
-                  
                 </Layout>
             </AuthContext.Provider >
         </>

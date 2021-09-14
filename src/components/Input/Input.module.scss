@@ -11,7 +11,7 @@
     box-shadow: $box-shadow;
     font-size: 18px;
     outline: none;
-    &.errorcolor {
+    &.borderError {
       border: 1px solid $color-error;
     }
     &.small {
@@ -39,7 +39,6 @@
   font-size: 14px;
   margin-top: 10px;
 }
-
 
 
 

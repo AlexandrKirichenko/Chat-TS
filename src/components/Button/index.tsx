@@ -6,12 +6,14 @@ import classnames from 'classnames';
 interface ButtonProps {
     color?: string;
     type: 'button' | 'submit';
+    disabled?:boolean;
 }
 
-const Button:React.FC<ButtonProps> = ({color="primary", children,type="submit"}) => {
+const Button:React.FC<ButtonProps> = ({color="primary", children,disabled,type="submit"}) => {
     return (
-            <button type={type} className={classnames(style.button, style[color])}>{children}</button>
+            <button disabled={disabled}  type={type} className={classnames(style.button, style[color], disabled ? style.disableButton : null)}>{children}</button>
     )
 }
 
 export default Button;
+// disabled === true

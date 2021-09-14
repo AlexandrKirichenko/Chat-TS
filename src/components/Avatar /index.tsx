@@ -4,19 +4,14 @@ import Button from '../Button'
 import Input from '../Input'
 import style from './Avatar.module.scss';
 import classnames from 'classnames';
+import {AvatarProps} from "../../types";
 
-interface AvatarProps {
-    size: string;
-    img?: string;
-    name: string;
-}
-
-const Avatar: React.FC<AvatarProps> = ({img, name, size=""}) => {
+const Avatar: React.FC<AvatarProps> = ({url, name, sizeAvatar=""}) => {
     return(
         <div className={style.wrap}>
-            {img && <img className={classnames(style.avatar, style[size])} alt="avatar" src={img}/>}
-            {img === "" && name !== "" && (
-                <div className={classnames(style.avatar, style.text, style[size])}>
+            {url && <img className={classnames(style.avatar, style[sizeAvatar])} alt="avatar" src={url}/>}
+            {url === "" && name !== "" && (
+                <div className={classnames(style.avatar, style.text, style[sizeAvatar])}>
                     {name.substring(0,2)}
                 </div>
             )}

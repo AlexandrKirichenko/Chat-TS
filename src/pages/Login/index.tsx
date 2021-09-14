@@ -1,14 +1,13 @@
 import {FormikConfig, useFormik} from 'formik'
 import React, {useContext } from 'react'
+import {Link} from 'react-router-dom'
 import "./Login.module.scss";
 import * as yup from 'yup';
 import Input from "../../components/Input";
-import style from "./Registration.module.scss";
+import style from "./Login.module.scss";
 import classnames from 'classnames';
 import Button from "../../components/Button";
 import {AuthContext} from '../../App';
-
-const INPUT_TEST_ERROR  = 'Error'
 
 export interface UserCredentials {
     name: string;
@@ -23,11 +22,9 @@ const Login: React.FC = () => {
             .string()
             .matches(/^([^0-9]*)$/, "Name should not contain numbers")
             .required(),
-        password: yup
-            .string()
-            .required()
-            .min(8)
-            .max(30),
+        // password: yup
+        //     .string()
+        //     .required()
     });
     const formikConfig: FormikConfig<UserCredentials> = {
         enableReinitialize: false,
@@ -36,53 +33,47 @@ const Login: React.FC = () => {
             password: '',
         },
         onSubmit: (values) => {
-            const massage = `name: ${values.name}; password: ${values.password}`;
-            alert(massage);
+            const message = JSON.stringify(values, null, 2);
+            alert(message);
+            setLoginFormValues(values);
         },
         validationSchema
     };
     const formik = useFormik<UserCredentials>(formikConfig);
- 
     
     if (context === null) {
         return null;
     }
-    const {name, setName, password, setPassword} = context;
+    const {setLoginFormValues} = context;
 
     return (
-        <form noValidate onSubmit={formik.handleSubmit}>
-            <Input
-                type={"text"}
-                id={"form-name-input"}
-                autoComplete={"off"}
-                inputError={''}
-                setInputValue={val => formik.getFieldProps('name').onChange({
-                    target: {
-                        value: val,
-                        name: formik.getFieldProps('name').name
-                    },
-                })}
-                {...formik.getFieldProps('name')}
-            />
-            {formik.errors.name && formik.touched.name ? formik.errors.name : ''}
-            <Input
-                type={"password"}
-                id={"form-password-input"}
-                autoComplete={"off"}
-                setInputValue={val => formik.getFieldProps('password').onChange({
-                    target: {
-                        value: val,
-                        name: formik.getFieldProps('password').name
-                    },
-                })}
-                inputError={''}
-                {...formik.getFieldProps('password')}
-                
-            />
-            {formik.errors.name && formik.touched.name ? formik.errors.name : ''}
-           
-            <Button type={"submit"} color={"primary"}> Login </Button>
-        </form>
+        <>
+            <h2 className={style.header}>Welcome</h2>
+            <form noValidate onSubmit={formik.handleSubmit}>
+                <Input
+                    type={"text"}
+                    id={"form-name-input"}
+                    autoComplete={"off"}
+                    inputError = {formik.errors.name}
+                    touched = {formik.touched.name}
+                    {...formik.getFieldProps('name')}
+                />
+        
+                <Input
+                    type={"password"}
+                    id={"form-password-input"}
+                    autoComplete={"off"}
+                    inputError = {formik.errors.password}
+                    touched = {formik.touched.password}
+                    {...formik.getFieldProps('password')}
+                />
+                <div className={style.buttonsWrapper}>
+                    <Link to="/registration"><a className={style.a}>Registration</a></Link>
+                    <Button type={"submit"} color={"primary"} disabled={!(formik.isValid && formik.dirty)}> Login </Button>
+                </div>
+            </form>
+        </>
+       
     )
 }
 
