@@ -11,13 +11,9 @@ const Avatar: React.FC<AvatarProps> = ({url, nameAvatar, sizeAvatar=""}) => {
         <div className={style.wrap}>
             {url && <img className={classnames(style.avatar, style[sizeAvatar])} alt="avatar" src={url}/>}
             {(url === "" && nameAvatar !== "") ? (
-                <div className={classnames(style.avatar, style.text, style[sizeAvatar])}>
-                    {nameAvatar.substring(0,1)}
-                </div>
+                <div className={classnames(style.avatar, style.text, style[sizeAvatar])}>{nameAvatar.substring(0,1)}</div>
             ) :
-                (<div className={classnames(style.avatar, style.text, style[sizeAvatar])}>
-                    A
-                </div>)
+                (url) ? null: (<div className={classnames(style.avatar, style.text, style[sizeAvatar])}>A</div>)
             }
         </div>
     )

@@ -67,59 +67,61 @@ const Registration: React.FC = () => {
     const {setRegistrationFormValues} = context;
   
     return (
-        <form noValidate onSubmit={formik.handleSubmit}>
-            <Input
-                type={"text"}
-                id={"form-login-input"}
-                autoComplete={"off"}
-                inputError={formik.errors.name}
-                touched={formik.touched.name}
-                {...formik.getFieldProps('login')}
-            />
-            
-            <Input
-                type={"text"}
-                id={"form-email-input"}
-                autoComplete={"off"}
-                inputError={formik.errors.email}
-                touched={formik.touched.email}
-                {...formik.getFieldProps('email')}
-            />
-            <Input
-                type={"password"}
-                id={"form-password-input"}
-                autoComplete={"off"}
-                inputError={formik.errors.password}
-                touched={formik.touched.password}
-                {...formik.getFieldProps('password')}
-            />
-            
-            <Input
-                type={"password"}
-                id={"form-confirmPassword-input"}
-                autoComplete={"off"}
-                inputError={formik.errors.confirmPassword}
-                touched={formik.touched.confirmPassword}
-                {...formik.getFieldProps('confirmPassword')}
-            />
-            <AvatarInput
-                inputProps={{
-                    type: "text",
-                    id: "form-url-input",
-                    autoComplete: 'off',
-                    inputError: formik.errors.url,
-                    touched: formik.touched.url,
-                    size: 'small',
-                    ...formik.getFieldProps('url')
-                }}
-                avatarProps={{
-                    url: formik.getFieldProps('url').value,
-                    nameAvatar: formik.getFieldProps('name').value,
-                    sizeAvatar: "large"
-                }}
-            />
-            <Button type={"submit"} color={"primary"} disabled={!(formik.isValid && formik.dirty)}> Register </Button>
-        </form>
+        <div className="wrapForm">
+            <form noValidate onSubmit={formik.handleSubmit}>
+                <Input
+                    type={"text"}
+                    id={"form-login-input"}
+                    autoComplete={"off"}
+                    inputError={formik.errors.name}
+                    touched={formik.touched.name}
+                    {...formik.getFieldProps('login')}
+                />
+                <Input
+                    type={"text"}
+                    id={"form-email-input"}
+                    autoComplete={"off"}
+                    inputError={formik.errors.email}
+                    touched={formik.touched.email}
+                    {...formik.getFieldProps('email')}
+                />
+                <Input
+                    type={"password"}
+                    id={"form-password-input"}
+                    autoComplete={"off"}
+                    inputError={formik.errors.password}
+                    touched={formik.touched.password}
+                    {...formik.getFieldProps('password')}
+                />
+        
+                <Input
+                    type={"password"}
+                    id={"form-confirmPassword-input"}
+                    autoComplete={"off"}
+                    inputError={formik.errors.confirmPassword}
+                    touched={formik.touched.confirmPassword}
+                    {...formik.getFieldProps('confirmPassword')}
+                />
+                <AvatarInput
+                    inputProps={{
+                        type: "text",
+                        id: "form-url-input",
+                        autoComplete: 'off',
+                        inputError: formik.errors.url,
+                        touched: formik.touched.url,
+                        size: 'small',
+                        ...formik.getFieldProps('url')
+                    }}
+                    avatarProps={{
+                        url: formik.getFieldProps('url').value,
+                        nameAvatar: formik.getFieldProps('name').value,
+                        sizeAvatar: "large"
+                    }}
+                />
+                <Button type={"submit"} color={"primary"} size={'small'} disabled={!(formik.isValid && formik.dirty)}> Register </Button>
+            </form>
+        </div>
+        
     )
 }
 

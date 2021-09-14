@@ -1,19 +1,20 @@
-import React from "react";
-import "./Button.module.scss";
-import style from "./Button.module.scss";
-import classnames from 'classnames';
+import classnames from 'classnames'
+import React from 'react'
+import style from './Button.module.scss'
+import './Button.module.scss'
 
 interface ButtonProps {
     color?: string;
     type: 'button' | 'submit';
-    disabled?:boolean;
+    disabled?: boolean;
+    size?: 'small' | 'large';
 }
 
-const Button:React.FC<ButtonProps> = ({color="primary", children,disabled,type="submit"}) => {
+const Button: React.FC<ButtonProps> = ({color = 'primary', children, size="small", disabled, type = 'submit'}) => {
     return (
-            <button disabled={disabled}  type={type} className={classnames(style.button, style[color], disabled ? style.disableButton : null)}>{children}</button>
+        <button disabled={disabled} type={type}
+                className={classnames(style.button, style[color], style.size, disabled ? style.disableButton : null)}>{children}</button>
     )
 }
 
 export default Button;
-// disabled === true

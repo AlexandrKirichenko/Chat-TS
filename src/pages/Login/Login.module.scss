@@ -1,17 +1,25 @@
 @import "../../constants";
 
-.container {
+.wrap {
   max-width: 1440px;
-  margin: 0 auto;
+
   background: $color-background;
   font-family: $font-family-main;
   font-weight: 400;
-  &.buttonsWrapper {
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-  }
+  min-height: 100vh;
 }
+
+.wrapperLogin {
+  max-width: 553px;
+  margin: 0 auto;
+}
+
+.buttonsWrapper {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+}
+
 .a{
   color: $color-input-border;
   font-family: $font-family-main;
@@ -32,7 +40,7 @@
   font-style: normal;
   text-decoration: none;
   text-align: center;
-  padding-top: 76px;
+  padding-top: 126px;
 }
 
 .registration {

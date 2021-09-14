@@ -22,9 +22,6 @@ const Login: React.FC = () => {
             .string()
             .matches(/^([^0-9]*)$/, "Name should not contain numbers")
             .required(),
-        // password: yup
-        //     .string()
-        //     .required()
     });
     const formikConfig: FormikConfig<UserCredentials> = {
         enableReinitialize: false,
@@ -48,30 +45,37 @@ const Login: React.FC = () => {
 
     return (
         <>
-            <h2 className={style.header}>Welcome</h2>
-            <form noValidate onSubmit={formik.handleSubmit}>
-                <Input
-                    type={"text"}
-                    id={"form-login-input"}
-                    autoComplete={"off"}
-                    inputError = {formik.errors.name}
-                    touched = {formik.touched.name}
-                    {...formik.getFieldProps('login')}
-                />
+            <div className = {style.wrap}>
+                <div className={style.wrapperLogin}>
+                    <div className={style.header}>Welcome</div>
+                    <form noValidate onSubmit={formik.handleSubmit}>
+                        <Input
+                            type={"text"}
+                            id={"form-name-input"}
+                            autoComplete={"off"}
+                            inputError = {formik.errors.name}
+                            touched = {formik.touched.name}
+                            {...formik.getFieldProps('name')}
+                        />
         
-                <Input
-                    type={"password"}
-                    id={"form-password-input"}
-                    autoComplete={"off"}
-                    inputError = {formik.errors.password}
-                    touched = {formik.touched.password}
-                    {...formik.getFieldProps('password')}
-                />
-                <div className={style.buttonsWrapper}>
-                    <Link to="/registration"><a className={style.a}>Registration</a></Link>
-                    <Button type={"submit"} color={"primary"} disabled={!(formik.isValid && formik.dirty)}> Login </Button>
+                        <Input
+                            type={"password"}
+                            id={"form-password-input"}
+                            autoComplete={"off"}
+                            inputError = {formik.errors.password}
+                            touched = {formik.touched.password}
+                            {...formik.getFieldProps('password')}
+                        />
+                        <div className={style.buttonsWrapper}>
+                            <Link to="/registration"><a className={style.a}>Registration</a></Link>
+                            <Button type={"submit"} color={"primary"} size={'small'} disabled={!(formik.isValid && formik.dirty)}> Login </Button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+                
+            </div>
+            
+           
         </>
        
     )

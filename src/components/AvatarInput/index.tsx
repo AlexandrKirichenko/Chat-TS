@@ -15,10 +15,10 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
                                                      avatarProps, inputProps
                                                  }) => {
     return (
-        <>
+        <div className={style.wrap}>
             <Avatar {...avatarProps}/>
             <Input {...inputProps} />
-        </>
+        </div>
     )
 }
 
