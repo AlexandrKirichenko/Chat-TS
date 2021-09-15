@@ -1,15 +1,15 @@
 import React from 'react'
 
 export interface RegistrationUserCredentials {
-    name: string;
+    login: string;
     password: string;
-    confirmPassword: string;
+    repeatPassword: string;
     email: string;
     url?: string;
 }
 
 export interface LoginUserCredentials {
-    name: string;
+    login: string;
     password: string;
 }
 

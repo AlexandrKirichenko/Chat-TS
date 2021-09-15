@@ -10,7 +10,7 @@ import Button from "../../components/Button";
 import {AuthContext} from '../../App';
 
 export interface UserCredentials {
-    name: string;
+    login: string;
     password: string;
 }
 
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     const context = useContext(AuthContext);
     
     const validationSchema = yup.object({
-        name: yup
+        login: yup
             .string()
             .matches(/^([^0-9]*)$/, "Name should not contain numbers")
             .required(),
@@ -26,7 +26,7 @@ const Login: React.FC = () => {
     const formikConfig: FormikConfig<UserCredentials> = {
         enableReinitialize: false,
         initialValues: {
-            name: '',
+            login: '',
             password: '',
         },
         onSubmit: (values) => {
@@ -51,11 +51,11 @@ const Login: React.FC = () => {
                     <form noValidate onSubmit={formik.handleSubmit}>
                         <Input
                             type={"text"}
-                            id={"form-name-input"}
+                            id={"form-login-input"}
                             autoComplete={"off"}
-                            inputError = {formik.errors.name}
-                            touched = {formik.touched.name}
-                            {...formik.getFieldProps('name')}
+                            inputError = {formik.errors.login}
+                            touched = {formik.touched.login}
+                            {...formik.getFieldProps('login')}
                         />
         
                         <Input

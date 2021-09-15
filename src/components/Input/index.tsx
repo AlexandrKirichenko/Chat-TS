@@ -9,7 +9,6 @@ const Input: React.FC<InputProps> = ({
                                          onChange,
                                          onBlur,
                                          type = 'email',
-                                         size = 'large',
                                          inputError,
                                          value,
                                          id,
@@ -24,7 +23,7 @@ const Input: React.FC<InputProps> = ({
             <input
                 type={type}
                 id={id}
-                className={classnames(style.input, style[size], (inputError && touched) ? style.borderError:null)}
+                className={classnames(style.input, (inputError && touched) ? style.borderError:null)}
                 value={value}
                 name={name}
                 placeholder={`Enter your ${name.toLowerCase()}`}

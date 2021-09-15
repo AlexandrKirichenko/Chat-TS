@@ -10,12 +10,12 @@
     border: 1px solid $color-input-border;
     box-shadow: $box-shadow;
     font-size: 18px;
+    color: $color-text;
+   
     outline: none;
+    width: 100%;
     &.borderError {
       border: 1px solid $color-error;
-    }
-    &.small {
-      max-width:408px;
     }
     &.large {
       width: 100%;

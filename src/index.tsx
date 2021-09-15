@@ -12,3 +12,25 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
+
+
+
+
+
+
+
+
+// {
+//     name: "graphql Schema",
+//         "schemaPath": "schema.json",
+//     "extensions": {
+//     "Default graphql endpoint": {
+//         "url": REACT_APP_MY_COOL_LINK,
+//             "headers": {
+//             "user-agent": "JS graphql"
+//         },
+//         "introspect": true
+//     }
+// }
+// }
+// }

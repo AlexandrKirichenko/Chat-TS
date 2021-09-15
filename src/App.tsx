@@ -5,6 +5,41 @@ import Layout from './components/Layout'
 import Login from './pages/Login'
 import Registration from './pages/Registration'
 import {LoginUserCredentials, RegistrationUserCredentials} from "./types";
+import {
+    ApolloClient,
+    InMemoryCache,
+    ApolloProvider,
+    useQuery,
+    gql
+} from "@apollo/client";
+
+const serchChekinME = gql`
+    query {
+        me {
+            user {
+                id
+                email
+            }
+        }
+    }
+`;
+
+
+function ExchangeRates() {
+    const { loading, error, data } = useQuery(serchChekinME);
+    
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
+    
+    return data.rates.map(({ currency, rate } : {currency : any, rate : any}) => (
+        <div key={currency}>
+            <p>
+                {currency}: {rate}
+            </p>
+        </div>
+    ));
+}
+
 
 export interface IAuthContext {
     loginFormValues:LoginUserCredentials| null,
@@ -22,27 +57,17 @@ function App() {
     
     const AuthContextData = {loginFormValues, setLoginFormValues, registrationFormValues, setRegistrationFormValues}
     
+    
+    
     return (
         <>
-            <div>
-                <div>
-                    Vlues from context:
-                </div>
-                <div>
-                    loginFormValues: {JSON.stringify(loginFormValues)}
-                </div>
-                <div>
-                    registrationFormValues: {JSON.stringify(registrationFormValues)}
-                </div>
-                <br/>
-                <br/>
-            </div>
             <AuthContext.Provider value={AuthContextData}>
                 <Layout>
                     <Router>
                         <Switch>
                             <Route exact path="/"><Login/></Route>
                             <Route path="/registration"><Registration/></Route>
+                            <Route path="/chatBlock"><div>chat</div></Route>
                         </Switch>
                     </Router>
                 </Layout>
@@ -52,3 +77,30 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// <div>
+//     <div>
+//         Vlues from context:
+//     </div>
+//     <div>
+//         loginFormValues: {JSON.stringify(loginFormValues)}
+//     </div>
+//     <div>
+//         registrationFormValues: {JSON.stringify(registrationFormValues)}
+//     </div>
+//     <br/>
+//     <br/>
+// </div>

@@ -16,7 +16,7 @@ const Registration: React.FC = () => {
     const context = useContext(AuthContext);
     
     const validationSchema = yup.object({
-        name: yup
+        login: yup
             .string()
             .matches(/^([^0-9]*)$/, "Name should not contain numbers")
             .required()
@@ -30,7 +30,7 @@ const Registration: React.FC = () => {
             .required()
             .min(8)
             .max(30),
-        confirmPassword: yup
+        repeatPassword: yup
             .string().oneOf([yup.ref('password')], "Password mismatch")
             .required()
             .min(8)
@@ -44,9 +44,9 @@ const Registration: React.FC = () => {
     const formikConfig: FormikConfig<RegistrationUserCredentials> = {
         enableReinitialize: false,
         initialValues: {
-            name: '',
+            login: '',
             password: '',
-            confirmPassword: '',
+            repeatPassword: '',
             email: '',
             url: ''
         },
@@ -67,61 +67,65 @@ const Registration: React.FC = () => {
     const {setRegistrationFormValues} = context;
   
     return (
-        <div className="wrapForm">
-            <form noValidate onSubmit={formik.handleSubmit}>
-                <Input
-                    type={"text"}
-                    id={"form-login-input"}
-                    autoComplete={"off"}
-                    inputError={formik.errors.name}
-                    touched={formik.touched.name}
-                    {...formik.getFieldProps('login')}
-                />
-                <Input
-                    type={"text"}
-                    id={"form-email-input"}
-                    autoComplete={"off"}
-                    inputError={formik.errors.email}
-                    touched={formik.touched.email}
-                    {...formik.getFieldProps('email')}
-                />
-                <Input
-                    type={"password"}
-                    id={"form-password-input"}
-                    autoComplete={"off"}
-                    inputError={formik.errors.password}
-                    touched={formik.touched.password}
-                    {...formik.getFieldProps('password')}
-                />
-        
-                <Input
-                    type={"password"}
-                    id={"form-confirmPassword-input"}
-                    autoComplete={"off"}
-                    inputError={formik.errors.confirmPassword}
-                    touched={formik.touched.confirmPassword}
-                    {...formik.getFieldProps('confirmPassword')}
-                />
-                <AvatarInput
-                    inputProps={{
-                        type: "text",
-                        id: "form-url-input",
-                        autoComplete: 'off',
-                        inputError: formik.errors.url,
-                        touched: formik.touched.url,
-                        size: 'small',
-                        ...formik.getFieldProps('url')
-                    }}
-                    avatarProps={{
-                        url: formik.getFieldProps('url').value,
-                        nameAvatar: formik.getFieldProps('name').value,
-                        sizeAvatar: "large"
-                    }}
-                />
-                <Button type={"submit"} color={"primary"} size={'small'} disabled={!(formik.isValid && formik.dirty)}> Register </Button>
-            </form>
+        <div className={style.wrap}>
+            <div className={style.wrapForm}>
+                <div className={style.headerForm}>Registration</div>
+                <form noValidate onSubmit={formik.handleSubmit}>
+                    <Input
+                        type={"text"}
+                        id={"form-login-input"}
+                        autoComplete={"off"}
+                        inputError={formik.errors.login}
+                        touched={formik.touched.login}
+                        {...formik.getFieldProps('login')}
+                    />
+                    <Input
+                        type={"text"}
+                        id={"form-email-input"}
+                        autoComplete={"off"}
+                        inputError={formik.errors.email}
+                        touched={formik.touched.email}
+                        {...formik.getFieldProps('email')}
+                    />
+                    <Input
+                        type={"password"}
+                        id={"form-password-input"}
+                        autoComplete={"off"}
+                        inputError={formik.errors.password}
+                        touched={formik.touched.password}
+                        {...formik.getFieldProps('password')}
+                    />
+            
+                    <Input
+                        type={"password"}
+                        id={"form-repeatPassword-input"}
+                        autoComplete={"off"}
+                        inputError={formik.errors.repeatPassword}
+                        touched={formik.touched.repeatPassword}
+                        {...formik.getFieldProps('repeat Password')}
+                    />
+                    <AvatarInput
+                        inputProps={{
+                            type: "text",
+                            id: "form-url-input",
+                            autoComplete: 'off',
+                            inputError: formik.errors.url,
+                            touched: formik.touched.url,
+                            ...formik.getFieldProps('url')
+                        }}
+                        avatarProps={{
+                            url: formik.getFieldProps('url').value,
+                            nameAvatar: formik.getFieldProps('login').value,
+                            sizeAvatar: "large"
+                        }}
+                    />
+                    <div className={style.button}>
+                        <Button type={"submit"} color={"primary"} size={'small'} disabled={!(formik.isValid && formik.dirty)}> Register </Button>
+                    </div>
+                    
+                </form>
+            </div>
         </div>
-        
     )
 }
 

@@ -35,10 +35,6 @@
     }
   }
   &.disableButton{
-    background: $color-batton-disabled;
     opacity: 0.4;
-    &:hover {
-      background: $color-batton-disabled;
-    }
   }
 }
