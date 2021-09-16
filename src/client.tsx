@@ -9,4 +9,5 @@ export const client = new ApolloClient({
             'access-token': localStorage.getItem('access-token') || null,
         }
     })
+    
 });
