@@ -1,3 +1,4 @@
+import {useMutation} from '@apollo/client'
 import {FormikConfig, useFormik} from 'formik'
 import React, {useContext} from 'react'
 import "./Registration.module.scss";
@@ -12,8 +13,34 @@ import {RegistrationUserCredentials} from "../../types";
 import Button from "../../components/Button";
 
 
+const REGISTER = gql`
+    mutation {
+        registration(
+            avatar: "https://avatarfiles.alphacoders.com/798/79894.jpg"
+            email: "du92kippp2bf+werhd+@popcornfarm7.com"
+            password: "1234254"
+            login: "test277d7+6+d"
+        ) {
+            token
+            user {
+                login
+                email
+                id
+                avatar
+            }
+        }
+    }
+`;
+
 const Registration: React.FC = () => {
     const context = useContext(AuthContext);
+    const [registrationUser, {data}] = useMutation(REGISTER)
+    // const [addUser, {loading}] = useMutation(REGISTER, {
+    //     update(proxy, result){
+    //         console.log(result)
+    //     },
+    //     variables: values;
+    // })
     
     const validationSchema = yup.object({
         login: yup
@@ -53,6 +80,9 @@ const Registration: React.FC = () => {
         onSubmit: (values) => {
             console.log(values);
             const message = JSON.stringify(values, null, 2);
+            addUser(
+            
+            );
             alert(message);
             setRegistrationFormValues(values);
         },
@@ -102,7 +132,7 @@ const Registration: React.FC = () => {
                         autoComplete={"off"}
                         inputError={formik.errors.repeatPassword}
                         touched={formik.touched.repeatPassword}
-                        {...formik.getFieldProps('repeat Password')}
+                        {...formik.getFieldProps('repeatPassword')}
                     />
                     <AvatarInput
                         inputProps={{
