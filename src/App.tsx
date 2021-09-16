@@ -16,7 +16,7 @@ import {
 
 
 interface ChekMeProp {
-    children: React.ReactNode;
+    children: any;
 }
 
 export interface IAuthContext {
@@ -39,11 +39,11 @@ const ME = gql`
     }
 `;
 
-const CheckMe= ({ children } : {children:ChekMeProp }) => {
+const CheckMe: React.FC<ChekMeProp | null>= ({ children } ) => {
     const router = useHistory()
     const { loading, data, error } = useQuery(ME)
     useEffect(() => {
-        router.push('/')
+        router.push("/")
     }, [])
     if (loading) {
         return 'loading...'
@@ -72,15 +72,18 @@ const App = () => {
     return (
         <>
             <AuthContext.Provider value={AuthContextData}>
-                <Layout>
-                    <Router>
-                        <Switch>
-                            <Route exact path="/"><Login/></Route>
-                            <Route path="/registration"><Registration/></Route>
-                            <Route path="/chatBlock"><div>chat</div></Route>
-                        </Switch>
-                    </Router>
-                </Layout>
+                <CheckMe>
+                    <Layout>
+                        <Router>
+                            <Switch>
+                                <Route exact path="/"><Login/></Route>
+                                <Route path="/registration"><Registration/></Route>
+                                <Route path="/chatBlock"><div>chat</div></Route>
+                            </Switch>
+                        </Router>
+                    </Layout>
+                </CheckMe>
+                
             </AuthContext.Provider >
         </>
     );
