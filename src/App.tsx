@@ -27,8 +27,9 @@ function App() {
     
     const [loginFormValues, setLoginFormValues] = useState<LoginUserCredentials | null>(null)
     const [registrationFormValues, setRegistrationFormValues] = useState<RegistrationUserCredentials | null>(null)
+    const [isAuthorized, setAutorized] = useState<boolean>(false);
     
-    const AuthContextData = {loginFormValues, setLoginFormValues, registrationFormValues, setRegistrationFormValues}
+    const AuthContextData = {loginFormValues, setLoginFormValues, registrationFormValues, setRegistrationFormValues,isAuthorized, setAutorized}
     
     
     

@@ -13,6 +13,10 @@ export interface LoginUserCredentials {
     password: string;
 }
 
+export interface SetAutorizationCredentials {
+
+}
+
 export interface InputProps {
     type: "email" | "text" | "password";
     value: string;

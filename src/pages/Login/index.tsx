@@ -1,5 +1,6 @@
+import {gql, useMutation} from '@apollo/client'
 import {FormikConfig, useFormik} from 'formik'
-import React, {useContext } from 'react'
+import React, {useContext, useState} from 'react'
 import {Link} from 'react-router-dom'
 import "./Login.module.scss";
 import * as yup from 'yup';
@@ -14,8 +15,40 @@ export interface UserCredentials {
     password: string;
 }
 
+
+const SIGIN = gql`
+    mutation signIn(
+        $email: String!
+        $password: String!
+    ) {
+        signIn(
+            signInInput: {
+                email: $email
+                password: $password
+            }
+        )
+        {
+            token
+            user {
+                login
+                email
+                avatar
+            }
+        }
+    }
+`;
+
+
 const Login: React.FC = () => {
     const context = useContext(AuthContext);
+    const [loginFormUser, {data}] = useMutation(SIGIN);
+    
+    const autorizedUser = data && data.signIn
+    const token = autorizedUser && autorizedUser.token
+    if(token) {
+        console.log('token')
+        localStorage.setItem('token', token);
+    }
     
     const validationSchema = yup.object({
         login: yup
@@ -33,6 +66,9 @@ const Login: React.FC = () => {
             const message = JSON.stringify(values, null, 2);
             alert(message);
             setLoginFormValues(values);
+            loginFormUser(
+            
+            );
         },
         validationSchema
     };

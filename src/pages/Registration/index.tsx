@@ -43,9 +43,9 @@ const REGISTER = gql`
 
 const Registration: React.FC = () => {
     const context = useContext(AuthContext);
-    const [registrationUser, {loading, error, data}] = useMutation(REGISTER)
-    if (loading) console.log('Loading...');
-    if (error)  console.log(`Error! ${error.message}`);
+    const [registrationUser, {data}] = useMutation(REGISTER)
+    // if (loading) console.log('Loading...');
+    // if (error)  console.log(`Error! ${error.message}`);
     // const [addUser, {loading}] = useMutation(REGISTER, {
     //     update(proxy, result){
     //         console.log(result)
@@ -92,7 +92,7 @@ const Registration: React.FC = () => {
             console.log(values);
             const message = JSON.stringify(values, null, 2);
             registrationUser(
-                values
+            
             );
             alert(message);
             setRegistrationFormValues(values);
