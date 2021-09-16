@@ -1,4 +1,4 @@
-import {useMutation} from '@apollo/client'
+import {gql,useMutation} from '@apollo/client'
 import {FormikConfig, useFormik} from 'formik'
 import React, {useContext} from 'react'
 import "./Registration.module.scss";
@@ -14,18 +14,27 @@ import Button from "../../components/Button";
 
 
 const REGISTER = gql`
-    mutation {
+    mutation registration(
+        $avatar: String!
+        $email: String!
+        $password: String!
+        $login: String!
+        $avatar: String
+    ) {
         registration(
-            avatar: "https://avatarfiles.alphacoders.com/798/79894.jpg"
-            email: "du92kippp2bf+werhd+@popcornfarm7.com"
-            password: "1234254"
-            login: "test277d7+6+d"
-        ) {
+            registrationInput: {
+                avatar: $avatar
+                email: $email
+                password: $password
+                login: $login
+                avatar: $avatar
+            }
+        )
+        {
             token
             user {
                 login
                 email
-                id
                 avatar
             }
         }
@@ -34,7 +43,9 @@ const REGISTER = gql`
 
 const Registration: React.FC = () => {
     const context = useContext(AuthContext);
-    const [registrationUser, {data}] = useMutation(REGISTER)
+    const [registrationUser, {loading, error, data}] = useMutation(REGISTER)
+    if (loading) console.log('Loading...');
+    if (error)  console.log(`Error! ${error.message}`);
     // const [addUser, {loading}] = useMutation(REGISTER, {
     //     update(proxy, result){
     //         console.log(result)
@@ -80,8 +91,8 @@ const Registration: React.FC = () => {
         onSubmit: (values) => {
             console.log(values);
             const message = JSON.stringify(values, null, 2);
-            addUser(
-            
+            registrationUser(
+                values
             );
             alert(message);
             setRegistrationFormValues(values);

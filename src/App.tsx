@@ -13,27 +13,6 @@ import {
     gql
 } from "@apollo/client";
 
-const serchChekinME = gql`
-    query {
-        me {
-            user {
-                id
-                email
-            }
-        }
-    }
-`;
-
-
-function serchChekinME() {
-    const { loading, error, data } = useQuery(serchChekinME);
-    
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
-    
-    return
-}
-
 
 export interface IAuthContext {
     loginFormValues:LoginUserCredentials| null,
