@@ -1,6 +1,6 @@
 import {gql,useMutation} from '@apollo/client'
 import {FormikConfig, useFormik} from 'formik'
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import "./Registration.module.scss";
 import * as yup from 'yup';
 import Avatar from "../../components/Avatar ";
@@ -19,22 +19,19 @@ const REGISTER = gql`
         $email: String!
         $password: String!
         $login: String!
-        $avatar: String
     ) {
         registration(
-            registrationInput: {
-                avatar: $avatar
-                email: $email
-                password: $password
-                login: $login
-                avatar: $avatar
-            }
+                avatar: $avatar,
+                email: $email,
+                password: $password,
+                login: $login,
         )
         {
             token
             user {
                 login
                 email
+                id
                 avatar
             }
         }
@@ -43,15 +40,20 @@ const REGISTER = gql`
 
 const Registration: React.FC = () => {
     const context = useContext(AuthContext);
-    const [registrationUser, {data}] = useMutation(REGISTER)
-    // if (loading) console.log('Loading...');
-    // if (error)  console.log(`Error! ${error.message}`);
-    // const [addUser, {loading}] = useMutation(REGISTER, {
-    //     update(proxy, result){
-    //         console.log(result)
-    //     },
-    //     variables: values;
-    // })
+    const [registrationUser, {data, loading, error}] = useMutation(REGISTER, {
+        errorPolicy: 'all',
+    })
+    useEffect(() => {
+        const autorizedUser = data && data.registration
+        const token = autorizedUser && autorizedUser.token
+        if(token){localStorage.setItem('token', token);}
+        console.log('render')
+        if (error) {
+            console.log(error.graphQLErrors)
+        }
+    },[data,error])
+    
+    console.log(loading)
     
     const validationSchema = yup.object({
         login: yup
@@ -73,7 +75,7 @@ const Registration: React.FC = () => {
             .required()
             .min(8)
             .max(30),
-        url: yup
+        avatar: yup
             .string()
             .notRequired()
             .url('Please enter correct url')
@@ -86,13 +88,14 @@ const Registration: React.FC = () => {
             password: '',
             repeatPassword: '',
             email: '',
-            url: ''
+            avatar: ''
         },
         onSubmit: (values) => {
-            console.log(values);
             const message = JSON.stringify(values, null, 2);
             registrationUser(
-            
+                {
+                    variables: values,
+                }
             );
             alert(message);
             setRegistrationFormValues(values);
@@ -148,20 +151,22 @@ const Registration: React.FC = () => {
                     <AvatarInput
                         inputProps={{
                             type: "text",
-                            id: "form-url-input",
+                            id: "form-avatar-input",
                             autoComplete: 'off',
-                            inputError: formik.errors.url,
-                            touched: formik.touched.url,
-                            ...formik.getFieldProps('url')
+                            inputError: formik.errors.avatar,
+                            touched: formik.touched.avatar,
+                            ...formik.getFieldProps('avatar')
                         }}
                         avatarProps={{
-                            url: formik.getFieldProps('url').value,
+                            avatar: formik.getFieldProps('avatar').value,
                             nameAvatar: formik.getFieldProps('login').value,
                             sizeAvatar: "large"
                         }}
                     />
                     <div className={style.button}>
-                        <Button type={"submit"} color={"primary"} size={'small'} disabled={!(formik.isValid && formik.dirty)}> Register </Button>
+                        <Button type={"submit"} color={"primary"}  size={'small'}
+                                disabled={!(formik.isValid && formik.dirty && !loading)}> {loading ? "Loading..." : "Register"}
+                        </Button>
                     </div>
                     
                 </form>

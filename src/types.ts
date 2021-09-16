@@ -5,7 +5,7 @@ export interface RegistrationUserCredentials {
     password: string;
     repeatPassword: string;
     email: string;
-    url?: string;
+    avatar?: string;
 }
 
 export interface LoginUserCredentials {
@@ -29,12 +29,12 @@ export interface InputProps {
     touched?: boolean;
     onBlur?: (value: React.ChangeEvent<HTMLInputElement>) => void;
     onChange?: (value: React.ChangeEvent<HTMLInputElement>) => void;
-    url?: string;
+    avatar?: string;
 }
 
 
 export interface AvatarProps {
     sizeAvatar?: string;
-    url?: string;
+    avatar?: string;
     nameAvatar: string;
 }

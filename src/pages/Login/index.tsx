@@ -1,4 +1,4 @@
-import {gql, useMutation} from '@apollo/client'
+import {gql, useQuery} from '@apollo/client'
 import {FormikConfig, useFormik} from 'formik'
 import React, {useContext, useState} from 'react'
 import {Link} from 'react-router-dom'
@@ -14,41 +14,54 @@ export interface UserCredentials {
     login: string;
     password: string;
 }
-
-
 const SIGIN = gql`
-    mutation signIn(
+    query signIn(
         $email: String!
         $password: String!
     ) {
         signIn(
-            signInInput: {
-                email: $email
-                password: $password
-            }
+            email: $email,
+            password: $password,
         )
         {
             token
             user {
-                login
                 email
+                id
                 avatar
+                login
             }
         }
     }
 `;
 
+// const SIGIN = gql`
+//     mutation signIn(
+//         $email: String!
+//         $password: String!
+//     ) {
+//         signIn(
+//             signInInput: {
+//                 email: $email
+//                 password: $password
+//             }
+//         )
+//         {
+//             token
+//             user {
+//                 login
+//                 email
+//                 avatar
+//             }
+//         }
+//     }
+// `;
 
 const Login: React.FC = () => {
     const context = useContext(AuthContext);
-    const [loginFormUser, {data}] = useMutation(SIGIN);
-    
-    const autorizedUser = data && data.signIn
-    const token = autorizedUser && autorizedUser.token
-    if(token) {
-        console.log('token')
-        localStorage.setItem('token', token);
-    }
+    const {data} = useQuery(SIGIN);
+   
+   
     
     const validationSchema = yup.object({
         login: yup
@@ -66,9 +79,11 @@ const Login: React.FC = () => {
             const message = JSON.stringify(values, null, 2);
             alert(message);
             setLoginFormValues(values);
-            loginFormUser(
-            
-            );
+            // loginFormUser(
+            //     {
+            //         variables: values,
+            //     }
+            // );
         },
         validationSchema
     };

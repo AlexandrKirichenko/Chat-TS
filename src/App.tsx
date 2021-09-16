@@ -5,13 +5,7 @@ import Layout from './components/Layout'
 import Login from './pages/Login'
 import Registration from './pages/Registration'
 import {LoginUserCredentials, RegistrationUserCredentials} from "./types";
-import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    useQuery,
-    gql
-} from "@apollo/client";
+
 
 
 export interface IAuthContext {
@@ -30,7 +24,6 @@ function App() {
     const [isAuthorized, setAutorized] = useState<boolean>(false);
     
     const AuthContextData = {loginFormValues, setLoginFormValues, registrationFormValues, setRegistrationFormValues,isAuthorized, setAutorized}
-    
     
     
     return (
