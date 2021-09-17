@@ -95,7 +95,7 @@ const Registration: React.FC = () => {
                     variables: values,
                 }
             );
-            alert(message);
+            // alert(message);
             setRegistrationFormValues(values);
         },
         validationSchema,
