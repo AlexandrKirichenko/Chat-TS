@@ -27,7 +27,6 @@ function App() {
     const AuthContextData = {loginFormValues, setLoginFormValues, registrationFormValues,
         setRegistrationFormValues,isAuthorized, setAutorized, login, setLogin, password, setPassword}
     
-    
     return (
         <>
             <AuthContext.Provider value={AuthContextData}>
@@ -51,28 +50,3 @@ export default App;
 
 
 
-// if (error) {
-//     console.log(error.graphQLErrors)
-// }
-// },[data,error])
-
-
-
-
-
-
-
-
-// <div>
-//     <div>
-//         Vlues from context:
-//     </div>
-//     <div>
-//         loginFormValues: {JSON.stringify(loginFormValues)}
-//     </div>
-//     <div>
-//         registrationFormValues: {JSON.stringify(registrationFormValues)}
-//     </div>
-//     <br/>
-//     <br/>
-// </div>

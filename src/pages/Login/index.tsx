@@ -51,8 +51,6 @@ const Login: React.FC = () => {
             password: '12334254',
         },
         onSubmit: (values) => {
-            // const message = JSON.stringify(values, null, 2);
-            // alert(message);
             
             doLogin({
                 variables: {email: values.login, password: values.password},
@@ -72,17 +70,11 @@ const Login: React.FC = () => {
     
     return (
         <>
-            <pre>{data ? JSON.stringify(data, null, 2) : null}</pre>
-            
-            <pre>{error ? JSON.stringify(error, null, 2) : null}</pre>
-            
-            
+            {/*<pre>{data ? JSON.stringify(data, null, 2) : null}</pre>*/}
             
             <div className={style.wrap}>
                 <div className={style.wrapperLogin}>
                     <div className={style.header}>Welcome</div>
-                    
-                    <div>{loading ? <div>Loading...</div> : null}</div>
                     
                     <form noValidate onSubmit={formik.handleSubmit}>
                         
@@ -105,8 +97,9 @@ const Login: React.FC = () => {
                         />
                         <div className={style.buttonsWrapper}>
                             <Link to="/registration"><a className={style.a}>Registration</a></Link>
-                            <Button type={"submit"} color={"primary"} size={'small'} disabled={!(formik.isValid && formik.dirty)}> Login </Button>
+                            <Button type={"submit"} color={"primary"} size={'small'} > {loading ? "Loading..." : "Login"}</Button>
                         </div>
+                        <div className={style.errorMessage}> {error? error.graphQLErrors[0].message : null}</div>
                     </form>
                 </div>
             </div>
