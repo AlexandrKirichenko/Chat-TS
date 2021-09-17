@@ -13,8 +13,9 @@ export interface LoginUserCredentials {
     password: string;
 }
 
-export interface SetAutorizationCredentials {
-
+export interface LoginUser {
+    login: string;
+    password: string;
 }
 
 export interface InputProps {

@@ -1,10 +1,13 @@
-import { gql, useLazyQuery } from "@apollo/client";
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../App";
+import {gql, useLazyQuery} from "@apollo/client";
+import React, {useContext, useState} from "react";
+import {Link} from "react-router-dom";
+import {AuthContext} from "../../App";
 import Input from "../../components/Input";
 import "./Login.module.scss";
 import style from "./Login.module.scss";
+import {FormikConfig, useFormik} from "formik";
+import {RegistrationUserCredentials} from "../../types";
+import * as yup from "yup";
 
 export interface UserCredentials {
     login: string;
@@ -26,64 +29,92 @@ const SIGIN = gql`
 `;
 
 const Login: React.FC = () => {
-    const context = useContext(AuthContext);
-    const [doLogin, { loading, error, data }] = useLazyQuery(SIGIN);
-    const [login, setLogin] = useState<string>(
-        "du92kippp2fgbf+werhd+@popcornfarm7.com"
-    );
-    const [password, setPassword] = useState<string>("12334254");
     
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
-    if (data) {
-        localStorage.setItem(
-            "user",
-            JSON.stringify({ token: data.signIn.token, user: data.signIn.user })
-        );
-        return <div>Logged in as: {data.signIn.user.email}</div>;
+    
+    const [doLogin, {loading, error, data}] = useLazyQuery(SIGIN);
+    const validationSchema = yup.object({
+        login: yup
+            .string()
+            .required()
+            .min(2),
+        password: yup
+            .string()
+            .required()
+            .min(8)
+            .max(30),
+    })
+    
+    const formikConfig: FormikConfig<UserCredentials> = {
+        enableReinitialize: false,
+        initialValues: {
+            login: 'du92kippp2fgbf+werhd+@popcornfarm7.com',
+            password: '12334254',
+        },
+        onSubmit: (values) => {
+            // const message = JSON.stringify(values, null, 2);
+            // alert(message);
+            
+            doLogin({
+                variables: {email: values.login, password: values.password},
+            });
+            setLoginFormValues(values);
+        },
+        validationSchema
+    };
+    
+    const formik = useFormik<UserCredentials>(formikConfig);
+    
+    const context = useContext(AuthContext);
+    if (!context) {
+        return null
     }
+    const {setLoginFormValues} = context;
+    
     return (
         <>
+            <pre>{data ? JSON.stringify(data, null, 2) : null}</pre>
+            
+            <pre>{error ? JSON.stringify(error, null, 2) : null}</pre>
+            
+            
+            
             <div className={style.wrap}>
                 <div className={style.wrapperLogin}>
                     <div className={style.header}>Welcome</div>
-                    <Input
-                        name={"login"}
-                        inputError={undefined}
-                        type={"text"}
-                        id={"form-login-input"}
-                        autoComplete={"off"}
-                        value={login}
-                        onChange={(e) => setLogin(e.target.value)}
-                    />
                     
-                    <Input
-                        name={"password"}
-                        inputError={undefined}
-                        type={"password"}
-                        id={"form-password-input"}
-                        autoComplete={"off"}
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                    />
-                    <div className={style.buttonsWrapper}>
-                        <Link to="/registration">
-                            <a className={style.a}>Registration</a>
-                        </Link>
-                        <button
-                            type={"submit"}
-                            color={"primary"}
-                            onClick={async () => {
-                                const res = await doLogin({
-                                    variables: { email: login, password: password },
-                                });
-                                console.log({ res });
-                            }}
-                        >
-                            {" "}
-                            Login
-                        </button>
-                    </div>
+                    <div>{loading ? <div>Loading...</div> : null}</div>
+                    
+                    <form noValidate onSubmit={formik.handleSubmit}>
+                        
+                        <Input
+                            type={"text"}
+                            id={"form-login-input"}
+                            autoComplete={"off"}
+                            inputError={formik.errors.login}
+                            touched={formik.touched.login}
+                            {...formik.getFieldProps('login')}
+                        />
+                        
+                        <Input
+                            type={"password"}
+                            id={"form-password-input"}
+                            autoComplete={"off"}
+                            inputError={formik.errors.password}
+                            touched={formik.touched.password}
+                            {...formik.getFieldProps('password')}
+                        />
+                        <div className={style.buttonsWrapper}>
+                            <Link to="/registration">
+                                <a className={style.a}>Registration</a>
+                            </Link>
+                            <button
+                                type={"submit"}
+                                color={"primary"}
+                            >
+                                Login
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </>
