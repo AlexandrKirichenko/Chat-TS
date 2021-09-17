@@ -1,4 +1,3 @@
-
 import React from "react";
 import "./Layout.module.scss";
 import style from "./Layout.module.scss";

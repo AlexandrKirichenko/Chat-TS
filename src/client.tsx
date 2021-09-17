@@ -2,7 +2,7 @@ import {ApolloClient, InMemoryCache,createHttpLink} from '@apollo/client'
 
 function getUser() {
     const userObj = localStorage.getItem('user');
-    // console.log('Load user from localstorage: ', userObj)
+    
     if (userObj && userObj.length > 0) {
         return JSON.parse(userObj)
     } else {

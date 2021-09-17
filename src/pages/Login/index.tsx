@@ -69,7 +69,6 @@ const Login: React.FC = () => {
     
     return (
         <>
-            {/*<pre>{data ? JSON.stringify(data, null, 2) : null}</pre>*/}
             <div className={style.wrap}>
                 <div className={style.wrapperLogin}>
                     <div className={style.header}>Welcome</div>
