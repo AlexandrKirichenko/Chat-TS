@@ -22,8 +22,10 @@ function App() {
     const [loginFormValues, setLoginFormValues] = useState<LoginUserCredentials | null>(null)
     const [registrationFormValues, setRegistrationFormValues] = useState<RegistrationUserCredentials | null>(null)
     const [isAuthorized, setAutorized] = useState<boolean>(false);
-    
-    const AuthContextData = {loginFormValues, setLoginFormValues, registrationFormValues, setRegistrationFormValues,isAuthorized, setAutorized}
+    const [login, setLogin] = useState<string>('du92kippp2fgbf+werhd+@popcornfarm7.com')
+    const [password, setPassword] = useState<string>('12334254')
+    const AuthContextData = {loginFormValues, setLoginFormValues, registrationFormValues,
+        setRegistrationFormValues,isAuthorized, setAutorized, login, setLogin, password, setPassword}
     
     
     return (

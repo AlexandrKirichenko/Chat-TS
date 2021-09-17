@@ -14,7 +14,7 @@ const Button: React.FC<ButtonProps> = ({color = 'primary', children, size="small
     
     return (
         <button disabled={disabled} type={type}
-                className={classnames(style.button, style[color], style.size, disabled ? style.disableButton : null)}>{children}</button>
+                className={classnames(style.button, style[color], style[size], disabled ? style.disableButton : null)}>{children}</button>
     )
 }
 

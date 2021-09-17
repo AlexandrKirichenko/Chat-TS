@@ -160,7 +160,7 @@ const Registration: React.FC = () => {
                         }}
                     />
                     <div className={style.button}>
-                        <Button type={"submit"} color={"primary"}  size={'small'}
+                        <Button type={"submit"} color={"primary"}  size={'large'}
                                 disabled={!(formik.isValid && formik.dirty && !loading)}> {loading ? "Loading..." : "Register"}
                         </Button>
                     </div>
