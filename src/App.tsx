@@ -49,7 +49,10 @@ export default App;
 
 
 
-
+// if (error) {
+//     console.log(error.graphQLErrors)
+// }
+// },[data,error])
 
 
 

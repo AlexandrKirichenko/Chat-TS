@@ -3,11 +3,9 @@ import {FormikConfig, useFormik} from 'formik'
 import React, {useContext, useEffect} from 'react'
 import "./Registration.module.scss";
 import * as yup from 'yup';
-import Avatar from "../../components/Avatar ";
 import Input from "../../components/Input";
 import AvatarInput from "../../components/AvatarInput"
 import style from "./Registration.module.scss";
-import classnames from 'classnames';
 import {AuthContext} from '../../App';
 import {RegistrationUserCredentials} from "../../types";
 import Button from "../../components/Button";
@@ -21,10 +19,10 @@ const REGISTER = gql`
         $login: String!
     ) {
         registration(
-                avatar: $avatar,
-                email: $email,
-                password: $password,
-                login: $login,
+            avatar: $avatar,
+            email: $email,
+            password: $password,
+            login: $login,
         )
         {
             token
@@ -43,17 +41,16 @@ const Registration: React.FC = () => {
     const [registrationUser, {data, loading, error}] = useMutation(REGISTER, {
         errorPolicy: 'all',
     })
+    
     useEffect(() => {
         const autorizedUser = data && data.registration
         const token = autorizedUser && autorizedUser.token
         if(token){localStorage.setItem('token', token);}
-        console.log('render')
         if (error) {
-            console.log(error.graphQLErrors)
-        }
+        console.log(error.graphQLErrors)
+    }
     },[data,error])
     
-    console.log(loading)
     
     const validationSchema = yup.object({
         login: yup
@@ -102,14 +99,13 @@ const Registration: React.FC = () => {
         },
         validationSchema,
     };
-    
     const formik = useFormik<RegistrationUserCredentials>(formikConfig);
     
     if (context === null) {
         return null;
     }
     const {setRegistrationFormValues} = context;
-  
+    
     return (
         <div className={style.wrap}>
             <div className={style.wrapForm}>
@@ -139,7 +135,7 @@ const Registration: React.FC = () => {
                         touched={formik.touched.password}
                         {...formik.getFieldProps('password')}
                     />
-            
+                    
                     <Input
                         type={"password"}
                         id={"form-repeatPassword-input"}
@@ -168,8 +164,9 @@ const Registration: React.FC = () => {
                                 disabled={!(formik.isValid && formik.dirty && !loading)}> {loading ? "Loading..." : "Register"}
                         </Button>
                     </div>
-                    
+                    <div className={style.errorMessage}> {error? error.graphQLErrors[0].message : null}</div>
                 </form>
+            
             </div>
         </div>
     )

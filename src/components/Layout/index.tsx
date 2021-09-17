@@ -1,8 +1,8 @@
-import {gql, useQuery} from '@apollo/client'
-import React,{useEffect} from "react";
+// import {gql, useQuery} from '@apollo/client'
+import React from "react";
 import "./Layout.module.scss";
 import style from "./Layout.module.scss";
-import {useHistory} from 'react-router-dom';
+// import {useHistory} from 'react-router-dom';
 
 interface LayoutProp {
     children: React.ReactNode;

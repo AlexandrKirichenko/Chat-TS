@@ -25,6 +25,10 @@
   padding-top: 126px;
 }
 
+.errorMessage{
+  color:$color-error;
+}
+
 .avatar_wrap {
   border-radius: 6px;
   background-color: rgba(241,225,137,0.1);
@@ -35,5 +39,3 @@
   display: flex;
   justify-content: flex-end;
 }
-
-
