@@ -1,0 +1,113 @@
+import {gql, useLazyQuery} from '@apollo/client'
+import {FormikConfig, useFormik} from 'formik'
+import React, {useContext, useState} from 'react'
+import {Link} from 'react-router-dom'
+import "./Login.module.scss";
+import * as yup from 'yup';
+import Input from "../../components/Input";
+import style from "./Login.module.scss";
+import classnames from 'classnames';
+import Button from "../../components/Button";
+import {AuthContext} from '../../App';
+
+export interface UserCredentials {
+    login: string;
+    password: string;
+}
+
+const SIGIN = gql`
+    query signIn($email: String!, $password: String!) {
+        signIn(email: $email, password: $password) {
+            token
+            user {
+                email
+                id
+                avatar
+                login
+            }
+        }
+    }
+`;
+
+
+const Login: React.FC = () => {
+    const context = useContext(AuthContext);
+    const [ getValues, { loading, error, data } ] = useLazyQuery(SIGIN);
+     if (loading) return <div>Loading...</div>
+        if (error) return <div>Error: {error.message}</div>
+        if (data) {
+            localStorage.setItem("user", JSON.stringify({token: data.signIn.token, user: data.signIn.user}));
+            return <div>Logged in as: {data.signIn.user.email}</div>
+
+        }
+
+    const formikConfig: FormikConfig<UserCredentials> = {
+        enableReinitialize: false,
+        initialValues: {
+            login: '',
+            password: '',
+        },
+        onSubmit: (values) => {
+            console.log(data);
+            const message = JSON.stringify(values, null, 2);
+            alert(message);
+            setLoginFormValues(values);
+            const test = getValues({variables: values,});
+            console.log({test});
+
+
+            {async () => {
+                                        const res = await doLogin({variables: {email: login, password: password}})
+                                        console.log({res})
+                                    }}
+        },
+        validationSchema
+    };
+    const formik = useFormik<UserCredentials>(formikConfig);
+
+    if (context === null) {
+        return null;
+    }
+    const {setLoginFormValues} = context;
+
+    return (
+        <>
+            <div className = {style.wrap}>
+                <div className={style.wrapperLogin}>
+                    <div className={style.header}>Welcome</div>
+                    <form noValidate onSubmit={formik.handleSubmit}>
+                        <Input
+                            type={"text"}
+                            id={"form-login-input"}
+                            autoComplete={"off"}
+                            inputError = {formik.errors.login}
+                            touched = {formik.touched.login}
+                            {...formik.getFieldProps('login')}
+
+                            value={login}
+                            onChange={e => setLogin(e.target.value)}
+                        />
+
+                        <Input
+                            type={"password"}
+                            id={"form-password-input"}
+                            autoComplete={"off"}
+                            inputError = {formik.errors.password}
+                            touched = {formik.touched.password}
+                            {...formik.getFieldProps('password')}
+
+                             onChange={e => setPassword(e.target.value)}
+                             value={password}
+                        />
+                        <div className={style.buttonsWrapper}>
+                            <Link to="/registration"><a className={style.a}>Registration</a></Link>
+                            <Button type={"submit"} color={"primary"} size={'small'} disabled={!(formik.isValid && formik.dirty)}> Login </Button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default Login;
