@@ -6,7 +6,7 @@ import Input from "../../components/Input";
 import "./Login.module.scss";
 import style from "./Login.module.scss";
 import {FormikConfig, useFormik} from "formik";
-import {RegistrationUserCredentials} from "../../types";
+import Button from "../../components/Button";
 import * as yup from "yup";
 
 export interface UserCredentials {
@@ -104,15 +104,8 @@ const Login: React.FC = () => {
                             {...formik.getFieldProps('password')}
                         />
                         <div className={style.buttonsWrapper}>
-                            <Link to="/registration">
-                                <a className={style.a}>Registration</a>
-                            </Link>
-                            <button
-                                type={"submit"}
-                                color={"primary"}
-                            >
-                                Login
-                            </button>
+                            <Link to="/registration"><a className={style.a}>Registration</a></Link>
+                            <Button type={"submit"} color={"primary"} size={'small'} disabled={!(formik.isValid && formik.dirty)}> Login </Button>
                         </div>
                     </form>
                 </div>
