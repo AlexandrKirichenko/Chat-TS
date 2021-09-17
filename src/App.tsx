@@ -6,8 +6,6 @@ import Login from './pages/Login'
 import Registration from './pages/Registration'
 import {LoginUserCredentials, RegistrationUserCredentials} from "./types";
 
-
-
 export interface IAuthContext {
     loginFormValues:LoginUserCredentials| null,
     setLoginFormValues: (values: LoginUserCredentials)=> void | null;

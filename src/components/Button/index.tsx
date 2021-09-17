@@ -1,7 +1,7 @@
-import classnames from 'classnames'
-import React from 'react'
-import style from './Button.module.scss'
-import './Button.module.scss'
+import classnames from 'classnames';
+import React from 'react';
+import style from './Button.module.scss';
+import './Button.module.scss';
 
 interface ButtonProps {
     color?: string;

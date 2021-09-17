@@ -2,10 +2,10 @@ import {gql,useMutation} from '@apollo/client'
 import {FormikConfig, useFormik} from 'formik'
 import React, {useContext, useEffect} from 'react'
 import "./Registration.module.scss";
+import style from "./Registration.module.scss";
 import * as yup from 'yup';
 import Input from "../../components/Input";
 import AvatarInput from "../../components/AvatarInput"
-import style from "./Registration.module.scss";
 import {AuthContext} from '../../App';
 import {RegistrationUserCredentials} from "../../types";
 import Button from "../../components/Button";

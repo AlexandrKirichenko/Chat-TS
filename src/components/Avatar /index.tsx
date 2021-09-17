@@ -1,5 +1,5 @@
 import './Avatar.module.scss';
-import React from 'react'
+import React from 'react';
 import style from './Avatar.module.scss';
 import classnames from 'classnames';
 import {AvatarProps} from "../../types";
