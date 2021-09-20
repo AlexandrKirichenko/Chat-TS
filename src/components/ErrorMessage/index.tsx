@@ -1,17 +1,15 @@
-import classnames from 'classnames';
 import React from 'react';
-import style from './Button.module.scss';
-import './Button.module.scss';
-import {gql} from "@apollo/client";
+import style from './ErrorMessage.module.scss';
 
 interface IErrorMessage {
-    error: string;
+    error: string | undefined;
 }
 
-const ErrorMessage: React.FC<IErrorMessage> = (error) => {
-    
-    return (
-        <div className={style.errorMessage}> {error? error.graphQLErrors[0].message : null}</div>
+const ErrorMessage: React.FC<IErrorMessage> = ({error}) => {
+    console.log('123213', error);
+    return (<>
+            <div className={style.errorMessage}> {error ? error : null}</div>
+        </>
     )
 }
 

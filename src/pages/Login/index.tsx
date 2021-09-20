@@ -32,7 +32,7 @@ const SIGIN = gql`
 const Login: React.FC = () => {
     
     const [doLogin, {loading, error, data}] = useLazyQuery(SIGIN);
-
+    
     
     const validationSchema = yup.object({
         login: yup
@@ -57,7 +57,7 @@ const Login: React.FC = () => {
             doLogin({
                 variables: {email: values.login, password: values.password},
             });
-        
+            
         },
         validationSchema
     };
@@ -68,7 +68,7 @@ const Login: React.FC = () => {
     if (!context) {
         return null
     }
- 
+    
     return (
         <>
             <div className={style.wrap}>
@@ -99,8 +99,7 @@ const Login: React.FC = () => {
                             <Link to="/registration"><a className={style.a}>Registration</a></Link>
                             <Button type={"submit"} color={"primary"} size={'small'} > {loading ? "Loading..." : "Login"}</Button>
                         </div>
-                        {/*<div className={style.errorMessage}> {error? error.graphQLErrors[0].message : null}</div>*/}
-                        <ErrorMessage error={error.graphQLErrors[0].message}>
+                        <ErrorMessage error={error && error.graphQLErrors[0].message} />
                     </form>
                 </div>
             </div>

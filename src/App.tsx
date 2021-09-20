@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import {gql} from '@apollo/client'
+import React, {useEffect, useState} from 'react'
 import {BrowserRouter as Router, Route,Switch} from 'react-router-dom'
 import './App.css'
 import Layout from './components/Layout'
@@ -24,6 +25,30 @@ function App() {
     const [user, setUser] = useState<User | null>(null)
     const AuthContextData = {isAuthorized, setAutorized, user, setUser}
     
+    const ME = gql`
+        query {
+            me {
+                user{
+                    login
+                    email
+                    avatar
+                }
+                token
+            }
+        }
+    `;
+    const { loading, data, error } = useQuery(ME, {
+        errorPolicy: 'all',
+    })
+
+    if (!data?.me?.user) {
+        return null
+    }
+
+    useEffect(() => {
+        const userObj = localStorage.getItem('user');
+    },[])
+
     return (
         <>
             <AuthContext.Provider value={AuthContextData}>
