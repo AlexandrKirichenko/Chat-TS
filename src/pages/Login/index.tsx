@@ -2,6 +2,7 @@ import {gql, useLazyQuery} from "@apollo/client";
 import React, {useContext, useEffect, useState} from 'react'
 import {Link} from "react-router-dom";
 import {AuthContext} from "../../App";
+import ErrorMessage from '../../components/ErrorMessage'
 import Input from "../../components/Input";
 import "./Login.module.scss";
 import style from "./Login.module.scss";
@@ -98,7 +99,8 @@ const Login: React.FC = () => {
                             <Link to="/registration"><a className={style.a}>Registration</a></Link>
                             <Button type={"submit"} color={"primary"} size={'small'} > {loading ? "Loading..." : "Login"}</Button>
                         </div>
-                        <div className={style.errorMessage}> {error? error.graphQLErrors[0].message : null}</div>
+                        {/*<div className={style.errorMessage}> {error? error.graphQLErrors[0].message : null}</div>*/}
+                        <ErrorMessage error={error.graphQLErrors[0].message}>
                     </form>
                 </div>
             </div>
