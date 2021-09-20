@@ -18,7 +18,6 @@ const AvatarInput: React.FC<AvatarInputProps> = ({avatarProps, inputProps}) => {
                 <div className={style.wrapInput}>
                     <Input {...inputProps} />
                 </div>
-    
             </div>
         </>
        

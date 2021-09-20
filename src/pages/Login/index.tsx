@@ -64,10 +64,22 @@ const Login: React.FC = () => {
     
     const formik = useFormik<UserCredentials>(formikConfig);
     
+    useEffect(() => {
+        
+        if (data) {
+            const token = data?.signIn?.token
+            localStorage.setItem('token', token);
+            setAutorized(true);
+        }
+    }, [data])
+    
     const context = useContext(AuthContext);
     if (!context) {
         return null
     }
+    
+    const {setAutorized} = context;
+    
     
     return (
         <>
@@ -97,9 +109,10 @@ const Login: React.FC = () => {
                         />
                         <div className={style.buttonsWrapper}>
                             <Link to="/registration"><a className={style.a}>Registration</a></Link>
-                            <Button type={"submit"} color={"primary"} size={'small'} > {loading ? "Loading..." : "Login"}</Button>
+                            <Button type={"submit"} color={"primary"}
+                                    size={'small'}> {loading ? "Loading..." : "Login"}</Button>
                         </div>
-                        <ErrorMessage error={error && error.graphQLErrors[0].message} />
+                        <ErrorMessage error={error && error.graphQLErrors[0].message}/>
                     </form>
                 </div>
             </div>
