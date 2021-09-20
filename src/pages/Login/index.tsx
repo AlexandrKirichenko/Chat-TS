@@ -1,5 +1,5 @@
 import {gql, useLazyQuery} from "@apollo/client";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from 'react'
 import {Link} from "react-router-dom";
 import {AuthContext} from "../../App";
 import Input from "../../components/Input";
@@ -31,6 +31,8 @@ const SIGIN = gql`
 const Login: React.FC = () => {
     
     const [doLogin, {loading, error, data}] = useLazyQuery(SIGIN);
+
+    
     const validationSchema = yup.object({
         login: yup
             .string()
@@ -46,15 +48,15 @@ const Login: React.FC = () => {
     const formikConfig: FormikConfig<UserCredentials> = {
         enableReinitialize: false,
         initialValues: {
-            login: 'du92kippp2fgbf+werhd+@popcornfarm7.com',
-            password: '12334254',
+            login: '',
+            password: '',
         },
         onSubmit: (values) => {
             
             doLogin({
                 variables: {email: values.login, password: values.password},
             });
-            setLoginFormValues(values);
+        
         },
         validationSchema
     };
@@ -65,12 +67,12 @@ const Login: React.FC = () => {
     if (!context) {
         return null
     }
-    const {setLoginFormValues} = context;
-    
+ 
     return (
         <>
             <div className={style.wrap}>
                 <div className={style.wrapperLogin}>
+                    <pre>{data ? JSON.stringify(data, null, 2) : null}</pre>
                     <div className={style.header}>Welcome</div>
                     
                     <form noValidate onSubmit={formik.handleSubmit}>

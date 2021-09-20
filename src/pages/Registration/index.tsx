@@ -45,7 +45,7 @@ const Registration: React.FC = () => {
     useEffect(() => {
         const autorizedUser = data && data.registration
         const token = autorizedUser && autorizedUser.token
-        console.log('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjUyLCJleHAiOjE2MzI0NzU2MTYsImlhdCI6MTYzMTg3MDgxNn0.tiFviUmz6msgKN4cHc0U5h3Prp82n2zDgX-meIjLeQo' === token)
+      
         if(token){localStorage.setItem('token', token);}
         if (error) {
         console.log(error.graphQLErrors)
@@ -95,7 +95,7 @@ const Registration: React.FC = () => {
                     variables: values,
                 }
             );
-            setRegistrationFormValues(values);
+      
         },
         validationSchema,
     };
@@ -104,7 +104,6 @@ const Registration: React.FC = () => {
     if (context === null) {
         return null;
     }
-    const {setRegistrationFormValues} = context;
     
     return (
         <div className={style.wrap}>

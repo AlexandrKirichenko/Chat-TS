@@ -6,24 +6,24 @@ import Login from './pages/Login'
 import Registration from './pages/Registration'
 import {LoginUserCredentials, RegistrationUserCredentials} from "./types";
 
+interface User  {
+    login: string;
+    email: string;
+    avatar: string;
+}
+
 export interface IAuthContext {
-    loginFormValues:LoginUserCredentials| null,
-    setLoginFormValues: (values: LoginUserCredentials)=> void | null;
-    registrationFormValues: RegistrationUserCredentials | null,
-    setRegistrationFormValues: (values: RegistrationUserCredentials)=> void | null;
+    isAuthorized: boolean;
+    setAutorized: (values: boolean) => void ;
+    user: User;
+    setUser: (values: string) => void;
 }
 
 export const AuthContext = React.createContext<IAuthContext | null>(null);
-
 function App() {
-    
-    const [loginFormValues, setLoginFormValues] = useState<LoginUserCredentials | null>(null)
-    const [registrationFormValues, setRegistrationFormValues] = useState<RegistrationUserCredentials | null>(null)
     const [isAuthorized, setAutorized] = useState<boolean>(false);
-    const [login, setLogin] = useState<string>('du92kippp2fgbf+werhd+@popcornfarm7.com')
-    const [password, setPassword] = useState<string>('12334254')
-    const AuthContextData = {loginFormValues, setLoginFormValues, registrationFormValues,
-        setRegistrationFormValues,isAuthorized, setAutorized, login, setLogin, password, setPassword}
+    const [user, setUser] = useState<string>('')
+    const AuthContextData = {isAuthorized, setAutorized, user, setUser}
     
     return (
         <>

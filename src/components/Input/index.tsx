@@ -26,7 +26,6 @@ const Input: React.FC<InputProps> = ({
                 className={classnames(style.input, (inputError && touched) ? style.borderError:null)}
                 value={value}
                 name={name}
-                placeholder={`Enter your ${name.toLowerCase()}`}
                 onChange={onChange}
                 autoComplete={autoComplete}
                 onBlur={onBlur}
