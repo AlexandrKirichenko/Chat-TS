@@ -4,7 +4,6 @@ import './App.css'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import Registration from './pages/Registration'
-import {LoginUserCredentials, RegistrationUserCredentials} from "./types";
 
 interface User  {
     login: string;
@@ -15,14 +14,14 @@ interface User  {
 export interface IAuthContext {
     isAuthorized: boolean;
     setAutorized: (values: boolean) => void ;
-    user: User;
-    setUser: (values: string) => void;
+    user: User | null;
+    setUser: (values: User| null) => void;
 }
 
 export const AuthContext = React.createContext<IAuthContext | null>(null);
 function App() {
     const [isAuthorized, setAutorized] = useState<boolean>(false);
-    const [user, setUser] = useState<string>('')
+    const [user, setUser] = useState<User | null>(null)
     const AuthContextData = {isAuthorized, setAutorized, user, setUser}
     
     return (
@@ -43,7 +42,6 @@ function App() {
 }
 
 export default App;
-
 
 
 

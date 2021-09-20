@@ -4,17 +4,13 @@ import style from './Button.module.scss';
 import './Button.module.scss';
 
 interface ButtonProps {
-    color?: string;
-    type: 'button' | 'submit';
-    disabled?: boolean;
-    size?: 'small' | 'large';
+    error
 }
 
-const ErrorMessage: React.FC<ButtonProps> = ({color = 'primary', children, size="small", disabled, type = 'submit'}) => {
+const ErrorMessage: React.FC<ButtonProps> = ({error = 'primary', children, size="small", disabled, type = 'submit'}) => {
     
     return (
-        <button disabled={disabled} type={type}
-                className={classnames(style.button, style[color], style[size], disabled ? style.disableButton : null)}>{children}</button>
+        <div className={style.errorMessage}> {error? error.graphQLErrors[0].message : null}</div>
     )
 }
 
