@@ -47,9 +47,6 @@ const Registration: React.FC = () => {
         const token = autorizedUser && autorizedUser.token
         
         if(token){localStorage.setItem('token', token);}
-        if (error) {
-            console.log(error.graphQLErrors)
-        }
     },[data,error])
     
     
