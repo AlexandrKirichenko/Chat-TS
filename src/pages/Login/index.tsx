@@ -85,7 +85,7 @@ const Login: React.FC = () => {
         <>
             <div className={style.wrap}>
                 <div className={style.wrapperLogin}>
-                    <pre>{data ? JSON.stringify(data, null, 2) : null}</pre>
+                    <span>{data ? JSON.stringify(data, null, 2) : null}</span>
                     <div className={style.header}>Welcome</div>
                     
                     <form noValidate onSubmit={formik.handleSubmit}>
