@@ -4,6 +4,7 @@ import style from './Avatar.module.scss';
 import classnames from 'classnames';
 import {AvatarProps} from "../../types";
 
+
 const Avatar: React.FC<AvatarProps> = ({url, nameAvatar, sizeAvatar=""}) => {
     return(
         <div className={style.wrap}>

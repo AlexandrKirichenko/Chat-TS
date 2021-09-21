@@ -40,3 +40,18 @@ export interface AvatarProps {
     sizeAvatar?: string;
 }
 
+export interface AvatarInputProps {
+    type: "email" | "text" | "password";
+    value: string;
+    id: string;
+    name: string;
+    size?: "small" | "large";
+    setInputValue?: (value: string) => void;
+    autoComplete: "on" | "off";
+    inputError: string | undefined;
+    touched?: boolean;
+    onBlur?: (value: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (value: React.ChangeEvent<HTMLInputElement>) => void;
+    url?: string;
+    nameAvatar: string;
+}
