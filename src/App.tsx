@@ -1,6 +1,6 @@
-import {gql, useLazyQuery, useQuery} from '@apollo/client'
+import {gql, useLazyQuery} from '@apollo/client'
 import React, {useEffect, useState} from 'react'
-import {BrowserRouter as Router, Redirect, Route, Switch, useHistory} from 'react-router-dom'
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
 import './App.css'
 import Layout from './components/Layout'
 import Login from './pages/Login'
@@ -41,8 +41,8 @@ function App() {
     const [user, setUser] = useState<User | null>(null)
     const AuthContextData = {isAuthorized, setAutorized, user, setUser}
     
-    const [doUser, {loading, error, data}] = useLazyQuery(ME);
-    const history = useHistory();
+    const [doUser, {data}] = useLazyQuery(ME);
+
     
     useEffect(() => {
         if (TOKEN) {
