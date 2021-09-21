@@ -10,12 +10,12 @@ interface AvatarInputProps {
 }
 
 const AvatarInput: React.FC<AvatarInputProps> = ({avatarProps, inputProps}) => {
-    const {url,nameAvatar, sizeAvatar} = avatarProps
+    const {url,nameAvatar} = avatarProps
     return (
         <>
             <div className={style.wrapLabel}>logo</div>
             <div className={style.wrap}>
-                <Avatar url={url} nameAvatar={nameAvatar} sizeAvatar={sizeAvatar}/>
+                <Avatar url={url} nameAvatar={nameAvatar}/>
                 <div className={style.wrapInput}>
                     <Input {...inputProps} />
                 </div>
