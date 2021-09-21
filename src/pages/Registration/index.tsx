@@ -9,32 +9,8 @@ import AvatarInput from "../../components/AvatarInput"
 import {AuthContext} from '../../App';
 import {RegistrationUserCredentials} from "../../types";
 import Button from "../../components/Button";
+import {REGISTER} from "../../schemas";
 
-
-const REGISTER = gql`
-    mutation registration(
-        $avatar: String!
-        $email: String!
-        $password: String!
-        $login: String!
-    ) {
-        registration(
-            avatar: $avatar,
-            email: $email,
-            password: $password,
-            login: $login,
-        )
-        {
-            token
-            user {
-                login
-                email
-                id
-                avatar
-            }
-        }
-    }
-`;
 
 const Registration: React.FC = () => {
     const context = useContext(AuthContext);
@@ -48,7 +24,6 @@ const Registration: React.FC = () => {
         
         if(token){localStorage.setItem('token', token);}
     },[data,error])
-    
     
     const validationSchema = yup.object({
         login: yup

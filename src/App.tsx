@@ -5,20 +5,9 @@ import './App.css'
 import ErrorMessage from './components/ErrorMessage'
 import Layout from './components/Layout'
 import Login from './pages/Login'
-import Registration from './pages/Registration'
+import Registration from './pages/Registration';
+import {ME} from "./schemas"
 
-const ME = gql`
-    query {
-        me {
-            user{
-                login
-                email
-                avatar
-            }
-            token
-        }
-    }
-`;
 
 interface User {
     login: string;

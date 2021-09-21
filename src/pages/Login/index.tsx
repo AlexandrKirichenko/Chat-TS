@@ -9,25 +9,13 @@ import style from "./Login.module.scss";
 import {FormikConfig, useFormik} from "formik";
 import Button from "../../components/Button";
 import * as yup from "yup";
+import {SIGIN} from "../../schemas"
 
 export interface UserCredentials {
     login: string;
     password: string;
 }
 
-const SIGIN = gql`
-    query signIn($email: String!, $password: String!) {
-        signIn(email: $email, password: $password) {
-            token
-            user {
-                email
-                id
-                avatar
-                login
-            }
-        }
-    }
-`;
 
 const Login: React.FC = () => {
     
@@ -79,7 +67,6 @@ const Login: React.FC = () => {
     }
     
     const {setAutorized} = context;
-    
     
     return (
         <>
