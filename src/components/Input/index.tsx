@@ -15,7 +15,7 @@ const Input: React.FC<InputProps> = ({
                                          name,
                                          setInputValue,
                                          autoComplete = 'off',
-                                         avatar =""
+                                         url =""
                                      }) => {
     return (
         <div className={style.wrap}>

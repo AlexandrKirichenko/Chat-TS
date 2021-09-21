@@ -10,18 +10,19 @@ interface AvatarInputProps {
 }
 
 const AvatarInput: React.FC<AvatarInputProps> = ({avatarProps, inputProps}) => {
+    const {url,nameAvatar, sizeAvatar} = avatarProps
     return (
         <>
             <div className={style.wrapLabel}>logo</div>
             <div className={style.wrap}>
-                <Avatar {...avatarProps}/>
+                <Avatar url={url} nameAvatar={nameAvatar} sizeAvatar={sizeAvatar}/>
                 <div className={style.wrapInput}>
                     <Input {...inputProps} />
                 </div>
             </div>
         </>
-       
+    
     )
 }
 
-export default AvatarInput
+export default AvatarInput;

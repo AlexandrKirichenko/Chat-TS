@@ -30,12 +30,13 @@ export interface InputProps {
     touched?: boolean;
     onBlur?: (value: React.ChangeEvent<HTMLInputElement>) => void;
     onChange?: (value: React.ChangeEvent<HTMLInputElement>) => void;
-    avatar?: string;
+    url?: string;
 }
 
 
 export interface AvatarProps {
-    sizeAvatar?: string;
-    avatar?: string;
+    url?: string;
     nameAvatar: string;
+    sizeAvatar?: string;
 }
+

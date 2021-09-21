@@ -52,7 +52,6 @@ function App() {
     
     useEffect(() => {
         if (data) {
-
             setAutorized(true);
             setUser(data);
         }
@@ -80,6 +79,3 @@ function App() {
 }
 
 export default App;
-
-
-

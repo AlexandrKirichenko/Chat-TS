@@ -45,11 +45,11 @@ const Registration: React.FC = () => {
     useEffect(() => {
         const autorizedUser = data && data.registration
         const token = autorizedUser && autorizedUser.token
-      
+        
         if(token){localStorage.setItem('token', token);}
         if (error) {
-        console.log(error.graphQLErrors)
-    }
+            console.log(error.graphQLErrors)
+        }
     },[data,error])
     
     
@@ -95,7 +95,7 @@ const Registration: React.FC = () => {
                     variables: values,
                 }
             );
-      
+            
         },
         validationSchema,
     };
@@ -153,7 +153,7 @@ const Registration: React.FC = () => {
                             ...formik.getFieldProps('avatar')
                         }}
                         avatarProps={{
-                            avatar: formik.getFieldProps('avatar').value,
+                            url: formik.getFieldProps('avatar').value,
                             nameAvatar: formik.getFieldProps('login').value,
                             sizeAvatar: "large"
                         }}
