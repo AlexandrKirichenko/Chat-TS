@@ -71,7 +71,6 @@ function App() {
                             </Route>
                         </Switch>
                     </Router>
-                    <pre>{JSON.stringify(data, null, 2)} </pre>
                 </Layout>
             </AuthContext.Provider>
         </>
