@@ -1,8 +1,7 @@
-import {gql, useQuery} from '@apollo/client'
+import { useQuery} from '@apollo/client'
 import React, {useEffect, useState} from 'react'
 import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
 import './App.css'
-import ErrorMessage from './components/ErrorMessage'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import Registration from './pages/Registration';

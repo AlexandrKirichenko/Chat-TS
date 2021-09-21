@@ -1,4 +1,4 @@
-import {gql, useLazyQuery} from "@apollo/client";
+import { useLazyQuery} from "@apollo/client";
 import React, {useContext, useEffect, useState} from 'react'
 import {Link} from "react-router-dom";
 import {AuthContext} from "../../App";
@@ -9,7 +9,8 @@ import style from "./Login.module.scss";
 import {FormikConfig, useFormik} from "formik";
 import Button from "../../components/Button";
 import * as yup from "yup";
-import {SIGIN} from "../../schemas"
+import {SIGIN} from "../../schemas";
+
 
 export interface UserCredentials {
     login: string;

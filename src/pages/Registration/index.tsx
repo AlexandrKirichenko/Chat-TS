@@ -115,14 +115,11 @@ const Registration: React.FC = () => {
                         {...formik.getFieldProps('repeatPassword')}
                     />
                     <AvatarInput
-                            type={ "text"}
-                            id={ "form-avatar-input"}
-                            autoComplete={ 'off'}
-                            inputError={ formik.errors.avatar}
-                            touched={ formik.touched.avatar}
-                            {...formik.getFieldProps('avatar')}
-                            url={ formik.getFieldProps('avatar').value}
-                            nameAvatar={ formik.getFieldProps('login').value}
+                        inputError={ formik.errors.avatar}
+                        touched={ formik.touched.avatar}
+                        {...formik.getFieldProps('avatar')}
+                        url={ formik.getFieldProps('avatar').value}
+                        nameAvatar={ formik.getFieldProps('login').value}
                     />
                     <div className={style.button}>
                         <Button type={"submit"} color={"primary"}  size={'large'}

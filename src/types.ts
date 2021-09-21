@@ -10,9 +10,9 @@ export interface RegistrationUserCredentials {
 
 
 export interface InputProps {
-    type: "email" | "text" | "password";
+    type?: "email" | "text" | "password";
     value: string;
-    id: string;
+    id?: string;
     name: string;
     size?: "small" | "large";
     setInputValue?: (value: string) => void;
@@ -32,12 +32,8 @@ export interface AvatarProps {
 }
 
 export interface AvatarInputProps {
-    type: "email" | "text" | "password";
     value: string;
-    id: string;
     name: string;
-    size?: "small" | "large";
-    autoComplete: "on" | "off";
     inputError: string | undefined;
     touched?: boolean;
     onBlur?: (value: React.ChangeEvent<HTMLInputElement>) => void;
