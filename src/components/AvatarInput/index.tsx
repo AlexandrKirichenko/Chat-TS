@@ -1,37 +1,53 @@
-import React from 'react'
-import Avatar from '../../components/Avatar '
+import React, {useEffect, useState} from 'react'
+import Avatar from '../../components/Avatar'
 import Input from '../../components/Input'
 import {AvatarInputProps} from '../../types'
 import style from './AvatarInput.module.scss'
+import * as yup from 'yup'
 
 const AvatarInput: React.FC<AvatarInputProps> = ({
-                                                     type,
                                                      value,
-                                                     id,
                                                      name,
-                                                     size,
-                                                     autoComplete,
                                                      inputError,
                                                      touched, onBlur,
                                                      onChange,
                                                      url,
                                                      nameAvatar,
                                                  }) => {
+    
+    const schema = yup.string().url().required();
+    
+    
+    const [internalUrl, setInternalUrl] = useState<string | null>(null);
+    
+    useEffect(() => {
+        const setter = async () => {
+            try {
+                await schema.validate(url);
+                if (url) {
+                    
+                    setInternalUrl(url);
+                }
+            } catch (e) {
+                setInternalUrl(null);
+                
+                console.log(e);
+            }
+        }
+        setter();
+    }, [url])
     return (
         <>
             <div className={style.wrapLabel}>logo</div>
             <div className={style.wrap}>
-                <Avatar url={url} nameAvatar={nameAvatar}/>
+                <Avatar url={internalUrl ? internalUrl : ''} nameAvatar={nameAvatar}/>
                 <div className={style.wrapInput}>
                     <Input
-                        type={type}
-                        id={id}
                         name={name}
                         value={value}
-                        size={size}
                         onChange={onChange}
                         inputError={inputError}
-                        autoComplete={autoComplete}
+                        autoComplete={'off'}
                         onBlur={onBlur}
                         touched={touched}
                     />
