@@ -8,15 +8,6 @@ export interface RegistrationUserCredentials {
     avatar?: string;
 }
 
-export interface LoginUserCredentials {
-    login: string;
-    password: string;
-}
-
-export interface LoginUser {
-    login: string;
-    password: string;
-}
 
 export interface InputProps {
     type: "email" | "text" | "password";
@@ -46,7 +37,6 @@ export interface AvatarInputProps {
     id: string;
     name: string;
     size?: "small" | "large";
-    setInputValue?: (value: string) => void;
     autoComplete: "on" | "off";
     inputError: string | undefined;
     touched?: boolean;

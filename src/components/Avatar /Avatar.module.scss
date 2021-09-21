@@ -1,8 +1,8 @@
 @import "../../constants";
 
 .avatar {
-  width: 38px;
-  height: 38px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   background: $color-avatar;
   border: 1px solid $color-border-avatar;
@@ -18,7 +18,7 @@
 .text {
   border: 1px solid $color-border-avatar;
   align-items: center;
-  font-size: 14px;
+  font-size: 36px;
 }
 
 .medium {
@@ -27,11 +27,11 @@
   font-size: 14px;
 }
 
-.large {
-  width: 110px;
-  height: 110px;
+.small {
+  width: 38px;
+  height: 38px;
   border: 1px solid $color-border-avatar;
-  font-size: 36px;
+  font-size: 14px;
 }
 
 

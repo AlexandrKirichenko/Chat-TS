@@ -6,7 +6,6 @@ interface IErrorMessage {
 }
 
 const ErrorMessage: React.FC<IErrorMessage> = ({error}) => {
-    console.log('123213', error);
     return (<>
             <div className={style.errorMessage}> {error ? error : null}</div>
         </>

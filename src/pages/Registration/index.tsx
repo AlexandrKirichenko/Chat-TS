@@ -86,7 +86,6 @@ const Registration: React.FC = () => {
             avatar: ''
         },
         onSubmit: (values) => {
-            const message = JSON.stringify(values, null, 2);
             registrationUser(
                 {
                     variables: values,

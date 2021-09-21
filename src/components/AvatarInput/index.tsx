@@ -10,7 +10,6 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
                                                      id,
                                                      name,
                                                      size,
-                                                     setInputValue,
                                                      autoComplete,
                                                      inputError,
                                                      touched, onBlur,
@@ -18,24 +17,24 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
                                                      url,
                                                      nameAvatar,
                                                  }) => {
-
     return (
         <>
             <div className={style.wrapLabel}>logo</div>
             <div className={style.wrap}>
                 <Avatar url={url} nameAvatar={nameAvatar}/>
                 <div className={style.wrapInput}>
-                    <Input type={type}
-                           id={id}
-                           name={name}
-                           value={value}
-                           setInputValue={setInputValue}
-                           size={size}/>
-                           onChange={onChange}
-                           inputError={inputError}
-                           autoComplete={autoComplete}
-                           onBlur={onBlur}
-                           touched={touched}
+                    <Input
+                        type={type}
+                        id={id}
+                        name={name}
+                        value={value}
+                        size={size}
+                        onChange={onChange}
+                        inputError={inputError}
+                        autoComplete={autoComplete}
+                        onBlur={onBlur}
+                        touched={touched}
+                    />
                 </div>
             </div>
         </>
