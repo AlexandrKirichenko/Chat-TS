@@ -16,7 +16,6 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
     
     const schema = yup.string().url().required();
     
-    
     const [internalUrl, setInternalUrl] = useState<string | null>(null);
     
     useEffect(() => {
