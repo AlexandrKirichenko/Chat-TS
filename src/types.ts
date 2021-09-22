@@ -39,4 +39,5 @@ export interface AvatarInputProps {
     onChange?: (value: React.ChangeEvent<HTMLInputElement>) => void;
     url?: string;
     nameAvatar: string;
+    // onError:string;
 }

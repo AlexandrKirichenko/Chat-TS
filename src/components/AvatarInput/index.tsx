@@ -4,7 +4,8 @@ import Input from '../../components/Input'
 import {AvatarInputProps} from '../../types'
 import style from './AvatarInput.module.scss'
 import * as yup from 'yup'
-// import debounce from 'lodash.debounce';
+
+const DELAY = 5000;
 
 const AvatarInput: React.FC<AvatarInputProps> = ({
                                                      value,
@@ -14,17 +15,22 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
                                                      onChange,
                                                      nameAvatar,
                                                  }) => {
-    
+
     const schema = yup.string().url().required();
-    
+
     const [internalUrl, setInternalUrl] = useState<string | null>(null);
-    
+    const [timerId, setTimerId] = useState<NodeJS.Timeout | null>();
+
     useEffect(() => {
         const setter = async () => {
+            if (timerId) {
+                clearTimeout(timerId);
+            }
             try {
                 await schema.validate(value);
                 if (value) {
-                    setInternalUrl(value);
+                    const timerId = setTimeout(()=>{setInternalUrl(value)}, DELAY)
+                    setTimerId(timerId);
                 }
             } catch (e) {
                 setInternalUrl(null);
@@ -32,6 +38,7 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
         }
         setter();
     }, [value])
+
     return (
         <>
             <div className={style.wrapLabel}>logo</div>
@@ -49,7 +56,7 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
                 </div>
             </div>
         </>
-    
+
     )
 }
 
