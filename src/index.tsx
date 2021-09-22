@@ -1,18 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import App from './App';
-import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-} from "@apollo/client";
+import {ApolloProvider} from "@apollo/client";
 import {client} from './client'
+import {BrowserRouter as Router} from 'react-router-dom'
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <App />
+        <Router>
+            <App/>
+        </Router>
     </ApolloProvider>,
     document.getElementById('root')
 );
+
+
+
+
 
