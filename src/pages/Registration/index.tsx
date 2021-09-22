@@ -1,4 +1,4 @@
-import {gql,useMutation} from '@apollo/client'
+import {useMutation} from '@apollo/client'
 import {FormikConfig, useFormik} from 'formik'
 import React, {useContext, useEffect} from 'react'
 import "./Registration.module.scss";

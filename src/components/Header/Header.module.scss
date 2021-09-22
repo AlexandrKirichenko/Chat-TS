@@ -1,7 +1,15 @@
 @import '../../constants';
 
-.headerWrap {
-
-  //min-height: 48px;
-  //background: $color-input-border;
+.header {
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  background-color: $color-input-border;
+  color: white;
+  
+  a {
+    text-decoration: none;
+    color: white;
+  }
 }
+

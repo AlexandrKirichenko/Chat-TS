@@ -1,12 +1,14 @@
-import { useQuery} from '@apollo/client'
+import {useQuery} from '@apollo/client'
 import React, {useEffect, useState} from 'react'
-import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
+import {Route, Switch, useHistory} from 'react-router-dom';
 import './App.css'
 import Layout from './components/Layout'
 import Login from './pages/Login'
-import Registration from './pages/Registration';
-import {ME} from "./schemas"
-
+import Registration from './pages/Registration'
+import {PATH_CHAT_BLOCK, PATH_LOGIN, PATH_REGISTRATION} from "./config";
+import Header from "./components/Header";
+import {ME} from "./schemas";
+// import chatBlock from "./pages/ChatBlock";
 
 interface User {
     login: string;
@@ -34,7 +36,8 @@ function App() {
     useEffect(() => {
         if (data) {
             setAutorized(true);
-            setUser(data);
+            setUser(data.me.user);
+            // history.push(PATH_CHAT_BLOCK);
         }
     }, [data]);
     
@@ -42,16 +45,17 @@ function App() {
         <>
             <AuthContext.Provider value={AuthContextData}>
                 <Layout>
-                    <Router>
-                        <Switch>
-                            {isAuthorized ? <Redirect from="/" to="/chatBlock" exact/> : null}
-                            <Route exact path="/"><Login/></Route>
-                            <Route path="/registration"><Registration/></Route>
-                            <Route path="/chatBlock">
-                                <div>chat</div>
-                            </Route>
-                        </Switch>
-                    </Router>
+                    <Header nameAvatar={''} />
+                    <Switch>
+                        <Route exact path={PATH_LOGIN}>
+                            <Login/>
+                        </Route>
+                        <Route path={PATH_REGISTRATION}><Registration/></Route>
+                        {/*<Route path={PATH_CHAT_BLOCK}>*/}
+                        {/*    {isAuthorized ? <ChatBlock />: <div> Надо войти в систему</div>}*/}
+                        {/*</Route>*/}
+                    </Switch>
+    
                 </Layout>
             </AuthContext.Provider>
         </>

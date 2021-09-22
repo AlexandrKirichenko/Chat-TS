@@ -4,6 +4,7 @@ import Input from '../../components/Input'
 import {AvatarInputProps} from '../../types'
 import style from './AvatarInput.module.scss'
 import * as yup from 'yup'
+// import debounce from 'lodash.debounce';
 
 const AvatarInput: React.FC<AvatarInputProps> = ({
                                                      value,
@@ -23,7 +24,6 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
             try {
                 await schema.validate(value);
                 if (value) {
-                    
                     setInternalUrl(value);
                 }
             } catch (e) {
@@ -43,7 +43,6 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
                         value={value}
                         onChange={onChange}
                         inputError={inputError}
-                        autoComplete={'off'}
                         onBlur={onBlur}
                         touched={touched}
                     />

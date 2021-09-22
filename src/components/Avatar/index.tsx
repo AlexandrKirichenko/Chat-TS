@@ -7,7 +7,7 @@ import {AvatarProps} from "../../types";
 const Avatar: React.FC<AvatarProps> = ({value, nameAvatar, sizeAvatar=""}) => {
     return(
         <div className={style.wrap}>
-            {value && <img className={classnames(style.avatar, style[sizeAvatar])} alt="avatar" src={value}/>}
+            {value && <img className={classnames(style.avatar, style[sizeAvatar])} src={value}/>}
             {(value === "" && nameAvatar !== "") ? (
                     <div className={classnames(style.avatar, style.text, style[sizeAvatar])}>{nameAvatar.substring(0,1)}</div>
                 ) :

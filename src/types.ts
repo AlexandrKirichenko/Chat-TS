@@ -15,7 +15,7 @@ export interface InputProps {
     id?: string;
     name: string;
     size?: "small" | "large";
-    autoComplete: "on" | "off";
+    autoComplete?: "on" | "off";
     inputError: string | undefined;
     touched?: boolean;
     onBlur?: (value: React.ChangeEvent<HTMLInputElement>) => void;

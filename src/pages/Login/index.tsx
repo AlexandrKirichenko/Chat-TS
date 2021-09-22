@@ -1,6 +1,6 @@
 import { useLazyQuery} from "@apollo/client";
-import React, {useContext, useEffect, useState} from 'react'
-import {Link} from "react-router-dom";
+import React, {useContext, useEffect} from 'react'
+import {Link, useHistory} from "react-router-dom";
 import {AuthContext} from "../../App";
 import ErrorMessage from '../../components/ErrorMessage'
 import Input from "../../components/Input";
@@ -10,7 +10,7 @@ import {FormikConfig, useFormik} from "formik";
 import Button from "../../components/Button";
 import * as yup from "yup";
 import {SIGIN} from "../../schemas";
-
+import {PATH_CHAT_BLOCK} from "../../config";
 
 export interface UserCredentials {
     login: string;
@@ -21,7 +21,6 @@ export interface UserCredentials {
 const Login: React.FC = () => {
     
     const [doLogin, {loading, error, data}] = useLazyQuery(SIGIN);
-    
     
     const validationSchema = yup.object({
         login: yup
@@ -59,6 +58,9 @@ const Login: React.FC = () => {
             const token = data?.signIn?.token
             localStorage.setItem('token', token);
             setAutorized(true);
+            setUser(data.signIn.user);
+    
+            // history.push(PATH_CHAT_BLOCK)
         }
     }, [data])
     
@@ -67,7 +69,7 @@ const Login: React.FC = () => {
         return null
     }
     
-    const {setAutorized} = context;
+    const {setAutorized, setUser} = context;
     
     return (
         <>
