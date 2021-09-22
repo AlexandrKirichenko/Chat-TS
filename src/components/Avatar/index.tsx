@@ -10,12 +10,12 @@ const Avatar: React.FC<AvatarProps> = ({value, nameAvatar, sizeAvatar = ""}) => 
     const [isLoadError, setIsLoadError] = useState(false);
     
     const handleError = () => {
-        //не удалось загрузить аватар, картинка по умолчанию
+        
         setIsLoadError(true)
     }
     
     useEffect(()=>{
-        // попытка загрузить новый аватар
+     
         setIsLoadError(false);
     }, [value]);
     
