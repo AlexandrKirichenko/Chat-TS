@@ -4,6 +4,7 @@ import Avatar from '../../components/Avatar'
 import Input from '../../components/Input'
 import {AvatarInputProps} from '../../types'
 import style from './AvatarInput.module.scss'
+import debounce from 'lodash/debounce';
 
 const AvatarInput: React.FC<AvatarInputProps> = ({
                                                      value,
@@ -20,22 +21,22 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
     const [urlError, setUrlError] = useState<boolean>(false)
     
     
-    const changeHandler = (e: any) => {
-        setInternalUrl(e.target.value)
-        if (internalUrl !== '') {
-            const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
-            const regex = new RegExp(expression)
-            
-            if (internalUrl && internalUrl.match(regex)) {
-                setUrlError(false)
-            } else {
-                setUrlError(true)
-            }
-        }
-        
-    }
-    
-    console.log('urlError', urlError)
+    // const changeHandler = (e: any) => {
+    //     setInternalUrl(e.target.value)
+    //     if (internalUrl !== '') {
+    //         const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
+    //         const regex = new RegExp(expression)
+    //
+    //         if (internalUrl && internalUrl.match(regex)) {
+    //             setUrlError(false)
+    //         } else {
+    //             setUrlError(true)
+    //         }
+    //     }
+    //
+    // }
+    //
+    // console.log('urlError', urlError)
     
     useEffect(() => {
         
