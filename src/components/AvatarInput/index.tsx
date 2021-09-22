@@ -11,7 +11,6 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
                                                      inputError,
                                                      touched, onBlur,
                                                      onChange,
-                                                     url,
                                                      nameAvatar,
                                                  }) => {
     
@@ -23,24 +22,22 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
     useEffect(() => {
         const setter = async () => {
             try {
-                await schema.validate(url);
-                if (url) {
+                await schema.validate(value);
+                if (value) {
                     
-                    setInternalUrl(url);
+                    setInternalUrl(value);
                 }
             } catch (e) {
                 setInternalUrl(null);
-                
-                console.log(e);
             }
         }
         setter();
-    }, [url])
+    }, [value])
     return (
         <>
             <div className={style.wrapLabel}>logo</div>
             <div className={style.wrap}>
-                <Avatar url={internalUrl ? internalUrl : ''} nameAvatar={nameAvatar}/>
+                <Avatar value={internalUrl ? internalUrl : ''} nameAvatar={nameAvatar}/>
                 <div className={style.wrapInput}>
                     <Input
                         name={name}

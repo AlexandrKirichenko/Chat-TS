@@ -118,7 +118,7 @@ const Registration: React.FC = () => {
                         inputError={ formik.errors.avatar}
                         touched={ formik.touched.avatar}
                         {...formik.getFieldProps('avatar')}
-                        url={ formik.getFieldProps('avatar').value}
+                        value={ formik.getFieldProps('avatar').value}
                         nameAvatar={ formik.getFieldProps('login').value}
                     />
                     <div className={style.button}>

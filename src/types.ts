@@ -15,7 +15,6 @@ export interface InputProps {
     id?: string;
     name: string;
     size?: "small" | "large";
-    setInputValue?: (value: string) => void;
     autoComplete: "on" | "off";
     inputError: string | undefined;
     touched?: boolean;
@@ -26,7 +25,7 @@ export interface InputProps {
 
 
 export interface AvatarProps {
-    url?: string;
+    value?: string;
     nameAvatar: string;
     sizeAvatar?: string;
 }
