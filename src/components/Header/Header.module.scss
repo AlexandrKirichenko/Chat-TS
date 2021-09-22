@@ -5,11 +5,11 @@
   display: flex;
   justify-content: space-between;
   background-color: $color-input-border;
-  color: white;
+  color: $color-background;
   
   a {
     text-decoration: none;
-    color: white;
+    color: $color-background;
   }
 }
 

@@ -67,3 +67,4 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
 }
 
 export default AvatarInput;
+

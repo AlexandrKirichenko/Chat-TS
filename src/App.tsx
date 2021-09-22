@@ -45,15 +45,13 @@ function App() {
         <>
             <AuthContext.Provider value={AuthContextData}>
                 <Layout>
-                    <Header nameAvatar={''} />
+                 
                     <Switch>
                         <Route exact path={PATH_LOGIN}>
                             <Login/>
                         </Route>
                         <Route path={PATH_REGISTRATION}><Registration/></Route>
-                        {/*<Route path={PATH_CHAT_BLOCK}>*/}
-                        {/*    {isAuthorized ? <ChatBlock />: <div> Надо войти в систему</div>}*/}
-                        {/*</Route>*/}
+                   
                     </Switch>
     
                 </Layout>
