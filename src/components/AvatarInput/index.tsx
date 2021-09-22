@@ -1,10 +1,23 @@
-import React, {useEffect, useState, useMemo} from 'react'
-import * as yup from 'yup'
+import React, {useCallback, useEffect, useState} from 'react'
 import Avatar from '../../components/Avatar'
 import Input from '../../components/Input'
 import {AvatarInputProps} from '../../types'
 import style from './AvatarInput.module.scss'
+import * as yup from 'yup'
 import debounce from 'lodash/debounce';
+
+
+const DELAY = 1000;
+
+const check = async (data: string) => {
+    const schema = yup.string().url().required();
+    try {
+        await schema.validate(data);
+        return true;
+    } catch {
+        return false;
+    }
+}
 
 const AvatarInput: React.FC<AvatarInputProps> = ({
                                                      value,
@@ -15,48 +28,22 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
                                                      nameAvatar,
                                                  }) => {
     
-    const schema = yup.string().url().required()
     
-    const [internalUrl, setInternalUrl] = useState<string>('')
-    const [urlError, setUrlError] = useState<boolean>(false)
+    const [internalUrl, setInternalUrl] = useState<string | null>(null);
+    const [internalInputValue, setInternalInputValue] = useState(value);
+    const DebounceSetInternalUrl = useCallback(debounce(setInternalUrl, DELAY), [])
     
-    
-    const changeHandler = (e: any) => {
-        setInternalUrl(e.target.value)
-        if (internalUrl !== '') {
-            const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
-            const regex = new RegExp(expression)
-
-            if (internalUrl && internalUrl.match(regex)) {
-                setUrlError(false)
-            } else {
-                setUrlError(true)
-            }
-        }
-
-    }
-    console.log('urlError', urlError)
-    
-    const debouncedChangeHandler = useMemo(
-        () => debounce(changeHandler, 300)
-        , []);
-    
-    useEffect(() => {
+    const handleChangeInternalInputValue = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        const result = await check(value);
         
-        const setter = async () => {
-            try {
-                await schema.validate(value)
-                if (value) {
-                    
-                    setInternalUrl(value)
-                    
-                }
-            } catch (e) {
-                setInternalUrl('')
-            }
+        setInternalInputValue(value);
+        if (result && onChange) {
+            DebounceSetInternalUrl(value);
+            onChange(e);
         }
-        setter()
-    }, [value])
+    }
+    
     
     return (
         <>
@@ -66,13 +53,12 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
                 <div className={style.wrapInput}>
                     <Input
                         name={name}
-                        value={internalUrl}
-                        onChange={debouncedChangeHandler}
+                        value={internalInputValue}
+                        onChange={handleChangeInternalInputValue}
                         inputError={inputError}
                         onBlur={onBlur}
                         touched={touched}
                     />
-                    {urlError && <div><h3>Not url</h3></div>}
                 </div>
             </div>
         </>
@@ -80,4 +66,4 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
     )
 }
 
-export default AvatarInput
+export default AvatarInput;
