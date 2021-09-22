@@ -30,7 +30,7 @@ function App() {
     const AuthContextData = {isAuthorized, setAutorized, user, setUser}
     
     const {data} = useQuery(ME);
-
+    
     useEffect(() => {
         if (data) {
             setAutorized(true);
