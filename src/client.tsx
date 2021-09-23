@@ -1,5 +1,6 @@
 import {ApolloClient, InMemoryCache,createHttpLink} from '@apollo/client'
 import {setContext} from '@apollo/client/link/context'
+import {LS_TOKEN_KEY} from "./config";
 
 const httpLink = createHttpLink({
     uri: process.env.REACT_APP_MY_COOL_LINK,
@@ -7,7 +8,7 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
     
-    const token = localStorage.getItem('token') || null;
+    const token = localStorage.getItem(LS_TOKEN_KEY) || null;
     
     return {
         headers: {

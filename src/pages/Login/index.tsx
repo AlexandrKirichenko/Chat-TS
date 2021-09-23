@@ -17,10 +17,10 @@ export interface UserCredentials {
     password: string;
 }
 
-
 const Login: React.FC = () => {
     
     const [doLogin, {loading, error, data}] = useLazyQuery(SIGIN);
+
     
     const validationSchema = yup.object({
         login: yup
@@ -41,7 +41,6 @@ const Login: React.FC = () => {
             password: '',
         },
         onSubmit: (values) => {
-            
             doLogin({
                 variables: {email: values.login, password: values.password},
             });
@@ -53,14 +52,11 @@ const Login: React.FC = () => {
     const formik = useFormik<UserCredentials>(formikConfig);
     
     useEffect(() => {
-        
         if (data) {
             const token = data?.signIn?.token
             localStorage.setItem('token', token);
             setAutorized(true);
             setUser(data.signIn.user);
-    
-            // history.push(PATH_CHAT_BLOCK)
         }
     }, [data])
     
