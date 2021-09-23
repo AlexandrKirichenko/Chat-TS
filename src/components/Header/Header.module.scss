@@ -4,7 +4,8 @@
   background-color: $color-input-border;
   color: $color-background;
   width: 100%;
-  min-height: 48px;
+  max-height: 48px;
+  position:relative;
   .headerText{
     font-family:$font-family-main;
     color: $color-background;
@@ -28,3 +29,8 @@
   }
 }
 
+.fullScreen{
+  opacity: 0;
+  height: 100vh;
+  width: 100vw;
+}

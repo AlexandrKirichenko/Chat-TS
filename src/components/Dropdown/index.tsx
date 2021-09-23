@@ -9,9 +9,9 @@ interface DropdownProps {
 }
 
 const Dropdown: React.FC<DropdownProps> = ({children, isShow}) => {
-    
+
     return (
-        {isShow} && <div className={style.wrap}>{children}</div>
+        <div className={classnames(isShow ? style.wrap : style.wrap_active)}>{children}</div>
     )
 }
 

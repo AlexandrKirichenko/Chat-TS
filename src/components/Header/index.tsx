@@ -57,8 +57,8 @@ const Header: React.FC<HeaderProps> = ({sizeAvatar, nameAvatar}) => {
                     <div>
                         {isAuthorized && user ?
                             <div>
-                                
-                                    <Avatar value={user.avatar} nameAvatar={user.login} sizeAvatar={'small'} setMenu={setShowUserMenu}/>
+                                <Avatar value={user.avatar} nameAvatar={user.login} sizeAvatar={'small'} userMenu={showUserMenu} setMenu={setShowUserMenu}/>
+                                {/*<div className={style.fullScreen}></div>*/}
                                 <Dropdown isShow={showUserMenu} >
                                     <ul className={style.nav}>
                                         <li>Profile</li>

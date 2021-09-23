@@ -49,7 +49,7 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
         <>
             <div className={style.wrapLabel}>logo</div>
             <div className={style.wrap}>
-                <Avatar value={internalUrl ? internalUrl : ''} nameAvatar={nameAvatar}/>
+                <Avatar value={internalUrl ? internalUrl : ''} nameAvatar={nameAvatar} />
                 <div className={style.wrapInput}>
                     <Input
                         name={name}
