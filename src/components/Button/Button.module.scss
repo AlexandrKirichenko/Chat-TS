@@ -14,8 +14,12 @@
   font-style: normal;
   text-decoration: none;
   text-align: center;
-  margin: 20px;
+  margin: 10px 0;
   cursor: pointer;
+  &.small {
+    width: 83px;
+  }
+  
   &.primary {
     background-color: $color-primary;
     &:hover {
@@ -29,5 +33,8 @@
       background-color: $color-secondary-light;
       transition: .3s ease-in-out;
     }
+  }
+  &.disableButton{
+    opacity: 0.4;
   }
 }

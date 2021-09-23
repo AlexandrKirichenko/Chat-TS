@@ -1,43 +1,37 @@
-import React from "react";
-import "./Input.module.scss";
-import style from "./Input.module.scss";
-import classnames from 'classnames';
+import classnames from 'classnames'
+import React, {useEffect, useState} from 'react'
+import style from './Input.module.scss'
+import './Input.module.scss'
+import {InputProps} from "../../types";
 
-
-interface InputProps {
-    type: "email" | "text" | "password";
-    size?: string;
-    value: string;
-    id: string;
-    name: string;
-    errorMsg?: string;
-    setInputValueCb(value: string): void;
-}
-
-const Input: React.FC<InputProps> = ({type, size = "", value, id, name, setInputValueCb, errorMsg = null}) => {
-    const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setInputValueCb(value);
-    }
-    
+const Input: React.FC<InputProps> = ({
+                                         touched,
+                                         onChange,
+                                         onBlur,
+                                         type = 'text',
+                                         inputError,
+                                         value,
+                                         id = '',
+                                         name,
+                                         autoComplete = 'off',
+                                     }) => {
     return (
         <div className={style.wrap}>
-            <label className={style.label} htmlFor={name}>
-                {name}
-            </label>
+            <label className={style.label} htmlFor={name}>{name}</label>
             <input
                 type={type}
                 id={id}
-                className={classnames(style.input, style[size])}
+                className={classnames(style.input, (inputError && touched) ? style.borderError:null)}
                 value={value}
                 name={name}
-                placeholder={`Enter your ${name.toLowerCase()}`}
-                onChange={handleChangeValue}
-                autoComplete="off"
+                onChange={onChange}
+                autoComplete={autoComplete}
+                onBlur={onBlur}
             />
-            {errorMsg ? <div className={style.errorMsg}>{errorMsg}</div>: null}
+            <div className={style.errorMessage}>
+                {inputError && touched ? inputError: null}
+            </div>
         </div>
-    
     )
 }
 

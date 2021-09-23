@@ -1,34 +1,63 @@
-import React, {useState} from "react";
-import "./App.css";
-import Layout from "./components/Layout";
+import {useQuery} from '@apollo/client'
+import React, {useEffect, useState} from 'react'
+import {Route, Switch, useHistory} from 'react-router-dom';
+import './App.css'
+import Layout from './components/Layout'
+import Login from './pages/Login'
 import Registration from './pages/Registration'
-import Avatar from "./components/Avatar ";
-import Input from "./components/Input";
-import Button from "./components/Button";
+import {PATH_CHAT_BLOCK, PATH_LOGIN, PATH_REGISTRATION} from "./config";
+import Header from "./components/Header";
+import {ME} from "./schemas";
+// import chatBlock from "./pages/ChatBlock";
 
-const INPUT_TEST_ERROR  = 'Error'
+interface User {
+    login: string;
+    email: string;
+    avatar: string;
+    id: string;
+}
+
+export interface IAuthContext {
+    isAuthorized: boolean;
+    setAutorized: (values: boolean) => void;
+    user: User | null;
+    setUser: (values: User | null) => void;
+}
+
+export const AuthContext = React.createContext<IAuthContext | null>(null);
 
 function App() {
-    const [inputValue, setInputValue] = useState('');
+    const [isAuthorized, setAutorized] = useState<boolean>(false);
+    const [user, setUser] = useState<User | null>(null)
+    const AuthContextData = {isAuthorized, setAutorized, user, setUser}
+    
+    const {data} = useQuery(ME);
+    
+    useEffect(() => {
+        if (data) {
+            setAutorized(true);
+            setUser(data.me.user);
+            // history.push(PATH_CHAT_BLOCK);
+        }
+    }, [data]);
     
     return (
         <>
-            <Layout>
-                {/*<Registration />*/}
-                <Input
-                    value={inputValue}
-                    type={"text"}
-                    id={"b34234"}
-                    name={"Password"}
-                    setInputValueCb={setInputValue}
-                    errorMsg={INPUT_TEST_ERROR}
-                />
-                <Button buttonName={"Register"} color={"primary"}> Login </Button>
-                <Button buttonName={"Login"} color={"secondary"}> Registration </Button>
-                <Avatar size={"large"} img={""} name={"Alex"}/>
-                <Avatar size={"medium"} img={""} name={"Alex"}/>
-            </Layout>
-        
+            <AuthContext.Provider value={AuthContextData}>
+                <Layout>
+                    <Header nameAvatar={''} />
+                    <Switch>
+                        <Route exact path={PATH_LOGIN}>
+                            <Login/>
+                        </Route>
+                        <Route path={PATH_REGISTRATION}><Registration/></Route>
+                        {/*<Route path={PATH_CHAT_BLOCK}>*/}
+                        {/*    {isAuthorized ? <ChatBlock />: <div> Надо войти в систему</div>}*/}
+                        {/*</Route>*/}
+                    </Switch>
+    
+                </Layout>
+            </AuthContext.Provider>
         </>
     );
 }

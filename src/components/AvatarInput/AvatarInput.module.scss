@@ -1,0 +1,40 @@
+@import "../../constants";
+
+.wrap {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 2px dashed $color-avatar;
+  border-radius: 6px;
+
+}
+
+.wrapLabel {
+  font-family: $font-family-main;
+  font-size: 12px;
+  font-style: normal;
+  text-decoration: none;
+  text-align: left;
+  margin-bottom: 10px;
+  color: $color-text;
+}
+
+.wrapInput {
+  width: 100%;
+  margin: 52px 17px 27px 0;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: $color-avatar;
+  border: 1px solid $color-border-avatar;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-family: $font-family-main;
+  color: $color-background;
+  margin: 8px 10px 9px 8px;
+}
