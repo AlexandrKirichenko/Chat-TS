@@ -28,7 +28,7 @@ export interface AvatarProps {
     value?: string;
     nameAvatar: string;
     sizeAvatar?: string;
-    setMenu?: (values: boolean) => void;
+    setMenu?:(values: boolean) => void;
 }
 
 export interface AvatarInputProps {

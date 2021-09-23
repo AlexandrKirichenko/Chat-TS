@@ -16,12 +16,12 @@ const Avatar: React.FC<AvatarProps> = ({value, nameAvatar, sizeAvatar = "",setMe
     }
     
     useEffect(()=>{
-     
+        
         setIsLoadError(false);
     }, [value]);
     
     return (
-        <div className={style.wrap} onClick={() => setMenu(true)}>
+        <div className={style.wrap} onClick={() => setMenu && setMenu(true)}>
             {value &&
             <img className={classnames(style.avatar, style[sizeAvatar])} src={isLoadError ? DEFAULT_AVATAR : value}
                  onError={handleError}/>}

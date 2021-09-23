@@ -11,7 +11,7 @@ interface DropdownProps {
 const Dropdown: React.FC<DropdownProps> = ({children, isShow}) => {
     
     return (
-        <div className={style.wrap}>{children}</div>
+        {isShow} && <div className={style.wrap}>{children}</div>
     )
 }
 
