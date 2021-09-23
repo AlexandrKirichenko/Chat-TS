@@ -22,8 +22,6 @@ export interface IAuthContext {
     setAutorized: (values: boolean) => void;
     user: User | null;
     setUser: (values: User | null) => void;
-    modalActive: boolean;
-    setModalActive: (values: boolean ) => void;
 }
 
 export const AuthContext = React.createContext<IAuthContext | null>(null);
@@ -31,8 +29,7 @@ export const AuthContext = React.createContext<IAuthContext | null>(null);
 function App() {
     const [isAuthorized, setAutorized] = useState<boolean>(false);
     const [user, setUser] = useState<User | null>(null);
-    const [modalActive, setModalActive] = useState<boolean> (false);
-    const AuthContextData = {isAuthorized, setAutorized, user, setUser,modalActive, setModalActive};
+    const AuthContextData = {isAuthorized, setAutorized, user, setUser};
     
     const {data} = useQuery(ME);
     const history = useHistory();

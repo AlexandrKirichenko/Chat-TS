@@ -9,18 +9,19 @@ import Dropdown from './../Dropdown'
 interface HeaderProps {
     sizeAvatar?: string;
     nameAvatar: string;
-    modalActive?: boolean;
-    setModalActive?: (values: boolean) => void;
+    showUserMenu?: boolean;
+    setShowUserMenu?: (values: boolean) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({sizeAvatar, nameAvatar}) => {
     const context = useContext(AuthContext);
+    const [showUserMenu, setShowUserMenu] = useState(false);
     const history = useHistory();
     if (context === null) {
         return null;
     }
    
-    const {user, setAutorized, isAuthorized, setUser,modalActive, setModalActive} = context;
+    const {user, setAutorized, isAuthorized, setUser} = context;
     
     const handleLogout = () => {
         setAutorized(false);
@@ -56,8 +57,9 @@ const Header: React.FC<HeaderProps> = ({sizeAvatar, nameAvatar}) => {
                     <div>
                         {isAuthorized && user ?
                             <div>
-                                <Avatar value={user.avatar} nameAvatar={user.login} sizeAvatar={'small'} active={modalActive} setActive={setModalActive}/>
-                                <Dropdown >
+                                
+                                    <Avatar value={user.avatar} nameAvatar={user.login} sizeAvatar={'small'} setMenu={setShowUserMenu}/>
+                                <Dropdown isShow={showUserMenu} >
                                     <ul className={style.nav}>
                                         <li>Profile</li>
                                         <li onClick={handleLogout}>Logout</li>
