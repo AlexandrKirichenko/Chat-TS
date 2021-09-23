@@ -58,12 +58,14 @@ const Header: React.FC<HeaderProps> = ({sizeAvatar, nameAvatar}) => {
                         {isAuthorized && user ?
                             <div>
                                 <Avatar value={user.avatar} nameAvatar={user.login} sizeAvatar={'small'} userMenu={showUserMenu} setMenu={setShowUserMenu}/>
-                                {/*<div className={style.fullScreen}></div>*/}
+                                <div className={style.fullScreen}></div>
                                 <Dropdown isShow={showUserMenu} >
-                                    <ul className={style.nav}>
-                                        <li>Profile</li>
-                                        <li onClick={handleLogout}>Logout</li>
-                                    </ul>
+                                    <>
+                                        <ul className={style.nav}>
+                                            <li>Profile</li>
+                                            <li onClick={handleLogout}>Logout</li>
+                                        </ul>
+                                    </>
                                 </Dropdown >
                             </div>
                             
