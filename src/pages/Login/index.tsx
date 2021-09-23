@@ -20,7 +20,7 @@ export interface UserCredentials {
 const Login: React.FC = () => {
     
     const [doLogin, {loading, error, data}] = useLazyQuery(SIGIN);
-
+    const history = useHistory();
     
     const validationSchema = yup.object({
         login: yup
@@ -57,6 +57,7 @@ const Login: React.FC = () => {
             localStorage.setItem('token', token);
             setAutorized(true);
             setUser(data.signIn.user);
+            history.push(PATH_CHAT_BLOCK)
         }
     }, [data])
     

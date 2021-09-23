@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import Avatar from '../../components/Avatar'
 import Input from '../../components/Input'
 import {AvatarInputProps} from '../../types'

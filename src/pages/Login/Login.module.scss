@@ -2,10 +2,9 @@
 
 .wrap {
   max-width: 1440px;
-
   background: $color-background;
   font-family: $font-family-main;
-  font-weight: 400;
+  font-weight: $font-weight-normal;;
   min-height: 100vh;
 }
 

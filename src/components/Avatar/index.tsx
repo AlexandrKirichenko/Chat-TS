@@ -7,6 +7,7 @@ import {AvatarProps} from "../../types";
 const DEFAULT_AVATAR = "https://www.tremplin-numerique.org/wp-content/uploads/2021/08/1629557521_Comment-changer-votre-photo-de-profil-Discord.png";
 
 const Avatar: React.FC<AvatarProps> = ({value, nameAvatar, sizeAvatar = ""}) => {
+    
     const [isLoadError, setIsLoadError] = useState(false);
     
     const handleError = () => {
@@ -20,7 +21,7 @@ const Avatar: React.FC<AvatarProps> = ({value, nameAvatar, sizeAvatar = ""}) => 
     }, [value]);
     
     return (
-        <div className={style.wrap}>
+        <div className={style.wrap} >
             {value &&
             <img className={classnames(style.avatar, style[sizeAvatar])} src={isLoadError ? DEFAULT_AVATAR : value}
                  onError={handleError}/>}

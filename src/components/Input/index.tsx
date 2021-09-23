@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import style from './Input.module.scss'
 import './Input.module.scss'
 import {InputProps} from "../../types";
