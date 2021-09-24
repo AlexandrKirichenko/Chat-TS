@@ -16,7 +16,6 @@ const Avatar: React.FC<AvatarProps> = ({value, nameAvatar, sizeAvatar = "",setMe
     }
     
     useEffect(()=>{
-        
         setIsLoadError(false);
     }, [value]);
     
