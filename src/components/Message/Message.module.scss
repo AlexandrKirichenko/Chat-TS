@@ -1,0 +1,21 @@
+@import "../../constants";
+
+.wrapMessage {
+  max-width: 796px;
+  display: flex;
+  
+}
+
+.messageBlock {
+ 
+  mex-width: 745px;
+  
+  background-color: #01C5C4;
+  box-shadow: $box-shadow;
+  border-radius: $border-radius-me;
+  background-color:$color-input-border;
+  &.notMe {
+    border-radius:16px 4px 16px 4px;
+    background-color:$color-secondary;
+  }
+}
