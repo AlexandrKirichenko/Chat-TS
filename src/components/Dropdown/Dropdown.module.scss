@@ -1,12 +1,7 @@
-.wrap {
-  
-  position: absolute;
-  color: black;
-  right: 15%;
-  &_active {
-    //visible: hidden;
+@import "../../constants";
+
+.wrap_active {
     opacity: 0;
-    ul li {text-decoration: none;}
   }
-}
+
 

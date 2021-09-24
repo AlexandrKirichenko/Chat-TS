@@ -6,7 +6,7 @@ import './Dropdown.module.scss';
 interface DropdownProps {
     children: React.ReactNode | React.FC;
     isShow: boolean;
-    handleLogout: any;
+    handleLogout: () => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({children, handleLogout, isShow}) => {

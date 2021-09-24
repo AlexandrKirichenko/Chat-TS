@@ -6,14 +6,16 @@ import Avatar from '../Avatar'
 import style from './Header.module.scss'
 import Dropdown from './../Dropdown'
 import useOutsideClick from './../hooks/useOutsideClick'
-import DropdownSet from './../Dropdown'
+import DropdownSet from './../DropdownSet'
 
 interface HeaderProps {
     sizeAvatar?: string;
     nameAvatar: string;
     showUserMenu?: boolean;
     setShowUserMenu?: (values: boolean) => void;
+    handleLogout?: (values: string) => void;
 }
+
 const Header: React.FC<HeaderProps> = () => {
     const context = useContext(AuthContext);
     const ref = useRef(null) as any;
@@ -23,6 +25,7 @@ const Header: React.FC<HeaderProps> = () => {
     if (context === null) {
         return null;
     }
+    
     const {user, setAutorized, isAuthorized, setUser} = context;
     const handleLogout = () => {
         setAutorized(false);
@@ -30,9 +33,11 @@ const Header: React.FC<HeaderProps> = () => {
         setUser(null);
         localStorage.removeItem(LS_TOKEN_KEY);
     }
+    
     const handleLogin = () => {
         history.push(PATH_LOGIN);
     }
+    
     return (
         <>
             <div className={style.header}>
@@ -46,7 +51,7 @@ const Header: React.FC<HeaderProps> = () => {
                             <div className={style.dropdownWrapper} ref={ref}>
                                 <Avatar value={user.avatar} nameAvatar={user.login} sizeAvatar={'small'} userMenu={showUserMenu} setMenu={setShowUserMenu}/>
                                 <Dropdown isShow={showUserMenu} handleLogout={handleLogout}>
-                                     <DropdownSet handleLogout={handleLogout}/>
+                                     <DropdownSet handleLogout={handleLogout }/>
                                 </Dropdown >
                             </div>
                             
