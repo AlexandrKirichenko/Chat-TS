@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import Avatar from '../../components/Avatar'
 import Input from '../../components/Input'
 import {AvatarInputProps} from '../../types'
@@ -49,7 +49,7 @@ const AvatarInput: React.FC<AvatarInputProps> = ({
         <>
             <div className={style.wrapLabel}>logo</div>
             <div className={style.wrap}>
-                <Avatar value={internalUrl ? internalUrl : ''} nameAvatar={nameAvatar}/>
+                <Avatar value={internalUrl ? internalUrl : ''} nameAvatar={nameAvatar} />
                 <div className={style.wrapInput}>
                     <Input
                         name={name}

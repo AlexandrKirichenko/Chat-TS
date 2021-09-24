@@ -6,7 +6,7 @@
   align-items: center;
   border: 2px dashed $color-avatar;
   border-radius: 6px;
-
+ 
 }
 
 .wrapLabel {
@@ -33,7 +33,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 400;
+  font-weight: $font-weight-normal;;
   font-family: $font-family-main;
   color: $color-background;
   margin: 8px 10px 9px 8px;

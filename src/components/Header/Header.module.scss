@@ -1,15 +1,40 @@
 @import '../../constants';
 
 .header {
-  padding: 30px;
-  display: flex;
-  justify-content: space-between;
   background-color: $color-input-border;
-  color: white;
+  color: $color-background;
+  width: 100%;
+  max-height: 48px;
   
+  .headerText{
+    font-family:$font-family-main;
+    color: $color-background;
+    font-weight: $font-weight-normal;
+    font-size: 24px;
+  }
+  
+
+  .headerWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1440px;
+    margin: 0 auto;
+    .dropdownWrapper{
+      position:relative;
+    }
+  }
   a {
     text-decoration: none;
-    color: white;
+    color: $color-background;
   }
+  .login {
+    cursor: pointer;
+    padding: 19px 8px 13px 0;
+  }
+}
+
+.nav {
+  text-decoration: none;
 }
 
