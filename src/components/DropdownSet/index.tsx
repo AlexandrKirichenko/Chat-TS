@@ -10,10 +10,14 @@ const DropdownSet: React.FC<DropdownPropsSet> = ({handleLogout}) => {
     
     return (
         <div className={style.nav}>
-            <ul className={style.list}>
-                <li>Profile</li>
-                <li onClick={handleLogout}>Logout</li>
-            </ul>
+            <div className={style.list}>
+                <div className={style.li}>Profile</div>
+                <div className={style.separatorWrapper}>
+                    <div>&nbsp;</div>
+                </div>
+                <div className={style.li} onClick={handleLogout}>Logout</div>
+            </div>
+            
         </div>
        
     )

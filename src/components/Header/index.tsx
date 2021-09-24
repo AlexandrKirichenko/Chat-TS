@@ -42,7 +42,6 @@ const Header: React.FC<HeaderProps> = () => {
         <>
             <div className={style.header}>
                 <div className={style.headerWrapper}>
-             
                     <div className={style.headerText}>
                         <Link to={PATH_CHAT_BLOCK}>GQL Chat</Link>
                     </div>
@@ -54,7 +53,6 @@ const Header: React.FC<HeaderProps> = () => {
                                      <DropdownSet handleLogout={handleLogout }/>
                                 </Dropdown >
                             </div>
-                            
                             : <div className={style.login} onClick={handleLogin}>Login</div>}
                     </div>
                 </div>
