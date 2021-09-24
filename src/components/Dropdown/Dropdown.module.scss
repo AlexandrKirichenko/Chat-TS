@@ -1,16 +1,12 @@
 .wrap {
-  text-decoration: none;
+  
   position: absolute;
   color: black;
+  right: 15%;
   &_active {
     //visible: hidden;
     opacity: 0;
+    ul li {text-decoration: none;}
   }
 }
 
-.screen {
-  z-index: 1000;
-  //opacity: 0;
-  height: 100vh;
-  width: 100vw;
-}

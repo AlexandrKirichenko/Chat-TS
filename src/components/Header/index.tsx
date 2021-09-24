@@ -1,10 +1,12 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useRef} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import {AuthContext} from '../../App'
 import {LS_TOKEN_KEY, PATH_CHAT_BLOCK, PATH_LOGIN} from '../../config'
 import Avatar from '../Avatar'
 import style from './Header.module.scss'
 import Dropdown from './../Dropdown'
+import useOutsideClick from './../hooks/useOutsideClick'
+import DropdownSet from './../Dropdown'
 
 interface HeaderProps {
     sizeAvatar?: string;
@@ -12,60 +14,39 @@ interface HeaderProps {
     showUserMenu?: boolean;
     setShowUserMenu?: (values: boolean) => void;
 }
-
-const Header: React.FC<HeaderProps> = ({sizeAvatar, nameAvatar}) => {
+const Header: React.FC<HeaderProps> = () => {
     const context = useContext(AuthContext);
+    const ref = useRef(null) as any;
     const [showUserMenu, setShowUserMenu] = useState(false);
+    useOutsideClick(ref, () => setShowUserMenu(false))
     const history = useHistory();
     if (context === null) {
         return null;
     }
-   
     const {user, setAutorized, isAuthorized, setUser} = context;
-    
     const handleLogout = () => {
         setAutorized(false);
         history.push(PATH_LOGIN);
         setUser(null);
         localStorage.removeItem(LS_TOKEN_KEY);
     }
-    
     const handleLogin = () => {
         history.push(PATH_LOGIN);
     }
-    
     return (
         <>
             <div className={style.header}>
                 <div className={style.headerWrapper}>
-                    {/*{user ?*/}
-                    {/*    <div>*/}
-                    {/*        <div>login: {user.login}</div>*/}
-                    {/*        <div>avatar: {user.avatar}</div>*/}
-                    {/*        <Avatar value={user.avatar} nameAvatar={'123'} sizeAvatar={''}/>*/}
-                    {/*        <div>email: {user.email}</div>*/}
-                    {/*    </div>*/}
-                    {/*    : null}*/}
-                    {/*<div>{JSON.stringify(user, null, 2)}</div>*/}
-                    {/*<div>*/}
-                    {/*    <Link to={PATH_REGISTRATION}>registration</Link>*/}
-                    
-                    {/*</div>*/}
+             
                     <div className={style.headerText}>
                         <Link to={PATH_CHAT_BLOCK}>GQL Chat</Link>
                     </div>
                     <div>
                         {isAuthorized && user ?
-                            <div>
+                            <div className={style.dropdownWrapper} ref={ref}>
                                 <Avatar value={user.avatar} nameAvatar={user.login} sizeAvatar={'small'} userMenu={showUserMenu} setMenu={setShowUserMenu}/>
-                                <div className={style.fullScreen}></div>
-                                <Dropdown isShow={showUserMenu} >
-                                    <>
-                                        <ul className={style.nav}>
-                                            <li>Profile</li>
-                                            <li onClick={handleLogout}>Logout</li>
-                                        </ul>
-                                    </>
+                                <Dropdown isShow={showUserMenu} handleLogout={handleLogout}>
+                                     <DropdownSet handleLogout={handleLogout}/>
                                 </Dropdown >
                             </div>
                             
