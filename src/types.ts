@@ -42,3 +42,12 @@ export interface AvatarInputProps {
     url?: string;
     nameAvatar: string;
 }
+
+export interface MessageProp {
+    id: string,
+    description: string,
+    userId: number,
+    login: string;
+    avatar?: string;
+    itsMe: boolean;
+}
