@@ -52,3 +52,17 @@ export const ME = gql`
         }
     }
 `;
+
+export const GET_ALL_MESSAGES = gql`
+    query getAllMessages {
+        getAllMessages {
+            id
+            description
+            userId
+            user{
+                login
+                avatar
+            }
+        }
+    }
+`;
