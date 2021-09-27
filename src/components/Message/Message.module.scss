@@ -2,24 +2,21 @@
 
 .wrapMessage {
   display: flex;
-  //align-items: center;
-  &.reverse {
+  &.secondary {
     flex-direction: row-reverse;
   }
   
   .messageBlock {
     max-width: 745px;
-    background-color: #01C5C4;
+    padding: 10px;
     box-shadow: $box-shadow;
     border-radius: $border-radius-me;
     background-color:$color-input-border;
     margin:7px 0;
-    &.notMe {
+    
+    &.secondary {
       border-radius:16px 4px 16px 4px;
       background-color:$color-secondary;
-    
     }
   }
 }
-
-

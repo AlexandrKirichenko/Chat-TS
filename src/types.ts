@@ -51,3 +51,13 @@ export interface MessageProp {
     avatar?: string;
     itsMe: boolean;
 }
+
+export interface MessageItem {
+    "user": {
+        "login": string,
+        "email": string,
+        "avatar": string,
+        "id": string
+        }
+        itsMe: boolean,
+}

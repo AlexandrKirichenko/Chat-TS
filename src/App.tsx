@@ -43,6 +43,7 @@ function App() {
     }, [data]);
     
     return (
+        
         <>
             <AuthContext.Provider value={AuthContextData}>
                 <Header nameAvatar={''}/>
