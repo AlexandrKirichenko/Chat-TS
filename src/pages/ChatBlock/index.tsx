@@ -32,7 +32,7 @@ const ChatBlock: React.FC = () => {
     if (user === null) {
         return null;
     }
-    console.log(user?.id)
+  
     
     return (
         <>
