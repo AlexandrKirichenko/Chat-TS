@@ -7,15 +7,16 @@
 }
 
 .messageBlock {
- 
-  mex-width: 745px;
-  
+  max-width: 745px;
   background-color: #01C5C4;
   box-shadow: $box-shadow;
   border-radius: $border-radius-me;
   background-color:$color-input-border;
+  margin-bottom:14px;
   &.notMe {
     border-radius:16px 4px 16px 4px;
     background-color:$color-secondary;
+    justify-content: flex-end;
+    flex-direction: revert;
   }
 }
