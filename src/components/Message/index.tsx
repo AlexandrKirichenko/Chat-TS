@@ -5,11 +5,15 @@ import Avatar from '../Avatar'
 import style from './Message.module.scss';
 import './Message.module.scss';
 
-interface DropdownPropsSet {
+interface MessageProp {
+    id: string,
+    description: string,
+    userId: number,
+    login: string;
+    avatar?: string;
     itsMe: boolean;
 }
-
-const Message: React.FC<DropdownPropsSet> = ({itsMe}) => {
+const Message: React.FC<MessageProp> = ({itsMe}) => {
     const context = useContext(AuthContext);
     if (context === null) {
         return null;
