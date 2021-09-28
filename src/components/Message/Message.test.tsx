@@ -1,9 +1,6 @@
-import {render, screen} from '@testing-library/react'
 
 import React from 'react'
-import ReactDOM from 'react-dom';
 import Message, {MessageProp} from './index'
-import ReactTestUtils from 'react-dom/test-utils';
 import {create, act} from 'react-test-renderer';
 
 const messageText = 'Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
@@ -13,7 +10,7 @@ const messageText = 'Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. 
 const defaultProps: MessageProp = {
     itsMe: false,
     login: 'login 1',
-    avatar: 'https://avatarfiles.alphacoders.com/798/79894.jpg',
+    avatar: '',
     messageText,
     userId: 1,
     id: '1'
