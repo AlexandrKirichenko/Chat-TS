@@ -4,7 +4,7 @@ import Avatar from '../Avatar'
 import style from './Message.module.scss';
 import './Message.module.scss';
 
-interface MessageProp {
+export interface MessageProp {
     id: string,
     messageText: string,
     userId: number,
@@ -27,5 +27,4 @@ const Message: React.FC<MessageProp> = ({itsMe, avatar, login, messageText}) => 
 }
 
 export default Message;
-
 

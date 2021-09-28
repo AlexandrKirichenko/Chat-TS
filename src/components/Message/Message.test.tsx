@@ -1,21 +1,26 @@
 import {render, screen} from '@testing-library/react'
 import React from 'react'
-import Message from './index'
+import Message, {MessageProp} from './index'
 
+const messageText = 'Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
+    'cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt ' +
+    'tempore vitae?'
 
+const defaultProps: MessageProp = {
+    itsMe: false,
+    login: 'login 1',
+    avatar: 'https://avatarfiles.alphacoders.com/798/79894.jpg',
+    messageText,
+    userId: 1,
+    id: '1'
+}
 
 describe('Message component', () => {
     it('Message rendering', () => {
         const message = render(
             <>
                 <Message
-                    key={1}
-                    itsMe={false}
-                    login={'login 1'}
-                    avatar={avatar}
-                    messageText={messageText}
-                    userId={1}
-                    id={'1'}
+                    {...defaultProps}
                 />
             </>
         )
@@ -23,15 +28,10 @@ describe('Message component', () => {
         
     })
     it('dinamyc styles not adds when flag true', () => {
+            const props = {...defaultProps, itsMe: true}
             render(
                 <Message
-                    key={2}
-                    itsMe={true}
-                    login={'login 2'}
-                    avatar={avatar2}
-                    messageText={messageText2}
-                    userId={2}
-                    id={'2'}
+                    {...props}
                 />
             )
             expect(screen.getByTestId('message__block')).toHaveClass('secondary')
@@ -39,15 +39,10 @@ describe('Message component', () => {
         }
     )
     it('dinamyc styles not adds when flag false', () => {
+            const props = {...defaultProps, itsMe: false};
             render(
                 <Message
-                    key={1}
-                    itsMe={false}
-                    login={'login 1'}
-                    avatar={'avatarUrl'}
-                    messageText={messageText}
-                    userId={1}
-                    id={'1'}
+                    {...props}
                 />
             )
             expect(screen.getByTestId('message__block')).not.toHaveClass('secondary')
@@ -55,15 +50,6 @@ describe('Message component', () => {
         }
     )
 })
-
-const avatar = 'https://avatarfiles.alphacoders.com/798/79894.jpg'
-const messageText = 'Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
-    'cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt ' +
-    'tempore vitae?'
-const messageText2 = 'Lorem2 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
-    'cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt ' +
-    'tempore vitae?'
-const avatar2 = 'https://i.natgeofe.com/n/9135ca87-0115-4a22-8caf-d1bdef97a814/75552_square.jpg'
 
 
 
