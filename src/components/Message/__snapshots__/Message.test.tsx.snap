@@ -7,6 +7,7 @@ Object {
     <div>
       <div
         class="wrapMessage"
+        data-testid="message__block"
       >
         <div
           class="wrap"
@@ -18,6 +19,7 @@ Object {
         </div>
         <div
           class="messageBlock"
+          data-testid="message"
         >
           Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt tempore vitae?
         </div>
@@ -27,6 +29,7 @@ Object {
   "container": <div>
     <div
       class="wrapMessage"
+      data-testid="message__block"
     >
       <div
         class="wrap"
@@ -38,6 +41,7 @@ Object {
       </div>
       <div
         class="messageBlock"
+        data-testid="message"
       >
         Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt tempore vitae?
       </div>
@@ -96,3 +100,5 @@ Object {
   "unmount": [Function],
 }
 `;
+
+exports[`Message component renders correctly 1`] = `null`;

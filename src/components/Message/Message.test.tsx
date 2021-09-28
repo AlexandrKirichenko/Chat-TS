@@ -1,60 +1,49 @@
-import {render,screen} from '@testing-library/react';
-import React from 'react'
-import Message from './index';
+import React from "react";
+import Message, {MessageProp} from "./index";
+import {create, act} from "react-test-renderer";
+import TestRenderer from 'react-test-renderer';
 
-const avatarUrl  = 'https://avatarfiles.alphacoders.com/798/79894.jpg';
-const description= 'Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
-    'cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt ' +
-    'tempore vitae?'
-const description2='Lorem2 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
-    'cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt ' +
-    'tempore vitae?'
-const avatarUrl2 ='https://i.natgeofe.com/n/9135ca87-0115-4a22-8caf-d1bdef97a814/75552_square.jpg'
-describe('Message component', () => {
-    it('Message rendering', () => {
-        
-        const message = render(
-            <>
-                <Message
-                    key={1}
-                    itsMe={false}
-                    login={'login 1'}
-                    avatar={avatarUrl}
-                    description={description}
-                    userId={1}
-                    id={'1'}
-                />
-            </>
-        );
-        expect(message).toMatchSnapshot();
-        
-    })
-    it('dinamyc styles works', () => {
-            render(
-                    <Message
-                        key={1}
-                        itsMe={false}
-                        login={'login 1'}
-                        avatar={'avatarUrl'}
-                        description={description}
-                        userId={1}
-                        id={'1'}
-                    />
-                    )
-            expect(screen.getByText(/Lorem1/i)).toHaveClass('messageBlock');
-       //     expect(screen.getByText(/Lorem1/i)).toHaveClass('wrapMessage');
-        render(
-            <Message
-                key={2}
-                itsMe={true}
-                login={'login 2'}
-                avatar={avatarUrl2}
-                description={description2}
-                userId={2}
-                id={'2'}
-            />
-        )
-        expect(screen.getByText(/Lorem2/i)).toHaveClass('secondary');
-        }
-    )
-})
+const messageText =
+    "Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur " +
+    "cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt " +
+    "tempore vitae?";
+
+const defaultProps: MessageProp = {
+    itsMe: false,
+    login: "login 1",
+    avatar: "",
+    messageText,
+    userId: 1,
+    id: "1",
+};
+
+describe("Message component", () => {
+    it("renders correctly", () => {
+        act(() => {
+            const container = create(<Message {...defaultProps} itsMe={true}/>).toJSON();
+            expect(container).toMatchSnapshot();
+        });
+    });
+    it("dinamyc styles not adds when flag true", () => {
+        const testRenderer = TestRenderer.create(<Message {...defaultProps} itsMe={true}/>);
+        const testInstance = testRenderer.root;
+        expect(testInstance.findByProps({"data-testid": "message__block"}).props['className']).toBe('wrapMessage secondary');
+        expect(testInstance.findByProps({"data-testid": "message"}).props['className']).toBe('messageBlock secondary');
+    });
+    
+    it("dinamyc styles not adds when flag false", () => {
+        const testRenderer = TestRenderer.create(<Message {...defaultProps} itsMe={false}/>);
+        const testInstance = testRenderer.root;
+        expect(testInstance.findByProps({"data-testid": "message__block"}).props['className']).not.toBe('secondary');
+        expect(testInstance.findByProps({"data-testid": "message"}).props['className']).not.toBe('secondary');
+    });
+});
+
+
+
+
+
+
+
+
+
