@@ -1,4 +1,3 @@
-import {render, screen} from '@testing-library/react'
 import classnames from 'classnames'
 import React from 'react'
 import Avatar from '../Avatar'
