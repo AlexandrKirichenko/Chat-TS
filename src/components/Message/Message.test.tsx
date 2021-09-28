@@ -1,6 +1,8 @@
 import {render, screen} from '@testing-library/react'
 import React from 'react'
 import Message, {MessageProp} from './index'
+import ReactTestUtils from 'react-dom/test-utils';
+import TestRenderer from 'react-test-renderer';
 
 const messageText = 'Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
     'cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt ' +
@@ -25,7 +27,7 @@ describe('Message component', () => {
             </>
         )
         expect(message).toMatchSnapshot()
-        
+
     })
     it('dinamyc styles not adds when flag true', () => {
             const props = {...defaultProps, itsMe: true}
