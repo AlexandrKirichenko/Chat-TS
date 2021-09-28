@@ -1,6 +1,5 @@
 import classnames from 'classnames'
-import React, {useContext} from 'react'
-import {AuthContext} from '../../App'
+import React from 'react'
 import Avatar from '../Avatar'
 import style from './Message.module.scss';
 import './Message.module.scss';
