@@ -8,7 +8,6 @@ const messageText =
     "cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt " +
     "tempore vitae?";
 
-
 const defaultProps1: MessageProp = {
     itsMe: false,
     login: "login 1",
@@ -37,33 +36,32 @@ describe("Message component", () => {
         });
     });
     
-    it("dinamyc styles not adds when flag true with first props collection", () => {
-        const testRenderer = TestRenderer.create(<Message {...defaultProps1} itsMe={true}/>);
-        const testInstance = testRenderer.root;
-        expect(testInstance.findByProps({"data-testid": "message__block"}).props['className']).toBe('wrapMessage secondary');
-        expect(testInstance.findByProps({"data-testid": "message"}).props['className']).toBe('messageBlock secondary');
-    });
+    it.each([
+        [defaultProps1],
+        [defaultProps2]
     
-    it("dinamyc styles not adds when flag true with second props collection", () => {
-        const testRenderer = TestRenderer.create(<Message {...defaultProps2} itsMe={true}/>);
-        const testInstance = testRenderer.root;
-        expect(testInstance.findByProps({"data-testid": "message__block"}).props['className']).toBe('wrapMessage secondary');
-        expect(testInstance.findByProps({"data-testid": "message"}).props['className']).toBe('messageBlock secondary');
-    });
-    
-    it("dinamyc styles not adds when flag false with first props collection", () => {
-        const testRenderer = TestRenderer.create(<Message {...defaultProps1} itsMe={false}/>);
+    ])('dinamyc styles not adds when flag true', (defaultProps)=>{
+        const testRenderer = TestRenderer.create(<Message {...defaultProps} itsMe={false}/>);
         const testInstance = testRenderer.root;
         expect(testInstance.findByProps({"data-testid": "message__block"}).props['className']).toBe('wrapMessage');
         expect(testInstance.findByProps({"data-testid": "message"}).props['className']).toBe('messageBlock');
-    });
+    })
     
-    it("dinamyc styles not adds when flag false with second props collection", () => {
-        const testRenderer = TestRenderer.create(<Message {...defaultProps2} itsMe={false}/>);
+    it.each([
+        [defaultProps1],
+        [defaultProps2]
+    
+    ])('dinamyc styles not adds when flag false', (defaultProps)=>{
+        const testRenderer = TestRenderer.create(<Message {...defaultProps} itsMe={false}/>);
         const testInstance = testRenderer.root;
         expect(testInstance.findByProps({"data-testid": "message__block"}).props['className']).toBe('wrapMessage');
         expect(testInstance.findByProps({"data-testid": "message"}).props['className']).toBe('messageBlock');
-    });
+    })
+    
+    
+    
+    
+    
 });
 
 
