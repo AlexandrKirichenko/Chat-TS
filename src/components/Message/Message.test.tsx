@@ -1,7 +1,10 @@
 import {render, screen} from '@testing-library/react'
+
 import React from 'react'
+import ReactDOM from 'react-dom';
 import Message, {MessageProp} from './index'
 import ReactTestUtils from 'react-dom/test-utils';
+import {create, act} from 'react-test-renderer';
 
 const messageText = 'Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
     'cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt ' +
@@ -16,12 +19,25 @@ const defaultProps: MessageProp = {
     id: '1'
 }
 
+let container : any;
+
+beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+});
+
+afterEach(() => {
+    document.body.removeChild(container);
+    container = null;
+});
+
+
 describe('Message component', () => {
     it('renders correctly', () => {
-        const tree = ReactTestUtils
-            .create(<Message{...defaultProps} itsMe={true}/>)
-            .toJSON();
-        expect(tree).toMatchSnapshot();
+        act(() => {
+            container = create(<Message{...defaultProps} itsMe={true}/>).toJSON();
+            expect(container).toMatchSnapshot();
+        });
     });
     
     
