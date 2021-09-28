@@ -16,17 +16,16 @@ const defaultProps: MessageProp = {
     id: "1",
 };
 
+const defaultProps2: MessageProp = {
+    itsMe: true,
+    login: "login 2",
+    avatar: "",
+    messageText,
+    userId: 2,
+    id: "2",
+};
+
 let container: any;
-
-beforeEach(() => {
-    container = document.createElement("div");
-    document.body.appendChild(container);
-});
-
-afterEach(() => {
-    document.body.removeChild(container);
-    container = null;
-});
 
 describe("Message component", () => {
     it("renders correctly", () => {
