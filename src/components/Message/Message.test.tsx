@@ -57,11 +57,6 @@ describe("Message component", () => {
         expect(testInstance.findByProps({"data-testid": "message__block"}).props['className']).toBe('wrapMessage');
         expect(testInstance.findByProps({"data-testid": "message"}).props['className']).toBe('messageBlock');
     })
-    
-    
-    
-    
-    
 });
 
 
