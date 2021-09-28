@@ -5,10 +5,10 @@ import Message from '../../components/Message'
 const ChatBlock: React.FC = () => {
     
     const avatar = 'https://avatarfiles.alphacoders.com/798/79894.jpg';
-    const description= 'Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
+    const messageText= 'Lorem1 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
         'cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt ' +
         'tempore vitae?'
-    const description2='Lorem2 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
+    const messageText2='Lorem2 ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aperiam beatae consequatur ' +
         'cupiditate delectus dolore est id maxime mollitia necessitatibus nemo, neque optio quidem quis recusandae sint sunt ' +
         'tempore vitae?'
     const avatar2 ='https://i.natgeofe.com/n/9135ca87-0115-4a22-8caf-d1bdef97a814/75552_square.jpg'
@@ -18,7 +18,7 @@ const ChatBlock: React.FC = () => {
         itsMe: false,
         login: 'login 1',
         avatar: avatar,
-        description: description,
+        messageText: messageText,
         userId: 1,
         id:'1'
     }
@@ -27,19 +27,23 @@ const ChatBlock: React.FC = () => {
         itsMe: true,
         login: 'login 1',
         avatar: avatar2,
-        description: description2,
+        messageText: messageText2,
         userId: 2,
         id:'2'
     }
     
     return (
-        <>
+        <div className={styles.chatWrap}>
+            <div className={styles.sidebar}>
+            
+            </div>
             <div className={styles.chatBlock}>
+               
                 <Message {...messageProps1}
                 />
                 <Message {...messageProps2}/>
             </div>
-        </>
+        </div>
     )
     
 }

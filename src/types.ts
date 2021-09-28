@@ -43,21 +43,3 @@ export interface AvatarInputProps {
     nameAvatar: string;
 }
 
-export interface MessageProp {
-    id: string,
-    description: string,
-    userId: number,
-    login: string;
-    avatar?: string;
-    itsMe: boolean;
-}
-
-export interface MessageItem {
-    "user": {
-        "login": string,
-        "email": string,
-        "avatar": string,
-        "id": string
-        }
-        itsMe: boolean,
-}
