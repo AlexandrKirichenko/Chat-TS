@@ -100,3 +100,5 @@ Object {
   "unmount": [Function],
 }
 `;
+
+exports[`Message component renders correctly 1`] = `null`;
