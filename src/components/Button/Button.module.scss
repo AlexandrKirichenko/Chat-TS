@@ -19,7 +19,10 @@
   &.small {
     width: 83px;
   }
-  
+  &.mediumChat {
+    width: 79px;
+    height: 81px;
+  }
   &.primary {
     background-color: $color-primary;
     &:hover {

@@ -19,6 +19,16 @@ interface MessageProp {
     };
 }
 
+const getMessageProps = (msg: MessageProp, userId: number) => ({
+    key: msg.id,
+    itsMe: msg.userId === userId,
+    messageText: msg.description,
+    login: msg.user.login,
+    userId: msg.userId,
+    avatar: msg.user.avatar,
+    id: msg.id,
+})
+
 const ChatBlock: React.FC = () => {
     const { data, loading } = useQuery(GET_ALL_MESSAGES);
     const messages: MessageProp[] = data ? data?.getAllMessages : null;
@@ -34,26 +44,22 @@ const ChatBlock: React.FC = () => {
     return (
         <>
             <div className={styles.chatBlock}>
-                {messages ? messages.map(msg => (
-                    <>
-                        <div className={styles.sidebar}></div>
-                        
-                        <Message key={msg.id}
-                                 itsMe={msg.userId === Number(user?.id)}
-                                 messageText={msg.description}
-                                 login={msg.user.login}
-                                 userId={msg.userId}
-                                 avatar={msg.user.avatar}
-                                 id={msg.id}
-                        />
-                       
-                    </>
-                    )
-                ) : null}
+                <div className={styles.sidebar}>
+                    <div>Rooms</div>
+                    <div>General</div>
+                    <div>Rooms 1</div>
+                    <div>Rooms 2</div>
+                </div>
+                <div>
+                    {messages ? messages.map(msg => (
+                            <Message{...getMessageProps(msg, Number(user?.id))}/>
+                        )
+                    ) : null}
+                </div>
                 <div className={styles.messageForm}>
-                    <textarea name="textarea"></textarea>
+                    <textarea className={styles.textarea} name="textarea"></textarea>
                     <Button type={'submit'} color={'primary'}
-                            size={'large'}> Send Message</Button>
+                            size={'mediumChat'}> </Button>
                 </div>
             </div>
         </>
@@ -62,31 +68,6 @@ const ChatBlock: React.FC = () => {
 }
 
 export default ChatBlock;
-
-// -------------------------------------------------------------------------
-//     return (
-//
-//
-//
-//
-//         <div className={styles.chatWrap}>
-//             <div className={styles.sidebar}></div>
-//             <div className={styles.chatBlock}>
-//                 <Message {...messageProps}/>
-//                 <div className={styles.messageForm}>
-//                     <textarea name="textarea" >
-//
-//                     </textarea>
-//                     <Button type={"submit"} color={"primary"}
-//                             size={'large'}> Send Message</Button>
-//                 </div>
-//             </div>
-//         </div>
-//     )
-//
-// }
-//
-// export default ChatBlock;
 
 
 

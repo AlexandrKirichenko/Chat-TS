@@ -7,7 +7,7 @@ interface ButtonProps {
     color?: string;
     type: 'button' | 'submit';
     disabled?: boolean;
-    size?: 'small' | 'large';
+    size?: 'small' | 'large'| 'mediumChat';
 }
 
 const Button: React.FC<ButtonProps> = ({color = 'primary', children, size="small", disabled, type = 'submit'}) => {
