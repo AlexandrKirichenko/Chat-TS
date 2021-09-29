@@ -21,11 +21,7 @@ const ChatBlock: React.FC = () => {
     
     return (
         <div className={styles.chatWrap}>
-            <div className={styles.sidebar}>
-            
-            </div>
             <div className={styles.chatBlock}>
-               
                 <Message {...messageProps}/>
             </div>
         </div>
