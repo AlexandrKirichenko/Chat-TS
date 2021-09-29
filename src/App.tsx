@@ -1,10 +1,10 @@
 import {useQuery} from '@apollo/client'
 import React, {useEffect, useState} from 'react'
-import {Route, Switch, useHistory} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import './App.css'
 import Header from './components/Header'
 import Layout from './components/Layout'
-import {PATH_CHAT_BLOCK, PATH_LOGIN, PATH_REGISTRATION} from './config'
+import { PATH_LOGIN, PATH_REGISTRATION} from './config'
 import Login from './pages/Login'
 import Registration from './pages/Registration'
 import {ME} from './schemas'
@@ -31,13 +31,12 @@ function App() {
     const AuthContextData = {isAuthorized, setAutorized, user, setUser};
     
     const {data} = useQuery(ME);
-    const history = useHistory();
+   
     
     useEffect(() => {
         if (data) {
             setAutorized(true);
             setUser(data.me.user);
-            history.push(PATH_CHAT_BLOCK);
         }
     }, [data]);
     
@@ -53,7 +52,6 @@ function App() {
                         </Route>
                         <Route path={PATH_REGISTRATION}><Registration/></Route>
                     </Switch>
-    
                 </Layout>
             </AuthContext.Provider>
         </>
