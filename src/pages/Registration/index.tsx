@@ -21,7 +21,6 @@ const Registration: React.FC = () => {
     useEffect(() => {
         const autorizedUser = data && data.registration
         const token = autorizedUser && autorizedUser.token
-        
         if(token){localStorage.setItem('token', token);}
     },[data,error])
     

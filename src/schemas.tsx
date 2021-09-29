@@ -46,6 +46,7 @@ export const ME = gql`
                 login
                 email
                 avatar
+                id
             }
             token
         }

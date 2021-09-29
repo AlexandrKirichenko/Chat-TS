@@ -8,11 +8,14 @@ $color-border-avatar: #979797;
 $color-user-avatar: #F39233;
 $color-error: #FF6C26;
 $color-text: #6A6868;
+$color-text-messages: #FFFFFF;
+$color-text-avatar: #FFFFFF;
 $color-background: #FFFFFF;
 $color-background-layout: #E7E7E7;
 $color-batton-disabled:#97a8a4;
 
 $font-family-main: Helvetica;
 $font-weight-normal: 400;
-$border-radius: 16px 4px 16px 4px;
+$border-radius: 16px 4px 16px 16px;
+$border-radius-me: 4px 16px 16px 16px;
 $box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.5);

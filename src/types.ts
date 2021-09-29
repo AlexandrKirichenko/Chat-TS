@@ -42,3 +42,4 @@ export interface AvatarInputProps {
     url?: string;
     nameAvatar: string;
 }
+
