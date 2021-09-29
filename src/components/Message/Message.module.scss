@@ -5,6 +5,10 @@
   margin: 0 19px;
   &.secondary {
     flex-direction: row-reverse;
+    .messageBlock {
+      border-radius:$border-radius;
+      background-color:$color-secondary;
+    }
   }
   .messageBlock {
     padding: 10px;
@@ -21,9 +25,5 @@
     text-align: left;
     padding-top: 9px;
     padding-bottom: 9px;
-    &.secondary {
-      border-radius:$border-radius;
-      background-color:$color-secondary;
-    }
   }
 }

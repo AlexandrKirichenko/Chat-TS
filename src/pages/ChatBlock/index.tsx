@@ -11,7 +11,7 @@ const ChatBlock: React.FC = () => {
     
     const messageProps = {
         key: 1,
-        itsMe: false,
+        itsMe: true,
         login: 'login 1',
         avatar: avatar,
         messageText: messageText,

@@ -27,14 +27,12 @@ describe("Message component", () => {
     it("dinamyc styles not adds when flag true", () => {
         const testRenderer = TestRenderer.create(<Message {...defaultProps} itsMe={true}/>);
         const testInstance = testRenderer.root;
-        expect(testInstance.findByProps({"data-testid": "message"}).props['className'].includes('secondary')).toBe(true);
         expect(testInstance.findByProps({"data-testid": "message__block"}).props['className'].includes('secondary')).toBe(true);
     });
     
     it("dinamyc styles not adds when flag false", () => {
         const testRenderer = TestRenderer.create(<Message {...defaultProps} itsMe={false}/>);
         const testInstance = testRenderer.root;
-        expect(testInstance.findByProps({"data-testid": "message"}).props['className'].includes('secondary')).toBe(false);
         expect(testInstance.findByProps({"data-testid": "message__block"}).props['className'].includes('secondary')).toBe(false);
     });
 });
