@@ -13,6 +13,7 @@ export interface MessageProp {
     itsMe: boolean;
 }
 
+
 const Message: React.FC<MessageProp> = ({itsMe, avatar, login, messageText}) => {
     
     return (
