@@ -46,14 +46,15 @@ const ChatBlock: React.FC = () => {
                                  avatar={msg.user.avatar}
                                  id={msg.id}
                         />
-                        <div className={styles.messageForm}>
-                            <textarea name="textarea"></textarea>
-                            <Button type={'submit'} color={'primary'}
-                                    size={'large'}> Send Message</Button>
-                        </div>
+                       
                     </>
                     )
                 ) : null}
+                <div className={styles.messageForm}>
+                    <textarea name="textarea"></textarea>
+                    <Button type={'submit'} color={'primary'}
+                            size={'large'}> Send Message</Button>
+                </div>
             </div>
         </>
     )
