@@ -52,3 +52,35 @@ export const ME = gql`
         }
     }
 `;
+
+export const GET_ALL_MESSAGES = gql`
+    query getAllMessages {
+        getAllMessages {
+            id
+            description
+            userId
+            user{
+                login
+                avatar
+            }
+        }
+    }
+`;
+
+export const MESSAGE_ADDED = gql`
+    subscription messageAdded {
+    messageAdded(date: "2021-09-29T11:48:04.732Z") {
+        id
+        description
+        userId
+        convId
+        date
+        user {
+            id
+            login
+            email
+            avatar
+        }
+    }
+}
+`;
