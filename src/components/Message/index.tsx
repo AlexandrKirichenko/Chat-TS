@@ -16,9 +16,9 @@ export interface MessageProp {
 const Message: React.FC<MessageProp> = ({itsMe, avatar, login, messageText}) => {
     
     return (
-        <div data-testid="message__block" className={classnames(style.wrapMessage, {[style.secondary]: itsMe})}>
+        <div data-testid="message__block" className={classnames(style.wrapMessage, {[style.secondary]: !itsMe})}>
             <Avatar value={avatar} nameAvatar={login} sizeAvatar={'small'}/>
-            <div  className={style.messageBlock}>
+            <div className={style.messageBlock}>
                 {messageText}
             </div>
         </div>
