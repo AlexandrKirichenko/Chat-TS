@@ -1,9 +1,9 @@
-import {useQuery} from '@apollo/client'
+import {useQuery,useSubscription} from '@apollo/client'
 import React, {useContext,useRef} from 'react'
 import {AuthContext} from '../../App'
 import Button from '../../components/Button'
 import Message from '../../components/Message'
-import {GET_ALL_MESSAGES} from '../../schemas'
+import {GET_ALL_MESSAGES, MESSAGE_ADDED} from '../../schemas'
 import styles from './ChatBlock.module.scss'
 
 
@@ -21,13 +21,20 @@ interface MessageProp {
 }
 
 const ChatBlock: React.FC = () => {
-    const {data, loading} = useQuery(GET_ALL_MESSAGES)
+    // const {data, loading} = useQuery(GET_ALL_MESSAGES)
+    const { data } = useSubscription(MESSAGE_ADDED)
+    
+    // const { subscribeToMore, ...result }  = useQuery(GET_ALL_MESSAGES);
     const messages: MessageProp[] = data ? data?.getAllMessages : null
     const context = useContext(AuthContext)
     // const refToButton = useRef<HTMLElement>(null)
     // const refToChat = useRef<HTMLElement>(null)
 
+    // ----------------------
+    const { subscribeToMore, ...result } = useQuery(GET_ALL_MESSAGES);
     
+    
+    // -------------------
     if (context === null) {
         return null
     }
@@ -39,8 +46,24 @@ const ChatBlock: React.FC = () => {
     const current = true
     
     return (
+        
         isAuthorized ?
         <>
+            {...result}
+            subscribeToNewComments={() =>
+            subscribeToMore({
+                document: GET_ALL_MESSAGES,
+                updateQuery: (prev, { subscriptionData }) => {
+                    if (!subscriptionData.data) return prev;
+                    const newFeedItem = subscriptionData.data.commentAdded;
+                    return Object.assign({}, prev, {
+                        post: {
+                            comments: [newFeedItem, ...prev.post.comments]
+                        }
+                    });
+                }
+            })
+        }
             <div className={styles.wrapper} >
                 <div className={styles.sidebar}>
                     <div className={styles.control}>
