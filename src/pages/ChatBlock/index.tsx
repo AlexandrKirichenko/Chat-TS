@@ -24,8 +24,8 @@ const ChatBlock: React.FC = () => {
     const {data, loading} = useQuery(GET_ALL_MESSAGES)
     const messages: MessageProp[] = data ? data?.getAllMessages : null
     const context = useContext(AuthContext)
-    const refToButton = useRef<HTMLElement>(null)
-    const refToChat = useRef<HTMLElement>(null)
+    // const refToButton = useRef<HTMLElement>(null)
+    // const refToChat = useRef<HTMLElement>(null)
 
     
     if (context === null) {
@@ -41,7 +41,7 @@ const ChatBlock: React.FC = () => {
     return (
         isAuthorized ?
         <>
-            <div className={styles.wrapper} ref={refToChat}>
+            <div className={styles.wrapper} >
                 <div className={styles.sidebar}>
                     <div className={styles.control}>
                         Rooms
@@ -82,7 +82,7 @@ const ChatBlock: React.FC = () => {
                             </>
                         )
                     ) : null}
-                        <div className={styles.messageForm} ref={refToButton}>
+                        <div className={styles.messageForm} >
                             <textarea name="textarea" placeholder="Type your message"></textarea>
                             <Button type={'submit'} color={'primary'}
                                     size={'mediumChat'}> Send </Button>
