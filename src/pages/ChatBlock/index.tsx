@@ -25,7 +25,7 @@ const ChatBlock: React.FC = () => {
     // const { data } = useSubscription(MESSAGE_ADDED)
     const ScrollDemo = () => {
         
-        const myRef = useRef(null)
+        const myRef = useRef<HTMLElement>(null)
         const executeScroll = () => scrollToRef(myRef)
         const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)
     // const { subscribeToMore, ...result }  = useQuery(GET_ALL_MESSAGES);
