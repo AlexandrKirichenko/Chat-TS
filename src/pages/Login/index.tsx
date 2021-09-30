@@ -72,7 +72,7 @@ const Login: React.FC = () => {
         <>
             <div className={style.wrap}>
                 <div className={style.wrapperLogin}>
-                   
+                    
                     <div className={style.header}>Welcome</div>
                     
                     <form noValidate onSubmit={formik.handleSubmit}>
@@ -99,7 +99,7 @@ const Login: React.FC = () => {
                             <Button type={"submit"} color={"primary"}
                                     size={'small'}> {loading ? "Loading..." : "Login"}</Button>
                         </div>
-                        <ErrorMessage error={error && error.graphQLErrors[0].message}/>
+                        {/*<ErrorMessage error={error && error.graphQLErrors[0].message}/>*/}
                     </form>
                 </div>
             </div>
