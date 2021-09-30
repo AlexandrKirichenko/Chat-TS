@@ -5,9 +5,15 @@
 }
 
 .chatBlock {
-  min-height: 100vh;
+  height: 100vh;
   padding: 16px;
-  flex-grow: 2.7;
+  //flex-grow: 2.7;
+  width: 100%;
+}
+
+.messageList {
+  height: 80%;
+  overflow-y: auto;
 }
 
 .sidebar{
@@ -38,7 +44,7 @@
 .wrapper {
   display: flex;
   overflow: auto;
-  //height: 100vh;
+  height: 100vh;
 }
 
 .sidebar {

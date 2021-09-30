@@ -20,17 +20,19 @@ interface MessageProp {
     };
 }
 
-const scrollToRef = (ref: any) => window.scrollTo(0, ref.current.offsetTop)
-
 const ChatBlock: React.FC = () => {
     const {data, loading} = useQuery(GET_ALL_MESSAGES)
-    const myRef = useRef(null)
-    const executeScroll = () => scrollToRef(myRef)
-
+    const myRef = useRef<HTMLDivElement | null>(null)
+    
     const messages: MessageProp[] = data ? data?.getAllMessages : null
     const context = useContext(AuthContext)
     useEffect(() => {
-        executeScroll()
+        if (myRef.current) {
+            
+            myRef.current.scrollTop=myRef.current?.scrollHeight;
+            
+            console.log(myRef);
+        }
     }, [messages]);
     if (context === null) {
         return null
@@ -67,28 +69,32 @@ const ChatBlock: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.chatBlock}>
-                        {messages ? messages.map(msg => (
-                                <>
-                                    <div className={styles.sidebar}></div>
+                        <div className={styles.messageList} ref={myRef}>
+                            {messages ? messages.map(msg => (
+                                    <>
+                                        <div className={styles.sidebar}></div>
+                                        
+                                        <Message key={msg.id}
+                                                 itsMe={msg.userId === Number(user?.id)}
+                                                 messageText={msg.description}
+                                                 login={msg.user.login}
+                                                 userId={msg.userId}
+                                                 avatar={msg.user.avatar}
+                                                 id={msg.id}
+                                        />
                                     
-                                    <Message key={msg.id}
-                                             itsMe={msg.userId === Number(user?.id)}
-                                             messageText={msg.description}
-                                             login={msg.user.login}
-                                             userId={msg.userId}
-                                             avatar={msg.user.avatar}
-                                             id={msg.id}
-                                    />
-                                
-                                </>
-                            )
-                        ) : null}
-                        <div ref={myRef} className={styles.messageForm}>
+                                    </>
+                                )
+                            ) : null}
+                        </div>
+                        <div  className={styles.messageForm}>
                             <textarea name="textarea" placeholder="Type your message"></textarea>
                             <Button type={'submit'} color={'primary'}
                                     size={'mediumChat'}> Send </Button>
                         </div>
+                    
                     </div>
+                
                 </div>
             </> : <div> You should login </div>
     )
