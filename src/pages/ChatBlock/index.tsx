@@ -5,7 +5,7 @@ import Button from '../../components/Button'
 import Message from '../../components/Message'
 import {GET_ALL_MESSAGES, MESSAGE_ADDED} from '../../schemas'
 import styles from './ChatBlock.module.scss'
-
+import {ReactComponent as TelegramImg } from '../../img/telegram.svg';
 
 interface MessageProp {
     id: string;
@@ -90,7 +90,7 @@ const ChatBlock: React.FC = () => {
                         <div  className={styles.messageForm}>
                             <textarea name="textarea" placeholder="Type your message"></textarea>
                             <Button type={'submit'} color={'primary'}
-                                    size={'mediumChat'}> Send </Button>
+                                    size={'mediumChat'}> <TelegramImg/> </Button>
                         </div>
                     
                     </div>

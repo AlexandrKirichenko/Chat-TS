@@ -21,8 +21,10 @@
   }
   &.mediumChat {
     width: 79px;
-    height: 81px;
+    min-height: 81px;
+    margin: 16px 0 0 0;
   }
+  
   &.primary {
     background-color: $color-primary;
     &:hover {
