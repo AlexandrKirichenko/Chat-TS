@@ -68,8 +68,8 @@ export const GET_ALL_MESSAGES = gql`
 `;
 
 export const MESSAGE_ADDED_SUB = gql`
-    subscription messageAdded {
-        messageAdded(date: "${new Date().toString()}") {
+    subscription messageAdded($date: DateTime!) {
+        messageAdded(date:$date) {
         id
         description
         userId

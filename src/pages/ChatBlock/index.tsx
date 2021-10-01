@@ -22,11 +22,11 @@ interface MessageProp {
 }
 
 const ChatBlock: React.FC = () => {
-    const {data, subscribeToMore} = useQuery(GET_ALL_MESSAGES)
+    const {data} = useSubscription(MESSAGE_ADDED_SUB)
     const [addMessage] = useMutation(CREATE_MESSAGE)
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('');
-    const messages: MessageProp[] = data ? data?.getAllMessages : null
+    const [messages, setMessages] = useState<any[]>([]);
     const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
         addMessage({variables: {description: message}})
@@ -39,18 +39,19 @@ const ChatBlock: React.FC = () => {
         }
     });
     
+    useEffect(()=> {
+        console.log(data);
+        if (data?.messageAdded) {
+            console.log(data?.messageAdded);
+            setMessages(prev=>[...prev, ...data?.messageAdded])
+        }
+    }, [data])
+    
     useEffect(() => {
         if (myRef.current) {
             myRef.current.scrollTop = myRef.current?.scrollHeight;
         }
-        subscribeToMore({
-            document: MESSAGE_ADDED_SUB, updateQuery: (prev, {subscriptionData}) => {
-                if (!subscriptionData) return prev
-                const newMessage = subscriptionData.data.newMessage
-                const updateMessageList = Object.assign({}, prev, {message: [...prev.message, newMessage]})
-                return updateMessageList
-            }
-        })
+        
     }, []);
     
     if (context === null) {
@@ -118,6 +119,5 @@ const ChatBlock: React.FC = () => {
 }
 
 export default ChatBlock;
-
 
 
