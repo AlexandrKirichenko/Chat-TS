@@ -1,11 +1,12 @@
 import {useQuery, useSubscription} from '@apollo/client'
-import React, {useContext, useEffect, useRef} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import {AuthContext} from '../../App'
 import Button from '../../components/Button'
 import Message from '../../components/Message'
-import {GET_ALL_MESSAGES, MESSAGE_ADDED} from '../../schemas'
+import {GET_ALL_MESSAGES, MESSAGE_ADDED_SUB} from '../../schemas'
 import styles from './ChatBlock.module.scss'
 import {ReactComponent as TelegramImg } from '../../img/telegram.svg';
+import {ReactComponent as Plus } from '../../img/plus.svg';
 
 interface MessageProp {
     id: string;
@@ -21,19 +22,35 @@ interface MessageProp {
 }
 
 const ChatBlock: React.FC = () => {
-    const {data, loading} = useQuery(GET_ALL_MESSAGES)
+    const {data,loading,subscribeToMore} = useQuery(GET_ALL_MESSAGES)
     const myRef = useRef<HTMLDivElement | null>(null)
-    
+    const [message, setMessage] = useState('');
     const messages: MessageProp[] = data ? data?.getAllMessages : null
+    
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     setMessage();
+    // }
     const context = useContext(AuthContext)
     useEffect(() => {
         if (myRef.current) {
-            
             myRef.current.scrollTop=myRef.current?.scrollHeight;
-            
-            console.log(myRef);
         }
-    }, [messages]);
+    });
+    
+    useEffect(() => {
+        if (myRef.current) {
+            myRef.current.scrollTop=myRef.current?.scrollHeight;
+        }
+        subscribeToMore({document:MESSAGE_ADDED_SUB, updateQuery:(prev,{subscriptionData})=>
+            {if(!subscriptionData) return prev
+                const newMessage = subscriptionData.data.newMessage
+                const updateMessageList= Object.assign({},prev,{message:[...prev.message, newMessage]})
+                return updateMessageList
+            }
+        })
+    },[]);
+    
     if (context === null) {
         return null
     }
@@ -48,13 +65,7 @@ const ChatBlock: React.FC = () => {
                     <div className={styles.sidebar}>
                         <div className={styles.control}>
                             Rooms
-                            <button className={styles.plus}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
-                                    <path
-                                        d="M236.235 -50.5098L231.529 -50.5098L231.529 -44.8627L225.882 -44.8627L225.882 -40.1569L231.529 -40.1569L231.529 -34.5098L236.235 -34.5098L236.235 -40.1569L241.882 -40.1569L241.882 -44.8627L236.235 -44.8627L236.235 -50.5098Z"
-                                        transform="translate(-225.88235473632812, 50.509803771972656)"/>
-                                </svg>
-                            </button>
+                            <button className={styles.plus}><Plus/></button>
                         </div>
                         <div className={styles.rooms}>
                             <div className={`${styles.room} ${current && styles.current}`}>

@@ -67,7 +67,7 @@ export const GET_ALL_MESSAGES = gql`
     }
 `;
 
-export const MESSAGE_ADDED = gql`
+export const MESSAGE_ADDED_SUB = gql`
     subscription messageAdded {
         messageAdded(date: "${new Date().toString()}") {
         id
@@ -84,3 +84,20 @@ export const MESSAGE_ADDED = gql`
     }
 }
 `;
+
+export const CREATE_MESSAGE = gql`
+    mutation createMessage($description:String!)
+    { createMessage(description:$description){
+        id
+        description
+        userId
+        convId
+        date
+        user {
+            login
+            email
+            avatar
+        }
+    }
+    }
+`
