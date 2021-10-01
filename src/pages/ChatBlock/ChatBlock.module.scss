@@ -1,54 +1,43 @@
 @import "../../constants";
 
-
-
-.chatBlock {
-  padding: 16px;
-  width: 100%;
-}
-
-.messageList {
-  height: 90%;
-  overflow-y: auto;
-}
-
-.sidebar{
-  flex-grow: 1;
-}
-
-.messageFormButton{
-  height: 81px;
-  border-bottom-right-radius: $border-radius-button;
-  background-color: $color-input-border-button;
-  box-shadow: $box-shadow;
-}
-
-.messageForm {
-  display: flex;
-  column-gap: 16px;
-  > textarea {
-    width: 100%;
-    resize: none;
-  }
-}
-
 .wrapper {
   display: flex;
   overflow: auto;
   height: 95vh;
-
-}
-
-.sidebar {
-  border-right: 1px solid #979797;
-  min-width: 335px;
-  font-family: $font-family-main;
-  color: $color-text;
-  font-weight: $font-weight-normal;
-  font-size: 24px;
-  font-style: normal;
-  text-decoration: none;
-  text-align: left;
+  .sidebar {
+    border-right: 1px solid #979797;
+    min-width: 335px;
+    font-family: $font-family-main;
+    color: $color-text;
+    font-weight: $font-weight-normal;
+    font-size: 24px;
+    font-style: normal;
+    text-decoration: none;
+    text-align: left;
+  }
+  .chatBlock {
+    padding: 16px;
+    width: 100%;
+    .messageList {
+      height: 90%;
+      overflow-y: auto;
+    }
+    .messageForm {
+      display: flex;
+      column-gap: 16px;
+      > textarea {
+        width: 100%;
+        resize: none;
+      }
+      .messageFormButton{
+        height: 81px;
+        border-bottom-right-radius: $border-radius-button;
+        background-color: $color-input-border-button;
+        box-shadow: $box-shadow;
+      }
+    
+    }
+  }
 }
 
 .control {

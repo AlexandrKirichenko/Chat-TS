@@ -38,8 +38,6 @@ const ChatBlock: React.FC = () => {
             myRef.current.scrollTop = myRef.current?.scrollHeight;
         }
     });
-    const { v4: uuidv4 } = require('uuid');
-    uuidv4();
     
     useEffect(() => {
         if (myRef.current) {
