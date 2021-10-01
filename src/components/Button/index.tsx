@@ -8,12 +8,13 @@ interface ButtonProps {
     type: 'button' | 'submit';
     disabled?: boolean;
     size?: 'small' | 'large'| 'mediumChat';
+    onClick?(e: React.SyntheticEvent<HTMLButtonElement>): void;
 }
 
-const Button: React.FC<ButtonProps> = ({color = 'primary', children, size="small", disabled, type = 'submit'}) => {
+const Button: React.FC<ButtonProps> = ({color = 'primary', children, size="small", disabled, type = 'submit', onClick}) => {
     
     return (
-        <button disabled={disabled} type={type}
+        <button disabled={disabled} type={type} onClick={onClick}
                 className={classnames(style.button, style[color], style[size], disabled ? style.disableButton : null)}>{children}</button>
     )
 }
