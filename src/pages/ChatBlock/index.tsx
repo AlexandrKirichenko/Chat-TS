@@ -1,4 +1,4 @@
-import {useMutation, useQuery, useSubscription} from '@apollo/client'
+import {useMutation, useQuery, useSubscription, } from '@apollo/client'
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import {AuthContext} from '../../App'
 import Button from '../../components/Button'
@@ -22,17 +22,33 @@ interface MessageProp {
 }
 
 const ChatBlock: React.FC = () => {
-    const {data} = useSubscription(MESSAGE_ADDED_SUB)
+    const {data: allOldMessages} = useQuery(GET_ALL_MESSAGES)
+    const {data: newMessageFromServer, error} =  useSubscription(MESSAGE_ADDED_SUB, { variables: {date: new Date()}})
+    console.log("")
     const [addMessage] = useMutation(CREATE_MESSAGE)
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState<any[]>([]);
+    
+    useEffect(()=>{
+        console.log(error);
+    }, [error])
+    
     const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
         addMessage({variables: {description: message}})
         setMessage('');
     }
     const context = useContext(AuthContext)
+    
+    useEffect(()=> {
+        if (allOldMessages) {
+            setMessages([...allOldMessages.getAllMessages ])
+            console.log(allOldMessages);
+        }
+    }, [allOldMessages])
+    
+    
     useEffect(() => {
         if (myRef.current) {
             myRef.current.scrollTop = myRef.current?.scrollHeight;
@@ -40,19 +56,18 @@ const ChatBlock: React.FC = () => {
     });
     
     useEffect(()=> {
-        console.log(data);
-        if (data?.messageAdded) {
-            console.log(data?.messageAdded);
-            setMessages(prev=>[...prev, ...data?.messageAdded])
+        console.log(newMessageFromServer);
+        if (newMessageFromServer?.messageAdded) {
+            console.log(newMessageFromServer?.messageAdded);
+            setMessages(prev=>[...prev, ...newMessageFromServer?.messageAdded])
         }
-    }, [data])
+    }, [newMessageFromServer])
     
-    useEffect(() => {
-        if (myRef.current) {
-            myRef.current.scrollTop = myRef.current?.scrollHeight;
-        }
-        
-    }, []);
+    // useEffect(() => {
+    //     if (myRef.current) {
+    //         myRef.current.scrollTop = myRef.current?.scrollHeight;
+    //     }
+    // }, []);
     
     if (context === null) {
         return null

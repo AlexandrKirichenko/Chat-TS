@@ -14,7 +14,7 @@ export interface MessageProp {
     avatar?: string;
     itsMe: boolean;
 }
-
+// useSubscription(MESSAGE_ADDED_SUB, { variables: {date: new Date()}})
 const Message: React.FC<MessageProp> = ({itsMe, avatar, login, messageText}) => {
  
     return (
