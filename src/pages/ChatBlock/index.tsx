@@ -1,9 +1,9 @@
-import {useQuery, useSubscription} from '@apollo/client'
+import {useMutation, useQuery, useSubscription} from '@apollo/client'
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import {AuthContext} from '../../App'
 import Button from '../../components/Button'
 import Message from '../../components/Message'
-import {GET_ALL_MESSAGES, MESSAGE_ADDED_SUB} from '../../schemas'
+import {GET_ALL_MESSAGES, MESSAGE_ADDED_SUB, CREATE_MESSAGE} from '../../schemas'
 import styles from './ChatBlock.module.scss'
 import {ReactComponent as TelegramImg } from '../../img/telegram.svg';
 import {ReactComponent as Plus } from '../../img/plus.svg';
@@ -23,14 +23,15 @@ interface MessageProp {
 
 const ChatBlock: React.FC = () => {
     const {data,loading,subscribeToMore} = useQuery(GET_ALL_MESSAGES)
+    const [addMessage] = useMutation(CREATE_MESSAGE)
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('');
     const messages: MessageProp[] = data ? data?.getAllMessages : null
-    
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     setMessage();
-    // }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        addMessage({variables: {description}})
+        setMessage();
+    }
     const context = useContext(AuthContext)
     useEffect(() => {
         if (myRef.current) {
@@ -88,6 +89,7 @@ const ChatBlock: React.FC = () => {
                                         <Message key={msg.id}
                                                  itsMe={msg.userId === Number(user?.id)}
                                                  messageText={msg.description}
+                                                 onChange={(e) => SetMessage(e.tatget.value)}
                                                  login={msg.user.login}
                                                  userId={msg.userId}
                                                  avatar={msg.user.avatar}
@@ -101,7 +103,8 @@ const ChatBlock: React.FC = () => {
                         <div  className={styles.messageForm}>
                             <textarea name="textarea" placeholder="Type your message"></textarea>
                             <Button type={'submit'} color={'primary'}
-                                    size={'mediumChat'}> <TelegramImg/> </Button>
+                                    size={'mediumChat'} onClick={handleSubmit}
+                            > <TelegramImg/> </Button>
                         </div>
                     
                     </div>
