@@ -14,7 +14,6 @@ const wsLink = new WebSocketLink({
         }),
     },
 });
-
 const httpLink = new HttpLink({
     uri: process.env.REACT_APP_MY_COOL_LINK,
 });
