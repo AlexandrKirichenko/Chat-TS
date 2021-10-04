@@ -1,5 +1,4 @@
 import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
-
 import { LS_TOKEN_KEY } from "./config";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { split, HttpLink } from "@apollo/client";
