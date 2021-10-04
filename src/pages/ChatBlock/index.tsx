@@ -1,4 +1,4 @@
-import {ApolloClient, useApolloClient, useMutation, useQuery, useSubscription,} from '@apollo/client'
+import {useApolloClient, useMutation, useQuery, useSubscription,} from '@apollo/client'
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react'
 import {AuthContext} from '../../App'
 import Button from '../../components/Button'
@@ -7,7 +7,6 @@ import {GET_ALL_MESSAGES, MESSAGE_ADDED_SUB, CREATE_MESSAGE} from '../../schemas
 import styles from './ChatBlock.module.scss'
 import {ReactComponent as TelegramImg} from '../../img/telegram.svg';
 import {ReactComponent as Plus} from '../../img/plus.svg';
-import {LS_TOKEN_KEY} from "../../config";
 
 interface MessageItem {
     id: string;
@@ -22,29 +21,15 @@ interface MessageItem {
     };
 }
 
-
 const ChatBlock: React.FC = () => {
-    const {data: allOldMessages, error} = useQuery(GET_ALL_MESSAGES)
-    // const {
-    //     data: newMessageFromServer,
-    //     error: errorSub
-    // } = useSubscription(MESSAGE_ADDED_SUB, {context: {'access-token': localStorage.getItem('token')}})
+    const {data: allMessages} = useQuery(GET_ALL_MESSAGES)
     const [addMessage] = useMutation(CREATE_MESSAGE)
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState<MessageItem[]>([]);
     const client = useApolloClient();
     let sub: any;
-    
-    
-    // useEffect(() => {
-    //     console.log(errorSub);
-    // }, [errorSub])
-    
-    useEffect(() => {
-        console.log('messages', messages);
-    }, [messages]);
-    
+   
     const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
         addMessage({variables: {description: message}})
@@ -52,44 +37,38 @@ const ChatBlock: React.FC = () => {
     }
     const context = useContext(AuthContext)
     
+    useEffect(()=>{
+        console.log('messages', messages);
+    }, [messages]);
+    
+    
     useEffect(() => {
-        if (allOldMessages) {
-            const startMsgList: MessageItem[] = allOldMessages.getAllMessages
-            setMessages([...startMsgList]);
-            const lastMsg = startMsgList[startMsgList.length - 1];
-            // console.log(lastMsg.date);
-            const token = localStorage.getItem(LS_TOKEN_KEY);
-            console.log(token);
+        if (allMessages) {
+            const startMessagesList: MessageItem[] = allMessages.getAllMessages
+            setMessages([...startMessagesList]);
+            const lastMessages = startMessagesList[startMessagesList.length - 1];
             sub = client
                 .subscribe({
                     query: MESSAGE_ADDED_SUB,
                     variables: {
-                        date: (new Date()).toString()
+                        date: lastMessages.date
                     },
-                    context: {'access-token': token}
+                    context: {'access-token': localStorage.getItem('token')}
                 })
                 .subscribe((newMessages) => {
-                    const newMsgFromSub: MessageItem[] = newMessages?.data?.messageAdded;
-                    const actualMsgFromSub: MessageItem[] = [];
-                    newMsgFromSub.forEach(newMsgItem => {
-                        const check = messages.filter(msg => msg.id === newMsgItem.id).length === 0;
-                        if (check) {
-                            actualMsgFromSub.push(newMsgItem);
-                        }
-                    });
-                    
-                    console.log(newMsgFromSub, actualMsgFromSub);
-                    setMessages(prev => [...prev, ...actualMsgFromSub]);
+                    const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded;
+                    setMessages(prev => [...prev, ...newMessagesFromSub]);
+                    console.log('xxxx',newMessagesFromSub);
                 })
         }
-        
+
         return () => {
             if (sub) {
                 sub.unsubscribe()
             }
         }
-    }, [allOldMessages])
-    
+    }, [allMessages])
+
     
     useEffect(() => {
         if (myRef.current) {
@@ -97,19 +76,19 @@ const ChatBlock: React.FC = () => {
         }
     });
     
-    
     const messagesRender = useMemo(
+        
         () =>
-            messages ? messages.map(msg => (
-                    <div key={msg.id}>
+            messages ? messages.map(Messages => (
+                    <div key={Messages.id}>
                         <div className={styles.sidebar}></div>
-                        <Message key={msg.id}
-                                 itsMe={msg.userId === Number(context?.user?.id)}
-                                 messageText={msg.description}
-                                 login={msg.user.login}
-                                 userId={msg.userId}
-                                 avatar={msg.user.avatar}
-                                 id={msg.id}
+                        <Message key={Messages.id}
+                                 itsMe={Messages.userId === Number(context?.user?.id)}
+                                 messageText={Messages.description}
+                                 login={Messages.user.login}
+                                 userId={Messages.userId}
+                                 avatar={Messages.user.avatar}
+                                 id={Messages.id}
                         />
                     
                     </div>
@@ -163,11 +142,8 @@ const ChatBlock: React.FC = () => {
                 </div>
             </> : <div> You should login </div>
     )
-    
-    
 }
 
 export default ChatBlock;
-
 
 

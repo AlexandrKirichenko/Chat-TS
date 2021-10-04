@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = () => {
                             <div className={style.dropdownWrapper} ref={ref}>
                                 <Avatar value={user.avatar} nameAvatar={user.login} sizeAvatar={'small'} userMenu={showUserMenu} setMenu={setShowUserMenu}/>
                                 <Dropdown isShow={showUserMenu} handleLogout={handleLogout}>
-                                     <DropdownSet handleLogout={handleLogout }/>
+                                    <DropdownSet handleLogout={handleLogout }/>
                                 </Dropdown >
                             </div>
                             : <div className={style.login} onClick={handleLogin}>Login</div>}
