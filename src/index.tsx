@@ -2,21 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
-import {ApolloProvider} from "@apollo/client";
-import {client} from './client'
 import {BrowserRouter as Router} from 'react-router-dom'
+import {AppContext} from "./AppContext";
+import {ApolloContext} from "./ApolloContext";
 
 ReactDOM.render(
-    <ApolloProvider client={client}>
-        <Router>
-            <React.StrictMode>
-                <App />
-            </React.StrictMode>
-        </Router>
-    </ApolloProvider>,
+    <AppContext>
+        <ApolloContext>
+            <Router>
+                <App/>
+            </Router>
+        </ApolloContext>
+    </AppContext>,
     document.getElementById('root')
 );
-
 
 
 

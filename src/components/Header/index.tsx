@@ -1,6 +1,6 @@
 import React, {useContext, useState, useRef} from 'react'
 import {Link, useHistory} from 'react-router-dom'
-import {AuthContext} from '../../App'
+import {appContext} from '../../AppContext'
 import {LS_TOKEN_KEY, PATH_CHAT_BLOCK, PATH_LOGIN} from '../../config'
 import Avatar from '../Avatar'
 import style from './Header.module.scss'
@@ -17,7 +17,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = () => {
-    const context = useContext(AuthContext);
+    const context = useContext(appContext);
     const ref = useRef(null) as any;
     const [showUserMenu, setShowUserMenu] = useState(false);
     useOutsideClick(ref, () => setShowUserMenu(false))
@@ -26,9 +26,9 @@ const Header: React.FC<HeaderProps> = () => {
         return null;
     }
     
-    const {user, setAutorized, isAuthorized, setUser} = context;
+    const {user, setIsAuthorized, isAuthorized, setUser} = context;
     const handleLogout = () => {
-        setAutorized(false);
+        setIsAuthorized(false);
         history.push(PATH_LOGIN);
         setUser(null);
         localStorage.removeItem(LS_TOKEN_KEY);
@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = () => {
                             <div className={style.dropdownWrapper} ref={ref}>
                                 <Avatar value={user.avatar} nameAvatar={user.login} sizeAvatar={'small'} userMenu={showUserMenu} setMenu={setShowUserMenu}/>
                                 <Dropdown isShow={showUserMenu} handleLogout={handleLogout}>
-                                     <DropdownSet handleLogout={handleLogout }/>
+                                    <DropdownSet handleLogout={handleLogout }/>
                                 </Dropdown >
                             </div>
                             : <div className={style.login} onClick={handleLogin}>Login</div>}
