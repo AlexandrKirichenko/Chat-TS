@@ -149,7 +149,6 @@ const ChatBlock: React.FC = () => {
                         </div>
                     
                     </div>
-                
                 </div>
             </> : <div> You should login </div>
     )
