@@ -124,7 +124,6 @@ const ChatBlock: React.FC = () => {
             </> : <div> You should login </div>
     )
     
-    
 }
 
 export default ChatBlock;
