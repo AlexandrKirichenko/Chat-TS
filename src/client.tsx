@@ -7,6 +7,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 
  const wsLink = new WebSocketLink({
     
+    
     uri: "wss://test-chat-be.herokuapp.com/graphql",
     options: {
          reconnect: true
@@ -39,16 +40,10 @@ const authLink = setContext((_, { headers }) => {
         }
     }
 });
-
 export const client = new ApolloClient({
     cache: new InMemoryCache(),
     link: authLink.concat(splitLink),
 });
-
-
-
-
-
 
 
 

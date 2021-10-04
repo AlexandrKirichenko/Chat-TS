@@ -23,7 +23,7 @@ interface MessageProp {
 
 const ChatBlock: React.FC = () => {
     const {data: allOldMessages,error} = useQuery(GET_ALL_MESSAGES)
-    const {data: newMessageFromServer, error : errorSub} = useSubscription(MESSAGE_ADDED_SUB)
+    const {data: newMessageFromServer, error : errorSub} = useSubscription(MESSAGE_ADDED_SUB, {context: { 'access-token': localStorage.getItem('token')}})
     const [addMessage] = useMutation(CREATE_MESSAGE)
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('');
