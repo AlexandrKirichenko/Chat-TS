@@ -31,6 +31,7 @@ const splitLink = split(
     httpLink
 );
 
+
 const authLink = new ApolloLink((operation, forward) => {
     const token = localStorage.getItem(LS_TOKEN_KEY) || null;
     debugger;
