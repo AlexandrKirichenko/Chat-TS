@@ -1,6 +1,6 @@
 import React, {useContext, useState, useRef} from 'react'
 import {Link, useHistory} from 'react-router-dom'
-import {appContext} from '../../AppContext'
+import {AuthContext} from '../../App'
 import {LS_TOKEN_KEY, PATH_CHAT_BLOCK, PATH_LOGIN} from '../../config'
 import Avatar from '../Avatar'
 import style from './Header.module.scss'
@@ -17,7 +17,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = () => {
-    const context = useContext(appContext);
+    const context = useContext(AuthContext);
     const ref = useRef(null) as any;
     const [showUserMenu, setShowUserMenu] = useState(false);
     useOutsideClick(ref, () => setShowUserMenu(false))
@@ -26,9 +26,9 @@ const Header: React.FC<HeaderProps> = () => {
         return null;
     }
     
-    const {user, setIsAuthorized, isAuthorized, setUser} = context;
+    const {user, setAutorized, isAuthorized, setUser} = context;
     const handleLogout = () => {
-        setIsAuthorized(false);
+        setAutorized(false);
         history.push(PATH_LOGIN);
         setUser(null);
         localStorage.removeItem(LS_TOKEN_KEY);

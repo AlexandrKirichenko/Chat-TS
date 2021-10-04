@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
+
 import { LS_TOKEN_KEY } from "./config";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { split, HttpLink } from "@apollo/client";
@@ -32,7 +32,6 @@ const splitLink = split(
 
 const authLink = new ApolloLink((operation, forward) => {
     const token = localStorage.getItem(LS_TOKEN_KEY) || null;
-    debugger;
     operation.setContext(({ context = {}, headers = {} }) => {
         return {
             context: {

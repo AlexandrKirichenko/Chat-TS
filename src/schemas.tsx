@@ -59,6 +59,7 @@ export const GET_ALL_MESSAGES = gql`
             id
             description
             userId
+            date
             user{
                 login
                 avatar
@@ -69,7 +70,7 @@ export const GET_ALL_MESSAGES = gql`
 
 export const MESSAGE_ADDED_SUB = gql`
     subscription messageAdded($date: DateTime!) {
-        messageAdded(date:$date) {
+        messageAdded(date:$date)  {
             id
             description
             userId

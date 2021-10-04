@@ -6,13 +6,14 @@ import style from "./Registration.module.scss";
 import * as yup from 'yup';
 import Input from "../../components/Input";
 import AvatarInput from "../../components/AvatarInput"
-import {appContext} from '../../AppContext';
+import {AuthContext} from '../../App';
 import {RegistrationUserCredentials} from "../../types";
 import Button from "../../components/Button";
 import {REGISTER} from "../../schemas";
 
+
 const Registration: React.FC = () => {
-    const context = useContext(appContext);
+    const context = useContext(AuthContext);
     const [registrationUser, {data, loading, error}] = useMutation(REGISTER, {
         errorPolicy: 'all',
     })

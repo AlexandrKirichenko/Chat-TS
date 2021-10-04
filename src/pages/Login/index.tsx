@@ -1,7 +1,7 @@
 import { useLazyQuery} from "@apollo/client";
 import React, {useContext, useEffect} from 'react'
 import {Link, useHistory} from "react-router-dom";
-import {appContext} from "../../AppContext";
+import {AuthContext} from "../../App";
 import ErrorMessage from '../../components/ErrorMessage'
 import Input from "../../components/Input";
 import "./Login.module.scss";
@@ -37,8 +37,8 @@ const Login: React.FC = () => {
     const formikConfig: FormikConfig<UserCredentials> = {
         enableReinitialize: false,
         initialValues: {
-            login: 'a@a.ru',
-            password: '12345678',
+            login: '',
+            password: '',
         },
         onSubmit: (values) => {
             doLogin({
@@ -53,22 +53,20 @@ const Login: React.FC = () => {
     
     useEffect(() => {
         if (data) {
-            const token = data?.signIn?.token;
-            setToken(token);
+            const token = data?.signIn?.token
             localStorage.setItem('token', token);
-            setIsAuthorized(true);
+            setAutorized(true);
             setUser(data.signIn.user);
             history.push(PATH_CHAT_BLOCK)
-            
         }
     }, [data])
     
-    const context = useContext(appContext);
+    const context = useContext(AuthContext);
     if (!context) {
         return null
     }
     
-    const {setIsAuthorized, setUser, setToken} = context;
+    const {setAutorized, setUser} = context;
     
     return (
         <>
@@ -101,7 +99,7 @@ const Login: React.FC = () => {
                             <Button type={"submit"} color={"primary"}
                                     size={'small'}> {loading ? "Loading..." : "Login"}</Button>
                         </div>
-                        <ErrorMessage error={error && error.graphQLErrors[0].message}/>
+                        {/*<ErrorMessage error={error && error.graphQLErrors[0].message}/>*/}
                     </form>
                 </div>
             </div>
