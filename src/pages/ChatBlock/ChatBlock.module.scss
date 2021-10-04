@@ -47,11 +47,12 @@
   background-color: rgba(241,225,137,0.1);
   display: flex;
   justify-content: space-between;
+ 
 }
 
 .plus {
   border: none;
-  background:$color-background;
+  background-color:$color-background-layout;
   > svg {
     fill: $color-pluss-button;
     transition: fill 0.2s ease;

@@ -1,5 +1,5 @@
-import {useMutation, useQuery, useSubscription, } from '@apollo/client'
-import React, {useContext, useEffect, useRef, useState} from 'react'
+import {ApolloClient, useApolloClient, useMutation, useQuery, useSubscription,} from '@apollo/client'
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react'
 import {AuthContext} from '../../App'
 import Button from '../../components/Button'
 import Message from '../../components/Message'
@@ -7,8 +7,9 @@ import {GET_ALL_MESSAGES, MESSAGE_ADDED_SUB, CREATE_MESSAGE} from '../../schemas
 import styles from './ChatBlock.module.scss'
 import {ReactComponent as TelegramImg} from '../../img/telegram.svg';
 import {ReactComponent as Plus} from '../../img/plus.svg';
+import {LS_TOKEN_KEY} from "../../config";
 
-interface MessageProp {
+interface MessageItem {
     id: string;
     description: string;
     userId: number;
@@ -21,17 +22,28 @@ interface MessageProp {
     };
 }
 
+
 const ChatBlock: React.FC = () => {
-    const {data: allOldMessages,error} = useQuery(GET_ALL_MESSAGES)
-    const {data: newMessageFromServer, error : errorSub} = useSubscription(MESSAGE_ADDED_SUB)
+    const {data: allOldMessages, error} = useQuery(GET_ALL_MESSAGES)
+    // const {
+    //     data: newMessageFromServer,
+    //     error: errorSub
+    // } = useSubscription(MESSAGE_ADDED_SUB, {context: {'access-token': localStorage.getItem('token')}})
     const [addMessage] = useMutation(CREATE_MESSAGE)
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState<any[]>([]);
+    const [messages, setMessages] = useState<MessageItem[]>([]);
+    const client = useApolloClient();
+    let sub: any;
     
-    useEffect(()=>{
-        console.log(errorSub);
-    }, [errorSub])
+    
+    // useEffect(() => {
+    //     console.log(errorSub);
+    // }, [errorSub])
+    
+    useEffect(() => {
+        console.log('messages', messages);
+    }, [messages]);
     
     const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -40,11 +52,41 @@ const ChatBlock: React.FC = () => {
     }
     const context = useContext(AuthContext)
     
-    useEffect(()=> {
+    useEffect(() => {
         if (allOldMessages) {
-            setMessages([...allOldMessages.getAllMessages ])
-            console.log(allOldMessages);
-            console.log(error)
+            const startMsgList: MessageItem[] = allOldMessages.getAllMessages
+            setMessages([...startMsgList]);
+            const lastMsg = startMsgList[startMsgList.length - 1];
+            // console.log(lastMsg.date);
+            const token = localStorage.getItem(LS_TOKEN_KEY);
+            console.log(token);
+            sub = client
+                .subscribe({
+                    query: MESSAGE_ADDED_SUB,
+                    variables: {
+                        date: (new Date()).toString()
+                    },
+                    context: {'access-token': token}
+                })
+                .subscribe((newMessages) => {
+                    const newMsgFromSub: MessageItem[] = newMessages?.data?.messageAdded;
+                    const actualMsgFromSub: MessageItem[] = [];
+                    newMsgFromSub.forEach(newMsgItem => {
+                        const check = messages.filter(msg => msg.id === newMsgItem.id).length === 0;
+                        if (check) {
+                            actualMsgFromSub.push(newMsgItem);
+                        }
+                    });
+                    
+                    console.log(newMsgFromSub, actualMsgFromSub);
+                    setMessages(prev => [...prev, ...actualMsgFromSub]);
+                })
+        }
+        
+        return () => {
+            if (sub) {
+                sub.unsubscribe()
+            }
         }
     }, [allOldMessages])
     
@@ -55,13 +97,25 @@ const ChatBlock: React.FC = () => {
         }
     });
     
-    useEffect(()=> {
-        console.log(newMessageFromServer);
-        if (newMessageFromServer?.messageAdded) {
-            console.log(newMessageFromServer?.messageAdded);
-            setMessages(prev=>[...prev, ...newMessageFromServer?.messageAdded])
-        }
-    }, [newMessageFromServer])
+    
+    const messagesRender = useMemo(
+        () =>
+            messages ? messages.map(msg => (
+                    <div key={msg.id}>
+                        <div className={styles.sidebar}></div>
+                        <Message key={msg.id}
+                                 itsMe={msg.userId === Number(context?.user?.id)}
+                                 messageText={msg.description}
+                                 login={msg.user.login}
+                                 userId={msg.userId}
+                                 avatar={msg.user.avatar}
+                                 id={msg.id}
+                        />
+                    
+                    </div>
+                )
+            ) : null,
+        [messages]);
     
     if (context === null) {
         return null
@@ -93,21 +147,7 @@ const ChatBlock: React.FC = () => {
                     </div>
                     <div className={styles.chatBlock}>
                         <div className={styles.messageList} ref={myRef}>
-                            {messages ? messages.map(msg => (
-                                    <div key={msg.id} >
-                                        <div className={styles.sidebar}></div>
-                                        <Message key={msg.id}
-                                                 itsMe={msg.userId === Number(user?.id)}
-                                                 messageText={msg.description}
-                                                 login={msg.user.login}
-                                                 userId={msg.userId}
-                                                 avatar={msg.user.avatar}
-                                                 id={msg.id}
-                                        />
-                                    
-                                    </div>
-                                )
-                            ) : null}
+                            {messagesRender}
                         </div>
                         <div className={styles.messageForm}>
                             <textarea name="textarea" value={message} placeholder="Type your message" onChange={e => {

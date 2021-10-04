@@ -5,7 +5,6 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { split, HttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 
-const token = localStorage.getItem(LS_TOKEN_KEY) || null;
  const wsLink = new WebSocketLink({
     
     uri: "wss://test-chat-be.herokuapp.com/graphql",

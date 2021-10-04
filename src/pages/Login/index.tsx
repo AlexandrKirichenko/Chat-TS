@@ -57,7 +57,7 @@ const Login: React.FC = () => {
             localStorage.setItem('token', token);
             setAutorized(true);
             setUser(data.signIn.user);
-            history.push(PATH_CHAT_BLOCK)
+            history.push(PATH_CHAT_BLOCK);
         }
     }, [data])
     
@@ -99,7 +99,7 @@ const Login: React.FC = () => {
                             <Button type={"submit"} color={"primary"}
                                     size={'small'}> {loading ? "Loading..." : "Login"}</Button>
                         </div>
-                        {/*<ErrorMessage error={error && error.graphQLErrors[0].message}/>*/}
+                        <ErrorMessage error={error && error.graphQLErrors[0].message}/>
                     </form>
                 </div>
             </div>
