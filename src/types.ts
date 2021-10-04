@@ -8,7 +8,6 @@ export interface RegistrationUserCredentials {
     avatar?: string;
 }
 
-
 export interface InputProps {
     type?: "email" | "text" | "password";
     value: string;
@@ -22,7 +21,6 @@ export interface InputProps {
     onChange?: (value: React.ChangeEvent<HTMLInputElement>) => void;
     url?: string;
 }
-
 
 export interface AvatarProps {
     value?: string;
