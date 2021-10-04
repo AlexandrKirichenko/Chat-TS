@@ -14,7 +14,6 @@ import { getMainDefinition } from '@apollo/client/utilities';
     },
 
  });
- 
 const httpLink = new HttpLink({
     uri: process.env.REACT_APP_MY_COOL_LINK,
 })
