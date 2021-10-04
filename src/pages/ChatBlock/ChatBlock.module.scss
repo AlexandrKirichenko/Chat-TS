@@ -5,7 +5,7 @@
   overflow: auto;
   height: 95vh;
   .sidebar {
-    border-right: 1px solid #979797;
+    border-right: 1px solid $color-chat-borderColor;
     min-width: 335px;
     font-family: $font-family-main;
     color: $color-text;
@@ -16,7 +16,7 @@
     text-align: left;
   }
   .chatBlock {
-    padding: 16px;
+    padding: 9px;
     width: 100%;
     .messageList {
       height: 90%;
@@ -24,7 +24,7 @@
     }
     .messageForm {
       display: flex;
-      column-gap: 16px;
+      column-gap: 9px;
       > textarea {
         width: 100%;
         resize: none;
@@ -44,14 +44,14 @@
   padding: 12px 16px 10px;
   font-size: 24px;
   border-bottom: $color-chat-border;
-  background-color: rgba(241,225,137,0.1);
+  background-color: $color-rooms-headerControll;
   display: flex;
   justify-content: space-between;
 }
 
 .plus {
   border: none;
-  background:$color-background;
+  background:$color-rooms-headerControll;
   > svg {
     fill: $color-pluss-button;
     transition: fill 0.2s ease;
@@ -71,10 +71,10 @@
 
 .room {
   padding: 11px 16px 10px 33px;
-  border-bottom: 1px dashed #979797;
+  border-bottom: $color-chat-border;
   @media (any-hover: hover) {
     &:hover {
-      background-color: #eeeeee;
+      background-color: $color-hovered-room;
     }
   }
   &.current {
@@ -86,7 +86,7 @@
       position: absolute;
       left: 0;
       top: 0;
-      background-color: #01C5C4;
+      background-color: $color-active-room;
     }
   }
 }
@@ -96,8 +96,8 @@ textarea {
   padding: 12px 16px;
   border-bottom-right-radius: 16px;
   border-top-left-radius: 16px;
-  border: 1px solid #01C5C4;
-  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.5);
+  border: 1px solid $color-input-border-button;
+  box-shadow: $box-shadow;
   margin-top: 16px;
   &:focus {
     outline: 0;

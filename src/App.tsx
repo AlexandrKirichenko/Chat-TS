@@ -1,66 +1,51 @@
-import { useQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import {useQuery} from "@apollo/client";
+import React, {useContext, useEffect, useState} from "react";
+import {Route, Switch, useHistory} from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import Layout from "./components/Layout";
-import { PATH_CHAT_BLOCK, PATH_LOGIN, PATH_REGISTRATION } from "./config";
+import {PATH_CHAT_BLOCK, PATH_LOGIN, PATH_REGISTRATION} from "./config";
 import ChatBlock from "./pages/ChatBlock";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
-import { ME } from "./schemas";
+import {ME} from "./schemas";
+import {appContext} from "./AppContext";
 
-
-interface User {
-    login: string;
-    email: string;
-    avatar: string;
-    id: string;
-}
-
-export interface IAuthContext {
-    isAuthorized: boolean;
-    setAutorized: (values: boolean) => void;
-    user: User | null;
-    setUser: (values: User | null) => void;
-}
-
-export const AuthContext = React.createContext<IAuthContext | null>(null);
 
 function App() {
-    const [isAuthorized, setAutorized] = useState<boolean>(false);
-    const [user, setUser] = useState<User | null>(null);
-    const AuthContextData = { isAuthorized, setAutorized, user, setUser };
-    
-    const { data } = useQuery(ME);
+    const {data} = useQuery(ME);
     const history = useHistory();
-    
     useEffect(() => {
         if (data) {
-            setAutorized(true);
+            setIsAuthorized(true);
             setUser(data.me.user);
             history.push(PATH_CHAT_BLOCK);
         }
     }, [data]);
+    const context = useContext(appContext);
+    if (!context) {
+        return null
+    }
+    
+    const {setIsAuthorized, setUser, isAuthorized} = context;
     
     return (
         <>
-            <AuthContext.Provider value={AuthContextData}>
-                <Header nameAvatar={""} />
-                <Layout>
-                    <Switch>
-                        <Route exact path={PATH_LOGIN}>
-                            <Login />
-                        </Route>
-                        <Route path={PATH_REGISTRATION}>
-                            <Registration />
-                        </Route>
-                        <Route path={PATH_CHAT_BLOCK}>
-                            {isAuthorized ? <ChatBlock /> : <div>You need to login</div>}
-                        </Route>
-                    </Switch>
-                </Layout>
-            </AuthContext.Provider>
+            
+            <Header nameAvatar={""}/>
+            <Layout>
+                <Switch>
+                    <Route exact path={PATH_LOGIN}>
+                        <Login/>
+                    </Route>
+                    <Route path={PATH_REGISTRATION}>
+                        <Registration/>
+                    </Route>
+                    <Route path={PATH_CHAT_BLOCK}>
+                        {isAuthorized ? <ChatBlock/> : <div>You need to login</div>}
+                    </Route>
+                </Switch>
+            </Layout>
         </>
     );
 }
