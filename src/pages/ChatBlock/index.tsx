@@ -29,7 +29,7 @@ const ChatBlock: React.FC = () => {
     const [messages, setMessages] = useState<MessageItem[]>([]);
     const client = useApolloClient();
     let sub: any;
-   
+    
     const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
         addMessage({variables: {description: message}})
@@ -61,14 +61,14 @@ const ChatBlock: React.FC = () => {
                     console.log('xxxx',newMessagesFromSub);
                 })
         }
-
+        
         return () => {
             if (sub) {
                 sub.unsubscribe()
             }
         }
-    }, [allMessages])
-
+    }, [])
+    
     
     useEffect(() => {
         if (myRef.current) {
@@ -145,5 +145,3 @@ const ChatBlock: React.FC = () => {
 }
 
 export default ChatBlock;
-
-
