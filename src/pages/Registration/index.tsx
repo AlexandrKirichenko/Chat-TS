@@ -65,7 +65,6 @@ const Registration: React.FC = () => {
                     variables: values,
                 }
             );
-            
         },
         validationSchema,
     };
