@@ -72,7 +72,6 @@ const ChatBlock: React.FC = () => {
             myRef.current.scrollTop = myRef.current?.scrollHeight;
         }
     });
-    
     const messagesRender = useMemo(
         () =>
             messages ? messages.map((Messages) => (
