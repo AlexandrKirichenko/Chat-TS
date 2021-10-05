@@ -23,7 +23,7 @@ interface MessageItem {
 
 const ChatBlock: React.FC = () => {
     const {data: allMessages} = useQuery(GET_ALL_MESSAGES)
-    const [addMessage] = useMutation(CREATE_MESSAGE)
+    const [addMessage ] = useMutation(CREATE_MESSAGE)
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState<MessageItem[]>([]);
@@ -38,6 +38,7 @@ const ChatBlock: React.FC = () => {
     const context = useContext(AuthContext)
     
     useEffect(() => {
+        console.log('ddddddddddddddddddddddddddddddddddddddddddddd')
         if (allMessages && !sub) {
             let startMessagesList: MessageItem[] = allMessages.getAllMessages
             setMessages([...startMessagesList]);
@@ -46,16 +47,38 @@ const ChatBlock: React.FC = () => {
                 .subscribe({
                     query: MESSAGE_ADDED_SUB,
                     variables: {
-                        date: lastMessages.date
+                        date: "2022-10-05T13:34:39.177Z"
                     },
-                    context: {'access-token': localStorage.getItem('token')}
+                    context: {'access-token': localStorage.getItem('token')},
+                    
                 })
                 .subscribe((newMessages) => {
                     const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded;
                     setMessages(prev => [...prev, ...newMessagesFromSub]);
                 })
+            console.log(sub)
+         
+            // wsClient.onConnected(() => console.log("websocket connected!!"))
+            // wsClient.onDisconnected(() => console.log("websocket disconnected!!"))
+            // wsClient.onReconnected(() => console.log("websocket reconnected!!"))
+            
+            // if(!lastMessages.date) {
+            //     client
+            //         .subscribe({
+            //             query: MESSAGE_ADDED_SUB,
+            //             variables: {
+            //                 date: "2022-10-05T13:34:39.177Z"
+            //             },
+            //             context: {'access-token': localStorage.getItem('token')}
+            //         })
+            //         .subscribe((newMessages) => {
+            //             const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded;
+            //             setMessages(prev => [...prev, ...newMessagesFromSub]);
+            //         })
+            //     console.log("ffff")
+            // }
+            // console.log(sub)
         }
-       
         return () => {
             if (sub) {
                 sub.unsubscribe()
