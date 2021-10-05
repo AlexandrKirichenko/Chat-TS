@@ -29,7 +29,7 @@ const ChatBlock: React.FC = () => {
     const [messages, setMessages] = useState<MessageItem[]>([]);
     const client = useApolloClient();
     let sub: any;
-   
+    
     const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
         addMessage({variables: {description: message}})
@@ -38,12 +38,10 @@ const ChatBlock: React.FC = () => {
     const context = useContext(AuthContext)
     
     useEffect(() => {
-        console.log("dddddddddddddddddddddddddd")
         if (allMessages && !sub) {
-            const startMessagesList: MessageItem[] = allMessages.getAllMessages
+            let startMessagesList: MessageItem[] = allMessages.getAllMessages
             setMessages([...startMessagesList]);
             const lastMessages = startMessagesList[startMessagesList.length - 1];
-            
             sub = client
                 .subscribe({
                     query: MESSAGE_ADDED_SUB,
@@ -55,10 +53,9 @@ const ChatBlock: React.FC = () => {
                 .subscribe((newMessages) => {
                     const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded;
                     setMessages(prev => [...prev, ...newMessagesFromSub]);
-                    console.log('xxxx',newMessagesFromSub);
                 })
         }
-
+       
         return () => {
             if (sub) {
                 sub.unsubscribe()
@@ -71,7 +68,8 @@ const ChatBlock: React.FC = () => {
         if (myRef.current) {
             myRef.current.scrollTop = myRef.current?.scrollHeight;
         }
-    });
+    },);
+   
     const messagesRender = useMemo(
         () =>
             messages ? messages.map((Messages) => (

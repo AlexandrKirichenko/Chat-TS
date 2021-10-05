@@ -7,12 +7,13 @@ import { getMainDefinition } from "@apollo/client/utilities";
 const wsLink = new WebSocketLink({
     uri: "wss://test-chat-be.herokuapp.com/graphql",
     options: {
-        reconnect: true,
+        reconnect: false,
         connectionParams: () => ({
             "access-token": localStorage.getItem(LS_TOKEN_KEY) || null,
         }),
     },
 });
+
 const httpLink = new HttpLink({
     uri: process.env.REACT_APP_MY_COOL_LINK,
 });
