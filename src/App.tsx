@@ -42,7 +42,7 @@ function App() {
             history.push(PATH_CHAT_BLOCK);
         }
     }, [data]);
-    
+
     return (
         <>
             <AuthContext.Provider value={AuthContextData}>

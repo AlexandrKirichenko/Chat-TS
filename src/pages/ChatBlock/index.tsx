@@ -37,16 +37,13 @@ const ChatBlock: React.FC = () => {
     }
     const context = useContext(AuthContext)
     
-    useEffect(()=>{
-        console.log('messages', messages);
-    }, [messages]);
-    
-    
     useEffect(() => {
-        if (allMessages) {
+        console.log("dddddddddddddddddddddddddd")
+        if (allMessages && !sub) {
             const startMessagesList: MessageItem[] = allMessages.getAllMessages
             setMessages([...startMessagesList]);
             const lastMessages = startMessagesList[startMessagesList.length - 1];
+            
             sub = client
                 .subscribe({
                     query: MESSAGE_ADDED_SUB,
@@ -77,12 +74,11 @@ const ChatBlock: React.FC = () => {
     });
     
     const messagesRender = useMemo(
-        
         () =>
-            messages ? messages.map(Messages => (
-                    <div key={Messages.id}>
-                        <div className={styles.sidebar}></div>
-                        <Message key={Messages.id}
+            messages ? messages.map((Messages) => (
+                <div key={Messages.id}>
+                    <div className={styles.sidebar}></div>
+                    <Message key={Messages.id}
                                  itsMe={Messages.userId === Number(context?.user?.id)}
                                  messageText={Messages.description}
                                  login={Messages.user.login}
@@ -90,7 +86,6 @@ const ChatBlock: React.FC = () => {
                                  avatar={Messages.user.avatar}
                                  id={Messages.id}
                         />
-                    
                     </div>
                 )
             ) : null,
@@ -138,7 +133,6 @@ const ChatBlock: React.FC = () => {
                         </div>
                     
                     </div>
-                
                 </div>
             </> : <div> You should login </div>
     )
