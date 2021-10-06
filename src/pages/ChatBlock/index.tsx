@@ -7,6 +7,7 @@ import {ReactComponent as Plus} from '../../img/plus.svg'
 import {ReactComponent as TelegramImg} from '../../img/telegram.svg'
 import {CREATE_MESSAGE, GET_ALL_MESSAGES, MESSAGE_ADDED_SUB} from '../../schemas'
 import styles from './ChatBlock.module.scss'
+import Rooms from '../../components/Rooms'
 
 interface MessageItem {
     id: string;
@@ -116,17 +117,7 @@ const ChatBlock: React.FC = () => {
                         Rooms
                         <button className={styles.plus}><Plus/></button>
                     </div>
-                    <div className={styles.rooms}>
-                        <div className={`${styles.room} ${current && styles.current}`}>
-                            General
-                        </div>
-                        <div className={styles.room}>
-                            Room 1
-                        </div>
-                        <div className={styles.room}>
-                            Room 2
-                        </div>
-                    </div>
+                    <Rooms current={current}/>
                 </div>
                 <div className={styles.chatBlock}>
                     <div className={styles.messageList} ref={myRef}>

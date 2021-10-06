@@ -124,5 +124,21 @@ export const CREATE_CONVERSATION = gql`
       date
     }
   }
-`
+`;
+
+export const CONVERSATION_ADDED_SUB = gql`
+    subscription conversationAdded {
+        conversationAdded
+        {
+            id
+            createdBy
+            name
+            date
+        }
+    }
+`;
+
+
+
+
 
