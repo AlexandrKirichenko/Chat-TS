@@ -7,7 +7,6 @@ import {GET_ALL_MESSAGES, MESSAGE_ADDED_SUB, CREATE_MESSAGE} from '../../schemas
 import styles from './ChatBlock.module.scss'
 import {ReactComponent as TelegramImg} from '../../img/telegram.svg';
 import {ReactComponent as Plus} from '../../img/plus.svg';
-import {wsclientConect, wsclientReconect} from '../../client'
 
 interface MessageItem {
     id: string;
@@ -34,26 +33,15 @@ const ChatBlock: React.FC = () => {
     const client = useApolloClient();
     let sub: any;
     
-    
     const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
-        // e.preventDefault();
+        e.preventDefault();
         addMessage({variables: {description: message}})
         setMessage('');
     }
-    //@ts-ignoge
-        const handleUserKeyPress = (e: any) => {
-        if (e.key === "Enter") {
-            handleSubmit(e);
-        }
-        };
- 
     const context = useContext(AuthContext)
    
     useEffect(() => {
-        console.log('ddddddddddddddddddddddddddddddddddddddddddddd')
         if (allMessages && !sub) {
-            // let startMessagesList: MessageItem[] = allMessages.getAllMessages
-            // setMessages([...startMessagesList]);
             const lastMessage = allMessages.getAllMessages[allMessages.getAllMessages.length - 1];
             sub = client
                 .subscribe({
@@ -67,13 +55,8 @@ const ChatBlock: React.FC = () => {
                     const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded;
                     setMessages(prev => [...prev, ...newMessagesFromSub])
                 })
-            
         }
-        return () => {
-            if (sub) {
-                sub.unsubscribe()
-            }
-        }
+
     }, [allMessages])
 
     
@@ -133,9 +116,8 @@ const ChatBlock: React.FC = () => {
                         <div className={styles.messageList} ref={myRef}>
                             {messagesRender}
                         </div>
-                   
                         <div className={styles.messageForm}>
-                              <textarea onKeyDown={handleUserKeyPress} name="textarea" value={message} placeholder="Type your message" onChange={e => {
+                            <textarea  name="textarea" value={message} placeholder="Type your message" onChange={e => {
                                 setMessage(e.target.value)
                             }}></textarea>
                             <Button type={'submit'} color={'primary'}
