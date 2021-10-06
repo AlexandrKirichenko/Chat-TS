@@ -1,37 +1,52 @@
-import {ApolloClient, InMemoryCache,createHttpLink} from '@apollo/client'
-import {setContext} from '@apollo/client/link/context'
-import {LS_TOKEN_KEY} from "./config";
+import {ApolloClient, ApolloLink, HttpLink, InMemoryCache, split} from '@apollo/client'
+import {WebSocketLink} from '@apollo/client/link/ws'
+import {getMainDefinition} from '@apollo/client/utilities'
+import {SubscriptionClient} from 'subscriptions-transport-ws'
+import {LS_TOKEN_KEY} from './config'
 
-const httpLink = createHttpLink({
-    uri: process.env.REACT_APP_MY_COOL_LINK,
+const wsClient = new SubscriptionClient(`wss://${process.env.REACT_APP_MY_COOL_LINK}`, {
+  reconnect: true,
+  connectionParams: () => ({
+    'access-token': localStorage.getItem(LS_TOKEN_KEY) || null,
+  }),
 })
 
-const authLink = setContext((_, { headers }) => {
-    
-    const token = localStorage.getItem(LS_TOKEN_KEY) || null;
-    
+const wsLink = new WebSocketLink(wsClient)
+
+const httpLink = new HttpLink({
+  uri: `http://${process.env.REACT_APP_MY_COOL_LINK}`,
+})
+
+const splitLink = split(
+  ({query}) => {
+    const definition = getMainDefinition(query)
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    )
+  },
+  wsLink,
+  httpLink
+)
+
+const authLink = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem(LS_TOKEN_KEY) || null
+  operation.setContext(({context = {}, headers = {}}) => {
     return {
-        headers: {
-            ...headers,
-            'access-token': token ? `${token}` : "",
-        }
+      context: {
+        ...context,
+        'access-token': token ? `${token}` : '',
+      },
+      headers: {
+        ...headers,
+        'access-token': token ? `${token}` : '',
+      },
     }
-});
+  })
+  return forward(operation)
+})
 
 export const client = new ApolloClient({
-    cache: new InMemoryCache(),
-    link: authLink.concat(httpLink)
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
+  cache: new InMemoryCache(),
+  link: authLink.concat(splitLink),
+})

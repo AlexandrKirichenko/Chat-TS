@@ -57,7 +57,7 @@ const Login: React.FC = () => {
             localStorage.setItem('token', token);
             setAutorized(true);
             setUser(data.signIn.user);
-            history.push(PATH_CHAT_BLOCK)
+            history.push(PATH_CHAT_BLOCK);
         }
     }, [data])
     
@@ -72,7 +72,7 @@ const Login: React.FC = () => {
         <>
             <div className={style.wrap}>
                 <div className={style.wrapperLogin}>
-                   
+                    
                     <div className={style.header}>Welcome</div>
                     
                     <form noValidate onSubmit={formik.handleSubmit}>

@@ -52,3 +52,53 @@ export const ME = gql`
         }
     }
 `;
+
+export const GET_ALL_MESSAGES = gql`
+    query getAllMessages {
+        getAllMessages {
+            id
+            description
+            userId
+            date
+            user{
+                login
+                avatar
+            }
+        }
+    }
+`;
+
+export const MESSAGE_ADDED_SUB = gql`
+    subscription messageAdded($date: DateTime!) {
+        messageAdded(date:$date)  {
+            id
+            description
+            userId
+            convId
+            date
+            user {
+                id
+                login
+                email
+                avatar
+            }
+        }
+    }
+`;
+
+export const CREATE_MESSAGE = gql`
+    mutation createMessage($description:String!)
+    { createMessage(description:$description){
+        id
+        description
+        userId
+        convId
+        date
+        user {
+            login
+            email
+            avatar
+        }
+    }
+    }
+`

@@ -9,19 +9,11 @@ import {BrowserRouter as Router} from 'react-router-dom'
 ReactDOM.render(
     <ApolloProvider client={client}>
         <Router>
-            <React.StrictMode>
                 <App />
-            </React.StrictMode>
         </Router>
     </ApolloProvider>,
     document.getElementById('root')
 );
-
-
-
-
-
-
 
 
 
