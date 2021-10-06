@@ -101,4 +101,28 @@ export const CREATE_MESSAGE = gql`
         }
     }
     }
+`;
+
+export const GET_ALL_CONVERSATIONS = gql`
+  query getAllConversations {
+  getAllConversations {
+    id
+    createdBy
+    name
+    date
+  }
+}
+`;
+
+export const CREATE_CONVERSATION = gql`
+  mutation createConversation(
+    $name:String!) {
+    createConversation(name:$name) {
+      id
+      createdBy
+      name
+      date
+    }
+  }
 `
+
