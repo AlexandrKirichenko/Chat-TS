@@ -23,9 +23,7 @@ interface MessageItem {
 
 const ChatBlock: React.FC = () => {
     const {data: allMessages} = useQuery(GET_ALL_MESSAGES, {onCompleted:
-            (allMessages) => {
-        setMessages([...allMessages.getAllMessages])
-    }} )
+            (allMessages) => {setMessages([...allMessages.getAllMessages])}} )
     const [addMessage ] = useMutation(CREATE_MESSAGE)
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('');
@@ -35,30 +33,39 @@ const ChatBlock: React.FC = () => {
     
     const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        
         addMessage({variables: {description: message}})
         setMessage('');
     }
+    
+    const handleKeyDownEnter = (e: any) => {
+        if (e.key === 'Enter') {
+            addMessage({variables: {description: message}})
+            setMessage('');
+        }
+    }
+    
     const context = useContext(AuthContext)
    
     useEffect(() => {
         if (allMessages && !sub) {
-            const lastMessage = allMessages.getAllMessages[allMessages.getAllMessages.length - 1];
+            const lastMessages = allMessages.getAllMessages[allMessages.getAllMessages.length - 1];
             sub = client
                 .subscribe({
                     query: MESSAGE_ADDED_SUB,
                     variables: {
-                        date: lastMessage.date
+                        date: (new Date(2080, 1,1)).toString()
                     },
                     context: {'access-token': localStorage.getItem('token')},
                 })
                 .subscribe((newMessages) => {
                     const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded;
+                  
                     setMessages(prev => [...prev, ...newMessagesFromSub])
+                 
                 })
         }
-
     }, [allMessages])
-
     
     useEffect(() => {
         if (myRef.current) {
@@ -87,11 +94,14 @@ const ChatBlock: React.FC = () => {
     if (context === null) {
         return null
     }
+    
     const {user, isAuthorized} = context
     if (user === null) {
         return null
     }
+    
     const current = true
+    
     return (isAuthorized ?
             <>
                 <div className={styles.wrapper}>
@@ -117,7 +127,7 @@ const ChatBlock: React.FC = () => {
                             {messagesRender}
                         </div>
                         <div className={styles.messageForm}>
-                            <textarea  name="textarea" value={message} placeholder="Type your message" onChange={e => {
+                            <textarea onKeyDown={handleKeyDownEnter} name="textarea" value={message} placeholder="Type your message" onChange={e => {
                                 setMessage(e.target.value)
                             }}></textarea>
                             <Button type={'submit'} color={'primary'}

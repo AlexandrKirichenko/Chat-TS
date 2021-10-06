@@ -3,7 +3,7 @@
 .wrapper {
   display: flex;
   overflow: auto;
-  height: 95vh;
+  height: calc(100vh - 48px);
   .sidebar {
     border-right: 1px solid $color-chat-borderColor;
     min-width: 335px;

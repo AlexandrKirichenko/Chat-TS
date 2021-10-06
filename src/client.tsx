@@ -14,10 +14,6 @@ const wsClient = new SubscriptionClient("wss://test-chat-be.herokuapp.com/graphq
 
 const wsLink = new WebSocketLink(wsClient)
 
-wsClient.onConnected(() => console.log("websocket connected!!"))
-wsClient.onDisconnected(() => console.log("websocket disconnected!!"))
-wsClient.onReconnected(() => console.log("websocket reconnected!!"))
-
 const httpLink = new HttpLink({
     uri: process.env.REACT_APP_MY_COOL_LINK,
 });
