@@ -11,7 +11,6 @@ import {RegistrationUserCredentials} from "../../types";
 import Button from "../../components/Button";
 import {REGISTER} from "../../schemas";
 
-
 const Registration: React.FC = () => {
     const context = useContext(AuthContext);
     const [registrationUser, {data, loading, error}] = useMutation(REGISTER, {

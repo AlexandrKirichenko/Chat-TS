@@ -6,7 +6,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { SubscriptionClient } from 'subscriptions-transport-ws'
 
 const wsClient = new SubscriptionClient("wss://test-chat-be.herokuapp.com/graphql",{
-    reconnect: false,
+    reconnect: true,
     connectionParams: () => ({
         "access-token": localStorage.getItem(LS_TOKEN_KEY) || null,
     }),
