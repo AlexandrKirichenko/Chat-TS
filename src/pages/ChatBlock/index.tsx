@@ -141,7 +141,6 @@ const ChatBlock: React.FC = () => {
                                 size={'mediumChat'} onClick={handleSubmit}
                         > <TelegramImg/> </Button>
                     </div>
-                
                 </div>
             </div>
         </> : <div> You should login </div>
