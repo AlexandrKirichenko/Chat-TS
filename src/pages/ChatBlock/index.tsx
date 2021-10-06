@@ -7,6 +7,7 @@ import {GET_ALL_MESSAGES, MESSAGE_ADDED_SUB, CREATE_MESSAGE} from '../../schemas
 import styles from './ChatBlock.module.scss'
 import {ReactComponent as TelegramImg} from '../../img/telegram.svg';
 import {ReactComponent as Plus} from '../../img/plus.svg';
+import {wsclientConect, wsclientReconect} from '../../client'
 
 interface MessageItem {
     id: string;
@@ -22,7 +23,10 @@ interface MessageItem {
 }
 
 const ChatBlock: React.FC = () => {
-    const {data: allMessages} = useQuery(GET_ALL_MESSAGES)
+    const {data: allMessages} = useQuery(GET_ALL_MESSAGES, {onCompleted:
+            (allMessages) => {
+        setMessages([...allMessages.getAllMessages])
+    }} )
     const [addMessage ] = useMutation(CREATE_MESSAGE)
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('');
@@ -30,54 +34,40 @@ const ChatBlock: React.FC = () => {
     const client = useApolloClient();
     let sub: any;
     
+    
     const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
-        e.preventDefault();
+        // e.preventDefault();
         addMessage({variables: {description: message}})
         setMessage('');
     }
+    //@ts-ignoge
+        const handleUserKeyPress = (e: any) => {
+        if (e.key === "Enter") {
+            handleSubmit(e);
+        }
+        };
+ 
     const context = useContext(AuthContext)
-    
+   
     useEffect(() => {
         console.log('ddddddddddddddddddddddddddddddddddddddddddddd')
         if (allMessages && !sub) {
-            let startMessagesList: MessageItem[] = allMessages.getAllMessages
-            setMessages([...startMessagesList]);
-            const lastMessages = startMessagesList[startMessagesList.length - 1];
+            // let startMessagesList: MessageItem[] = allMessages.getAllMessages
+            // setMessages([...startMessagesList]);
+            const lastMessage = allMessages.getAllMessages[allMessages.getAllMessages.length - 1];
             sub = client
                 .subscribe({
                     query: MESSAGE_ADDED_SUB,
                     variables: {
-                        date: "2022-10-05T13:34:39.177Z"
+                        date: lastMessage.date
                     },
                     context: {'access-token': localStorage.getItem('token')},
-                    
                 })
                 .subscribe((newMessages) => {
                     const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded;
-                    setMessages(prev => [...prev, ...newMessagesFromSub]);
+                    setMessages(prev => [...prev, ...newMessagesFromSub])
                 })
-            console.log(sub)
-         
-            // wsClient.onConnected(() => console.log("websocket connected!!"))
-            // wsClient.onDisconnected(() => console.log("websocket disconnected!!"))
-            // wsClient.onReconnected(() => console.log("websocket reconnected!!"))
             
-            // if(!lastMessages.date) {
-            //     client
-            //         .subscribe({
-            //             query: MESSAGE_ADDED_SUB,
-            //             variables: {
-            //                 date: "2022-10-05T13:34:39.177Z"
-            //             },
-            //             context: {'access-token': localStorage.getItem('token')}
-            //         })
-            //         .subscribe((newMessages) => {
-            //             const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded;
-            //             setMessages(prev => [...prev, ...newMessagesFromSub]);
-            //         })
-            //     console.log("ffff")
-            // }
-            // console.log(sub)
         }
         return () => {
             if (sub) {
@@ -143,8 +133,9 @@ const ChatBlock: React.FC = () => {
                         <div className={styles.messageList} ref={myRef}>
                             {messagesRender}
                         </div>
+                   
                         <div className={styles.messageForm}>
-                            <textarea name="textarea" value={message} placeholder="Type your message" onChange={e => {
+                              <textarea onKeyDown={handleUserKeyPress} name="textarea" value={message} placeholder="Type your message" onChange={e => {
                                 setMessage(e.target.value)
                             }}></textarea>
                             <Button type={'submit'} color={'primary'}
