@@ -4,7 +4,7 @@ import {getMainDefinition} from '@apollo/client/utilities'
 import {SubscriptionClient} from 'subscriptions-transport-ws'
 import {LS_TOKEN_KEY} from './config'
 
-const wsClient = new SubscriptionClient('wss://test-chat-be.herokuapp.com/graphql', {
+const wsClient = new SubscriptionClient(`wss://${process.env.REACT_APP_MY_COOL_LINK}`, {
   reconnect: true,
   connectionParams: () => ({
     'access-token': localStorage.getItem(LS_TOKEN_KEY) || null,
@@ -14,7 +14,7 @@ const wsClient = new SubscriptionClient('wss://test-chat-be.herokuapp.com/graphq
 const wsLink = new WebSocketLink(wsClient)
 
 const httpLink = new HttpLink({
-  uri: process.env.REACT_APP_MY_COOL_LINK,
+  uri: `http://${process.env.REACT_APP_MY_COOL_LINK}`,
 })
 
 const splitLink = split(

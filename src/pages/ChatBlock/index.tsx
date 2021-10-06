@@ -7,6 +7,7 @@ import {ReactComponent as Plus} from '../../img/plus.svg'
 import {ReactComponent as TelegramImg} from '../../img/telegram.svg'
 import {CREATE_MESSAGE, GET_ALL_MESSAGES, MESSAGE_ADDED_SUB} from '../../schemas'
 import styles from './ChatBlock.module.scss'
+import Rooms from '../../components/Rooms'
 
 interface MessageItem {
     id: string;
@@ -96,54 +97,35 @@ const ChatBlock: React.FC = () => {
           )
         ) : null,
       [messages])
-    
-    if (context === null) {
-        return null
-    }
-    
-    const {user, isAuthorized} = context
-    if (user === null) {
-        return null
-    }
-    
+  
     const current = true
     
-    return (isAuthorized ?
+    return (
         <>
-            <div className={styles.wrapper}>
-                <div className={styles.sidebar}>
-                    <div className={styles.control}>
-                        Rooms
-                        <button className={styles.plus}><Plus/></button>
-                    </div>
-                    <div className={styles.rooms}>
-                        <div className={`${styles.room} ${current && styles.current}`}>
-                            General
-                        </div>
-                        <div className={styles.room}>
-                            Room 1
-                        </div>
-                        <div className={styles.room}>
-                            Room 2
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.chatBlock}>
-                    <div className={styles.messageList} ref={myRef}>
-                        {messagesRender}
-                    </div>
-                    <div className={styles.messageForm}>
+          <div className={styles.wrapper}>
+            <div className={styles.sidebar}>
+              <div className={styles.control}>
+                Rooms
+                <button className={styles.plus}><Plus/></button>
+              </div>
+              <Rooms current={current}/>
+            </div>
+            <div className={styles.control}>
+              Rooms
+              <button className={styles.plus}><Plus/></button>
+            </div>
+            <Rooms current={current}/>
+              <div className={styles.messageForm}>
                             <textarea onKeyDown={handleKeyDownEnter} name="textarea" value={message}
                                       placeholder="Type your message" onChange={e => {
-                                setMessage(e.target.value)
+                              setMessage(e.target.value)
                             }}></textarea>
-                        <Button type={'submit'} color={'primary'}
-                                size={'mediumChat'} onClick={handleSubmit}
-                        > <TelegramImg/> </Button>
-                    </div>
-                </div>
+                <Button type={'submit'} color={'primary'}
+                        size={'mediumChat'} onClick={handleSubmit}
+                > <TelegramImg/> </Button>
+              </div>
             </div>
-        </> : <div> You should login </div>
+        </>
     )
 }
 
