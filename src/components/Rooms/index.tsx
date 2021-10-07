@@ -41,7 +41,6 @@ const Rooms:React.FC<any> =( { current }) => {
         })
     }
   }, [allRooms])
-  
   // const messagesRender = useMemo(
   //   () =>
   //     rooms ? rooms.map((rooms) => (
