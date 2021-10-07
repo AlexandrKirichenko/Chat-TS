@@ -6,7 +6,6 @@ import style from './AvatarInput.module.scss'
 import * as yup from 'yup'
 import debounce from 'lodash/debounce';
 
-
 const DELAY = 1000;
 
 const check = async (data: string) => {

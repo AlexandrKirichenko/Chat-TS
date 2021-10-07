@@ -5,7 +5,7 @@ import Button from '../../components/Button'
 import Message from '../../components/Message'
 import {ReactComponent as Plus} from '../../img/plus.svg'
 import {ReactComponent as TelegramImg} from '../../img/telegram.svg'
-import {CREATE_MESSAGE, GET_ALL_MESSAGES, MESSAGE_ADDED_SUB} from '../../schemas'
+import {CREATE_CONVERSATION, CREATE_MESSAGE, GET_ALL_MESSAGES, MESSAGE_ADDED_SUB, REGISTER} from '../../schemas'
 import styles from './ChatBlock.module.scss'
 import Rooms from '../../components/Rooms'
 
@@ -30,10 +30,12 @@ const ChatBlock: React.FC = () => {
           }
     })
     const [addMessage] = useMutation(CREATE_MESSAGE)
+    const [Add, {data}] = useMutation(CREATE_CONVERSATION)
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('')
     const [messages, setMessages] = useState<MessageItem[]>([])
     const client = useApolloClient()
+    const [selectedRoomId, changeSelectedRoomId] = useState<number | null>(null)
     let sub: any
     
     const sendMessage = (message: string) => {
@@ -117,7 +119,7 @@ const ChatBlock: React.FC = () => {
                         Rooms
                         <button className={styles.plus}><Plus/></button>
                     </div>
-                    <Rooms current={current}/>
+                    <Rooms selectedRoomId={selectedRoomId} changeSelectedRoomId={changeSelectedRoomId} current={current}/>
                 </div>
                 <div className={styles.chatBlock}>
                     <div className={styles.messageList} ref={myRef}>
