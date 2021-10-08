@@ -109,7 +109,7 @@ const ChatBlock: React.FC = () => {
         return null
     }
     
-    const current = true
+ 
     
     return (isAuthorized ?
         <>
@@ -119,7 +119,7 @@ const ChatBlock: React.FC = () => {
                         Rooms
                         <button className={styles.plus}><Plus/></button>
                     </div>
-                    <Rooms selectedRoomId={selectedRoomId} changeSelectedRoomId={changeSelectedRoomId} current={current}/>
+                    <Rooms selectedRoomId={selectedRoomId} changeSelectedRoomId={changeSelectedRoomId}/>
                 </div>
                 <div className={styles.chatBlock}>
                     <div className={styles.messageList} ref={myRef}>
