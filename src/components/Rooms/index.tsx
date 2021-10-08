@@ -58,11 +58,14 @@ const Rooms:React.FC<RoomsItem> =( { current,selectedRoomId,changeSelectedRoomId
   }, [allRooms])
 
   
-  return <div className={styles.rooms}>
+  return (<div className={styles.rooms}>
     {
-      rooms.map(rooms =>  <div key={rooms.id} className={classnames(styles.room,styles.current:[current] )} onClick={changeSelectedRoomId(rooms.id)}  >{rooms.name}</div>)
+      rooms.map(rooms => <>
+        <div key={rooms.id} className={classnames(styles.room,styles.current:[current] )}
+             onClick={changeSelectedRoomId(rooms.id)}>{rooms.name}</div>
+      </>
     }
-  </div>
+  </div>)
 }
 
 export default Rooms;
