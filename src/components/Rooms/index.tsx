@@ -9,12 +9,14 @@ import Room from '../Room'
 
 
 interface RoomsItem {
-  id: number;
-  name: string;
   selectedRoomId: number|null;
   changeSelectedRoomId: (values: number|null) => void;
 }
 
+// interface RoomProps {
+//   id: number;
+//   name: string;
+// }
 
 
 const Rooms:React.FC<RoomsItem> =( { selectedRoomId,changeSelectedRoomId }) => {
@@ -22,7 +24,7 @@ const Rooms:React.FC<RoomsItem> =( { selectedRoomId,changeSelectedRoomId }) => {
       (allRooms) => {
         setRooms([...allRooms.getAllConversations])}
   });
-  const [rooms, setRooms] = useState<RoomsItem[]>([]);
+  const [room, setRooms] = useState<RoomsItem[]>([]);
   const client = useApolloClient()
   let sub: any;
   
@@ -30,15 +32,8 @@ const Rooms:React.FC<RoomsItem> =( { selectedRoomId,changeSelectedRoomId }) => {
   // const changeSelectedRoomId = () => {
   //   console.log('Clicked')
   // }
- 
   
-  useEffect(() => {
-    console.log(rooms)
-  },)
-  
-  console.log(555555555555555)
-  console.log(allRooms);
-  console.log('ROOMS',rooms)
+
   
   useEffect(() => {
     console.log('subscr1')
@@ -62,9 +57,9 @@ const Rooms:React.FC<RoomsItem> =( { selectedRoomId,changeSelectedRoomId }) => {
       <div className={styles.rooms}>
         {
           // rooms.map(rooms =>  <div key={rooms.id} className={classnames(styles.room,styles.current:[current] )} onClick={changeSelectedRoomId(rooms.id)}>{rooms.name}</div>
-          rooms.map(rooms => <Room key={rooms.id} onClick={()=>changeSelectedRoomId(rooms.id)}
-                                   isActive={rooms.id === selectedRoomId}>
-              {rooms.name}
+          room.map(room => <Room key={room.id} onClick={()=>changeSelectedRoomId(room.id)}
+                                   isActive={room.id === selectedRoomId}>
+              {room.name}
             </Room>
           )}
       </div>
