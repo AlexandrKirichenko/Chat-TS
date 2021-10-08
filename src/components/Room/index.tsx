@@ -1,11 +1,10 @@
-import React, {ReactElement} from 'react'
+import React from 'react'
 import classnames from 'classnames'
 import styles from './Room.module.scss'
 
 interface IRoomItem {
   isActive: boolean;
-  children: string;
-  onClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
+  onClick(): void;
 }
 
 const Room:React.FC<IRoomItem> =( { onClick,isActive,children }) => {

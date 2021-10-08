@@ -1,7 +1,7 @@
 import {useApolloClient,useQuery} from '@apollo/client'
 import classnames from 'classnames'
 import React, {useEffect, useMemo, useState} from 'react'
-import styles from '../../pages/ChatBlock/ChatBlock.module.scss'
+import styles from './Rooms.module.scss'
 import {CONVERSATION_ADDED_SUB, GET_ALL_CONVERSATIONS, MESSAGE_ADDED_SUB} from '../../schemas'
 import {InputProps} from '../../types'
 import Message from '../Message'
@@ -9,17 +9,15 @@ import Room from '../Room'
 
 
 interface RoomsItem {
-  id: string;
+  id: number;
   name: string;
-  date: string;
-  selectedRoomId: any;
-  changeSelectedRoomId: (values: any) => void;
-  current: any;
+  selectedRoomId: number|null;
+  changeSelectedRoomId: (values: number|null) => void;
 }
 
 
 
-const Rooms:React.FC<RoomsItem> =( { current,selectedRoomId,changeSelectedRoomId }) => {
+const Rooms:React.FC<RoomsItem> =( { selectedRoomId,changeSelectedRoomId }) => {
   const {data: allRooms} = useQuery(GET_ALL_CONVERSATIONS, {onCompleted:
       (allRooms) => {
         setRooms([...allRooms.getAllConversations])}
@@ -57,20 +55,21 @@ const Rooms:React.FC<RoomsItem> =( { current,selectedRoomId,changeSelectedRoomId
         })
     }
   }, [allRooms])
-
+  
   
   return (
     <>
       <div className={styles.rooms}>
         {
           // rooms.map(rooms =>  <div key={rooms.id} className={classnames(styles.room,styles.current:[current] )} onClick={changeSelectedRoomId(rooms.id)}>{rooms.name}</div>
-          rooms.map(rooms =>  <Room key={rooms.id} onClick={changeSelectedRoomId(rooms.id)}  isActive={rooms.id===selectedRoomId}>
-            {rooms.name}
-            <Room/>)
-            }
-          </div>
+          rooms.map(rooms => <Room key={rooms.id} onClick={()=>changeSelectedRoomId(rooms.id)}
+                                   isActive={rooms.id === selectedRoomId}>
+              {rooms.name}
+            </Room>
+          )}
+      </div>
     </>
-  
-)}
+  )
+}
 
 export default Rooms;
