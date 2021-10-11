@@ -114,19 +114,6 @@ export const GET_ALL_CONVERSATIONS = gql`
 }
 `;
 
-// export const GET_ALL_CONVERSATIONS = gql`
-//   query getAllConversations($convId: convId)
-//   {
-//     getAllConversations(convId: $convId){
-//       id
-//       createdBy
-//       name
-//       date
-//     }
-//   }
-// `
-
-
 export const CREATE_CONVERSATION = gql`
   mutation createConversation(
     $name:String!) {

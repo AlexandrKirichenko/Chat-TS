@@ -1,6 +1,31 @@
 
+@import "../../constants";
 .rooms {
   font-size: 24px;
+  .plus {
+    border: none;
+    background:$color-rooms-headerControll;
+    > svg {
+      fill: $color-pluss-button;
+      transition: fill 0.2s ease;
+    }
+    @media (any-hover: hover) {
+      &:hover {
+        > svg {
+          fill: $color-pluss-button-hovered;
+        }
+      }
+    }
+  }
 }
 
+
+.control {
+  padding: 12px 16px 10px;
+  font-size: 24px;
+  border-bottom: $color-chat-border;
+  background-color: $color-rooms-headerControll;
+  display: flex;
+  justify-content: space-between;
+}
 
