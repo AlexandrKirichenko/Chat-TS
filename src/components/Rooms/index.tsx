@@ -14,7 +14,6 @@ interface RoomsItem {
 }
 
 interface RoomProps {
-  
   selectedRoomId: number | null;
   changeSelectedRoomId: (values: number | null) => void;
 }
@@ -30,12 +29,6 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId}) => {
   const [rooms, setRooms] = useState<RoomsItem[]>([]);
   const client = useApolloClient()
   let sub: any;
-  
-  // {current ={rooms.id===selectedRoomId}}
-  // const changeSelectedRoomId = () => {
-  //   console.log('Clicked')
-  // }
-  
   
   useEffect(() => {
     console.log('subscr1')

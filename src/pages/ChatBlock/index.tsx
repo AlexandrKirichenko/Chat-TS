@@ -2,12 +2,14 @@ import {useApolloClient, useMutation, useQuery,} from '@apollo/client'
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react'
 import {AuthContext} from '../../App'
 import Button from '../../components/Button'
+import Input from '../../components/Input'
 import Message from '../../components/Message'
 import {ReactComponent as Plus} from '../../img/plus.svg'
 import {ReactComponent as TelegramImg} from '../../img/telegram.svg'
 import {CREATE_CONVERSATION, CREATE_MESSAGE, GET_ALL_MESSAGES, MESSAGE_ADDED_SUB, REGISTER} from '../../schemas'
 import styles from './ChatBlock.module.scss'
 import Rooms from '../../components/Rooms'
+import AddRoomBlockBlock from '../../components/AddRoomBlock'
 
 interface MessageItem {
     id: string;
@@ -34,10 +36,11 @@ const ChatBlock: React.FC = () => {
     const myRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState('')
     const [messages, setMessages] = useState<MessageItem[]>([])
+    const [toglePlus, setToglePlus] = useState<boolean>(false)
     const client = useApolloClient()
     const [selectedRoomId, changeSelectedRoomId] = useState<number | null>(null)
     let sub: any
-    
+  
     const sendMessage = (message: string) => {
         if (message.trim()) {
             addMessage({variables: {description: message}})
@@ -49,6 +52,11 @@ const ChatBlock: React.FC = () => {
     const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault()
         sendMessage(message)
+    }
+    
+    const handlePlus = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        setToglePlus(!toglePlus)
     }
     
     const handleKeyDownEnter = (e: React.KeyboardEvent) => {
@@ -65,7 +73,8 @@ const ChatBlock: React.FC = () => {
               .subscribe({
                   query: MESSAGE_ADDED_SUB,
                   variables: {
-                      date: (new Date(2080, 1, 1)).toString()
+                      date: (new Date(2080, 1, 1)).toString(),
+                      // convID:
                   },
                   context: {'access-token': localStorage.getItem('token')},
               })
@@ -117,9 +126,13 @@ const ChatBlock: React.FC = () => {
                 <div className={styles.sidebar}>
                     <div className={styles.control}>
                         Rooms
-                        <button className={styles.plus}><Plus/></button>
+                        <button className={styles.plus} onClick={handlePlus}><Plus/></button>
                     </div>
                     <Rooms selectedRoomId={selectedRoomId} changeSelectedRoomId={changeSelectedRoomId}/>
+                    <AddRoomBlockBlock
+                      // name={"Input"}
+                      // onChange={onChange}
+                    />
                 </div>
                 <div className={styles.chatBlock}>
                     <div className={styles.messageList} ref={myRef}>

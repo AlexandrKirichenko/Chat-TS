@@ -70,7 +70,7 @@ export const GET_ALL_MESSAGES = gql`
 
 export const MESSAGE_ADDED_SUB = gql`
     subscription messageAdded($date: DateTime!) {
-        messageAdded(date:$date)  {
+        messageAdded(date:$date, convId:$convId)  {
             id
             description
             userId
@@ -113,6 +113,19 @@ export const GET_ALL_CONVERSATIONS = gql`
   }
 }
 `;
+
+// export const GET_ALL_CONVERSATIONS = gql`
+//   query getAllConversations($convId: convId)
+//   {
+//     getAllConversations(convId: $convId){
+//       id
+//       createdBy
+//       name
+//       date
+//     }
+//   }
+// `
+
 
 export const CREATE_CONVERSATION = gql`
   mutation createConversation(
