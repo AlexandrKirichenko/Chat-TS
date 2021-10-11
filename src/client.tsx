@@ -11,10 +11,6 @@ const wsClient = new SubscriptionClient(`wss://${process.env.REACT_APP_MY_COOL_L
   }),
 })
 
-wsClient.onConnected(() => console.log("websocket connected!!"))
-wsClient.onDisconnected(() => console.log("websocket disconnected!!"))
-wsClient.onReconnected(() => console.log("websocket reconnected!!"))
-
 const wsLink = new WebSocketLink(wsClient)
 
 const httpLink = new HttpLink({

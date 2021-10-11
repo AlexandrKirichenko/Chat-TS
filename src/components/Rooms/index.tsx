@@ -32,6 +32,7 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
   });
   const [AddRoom, {data}] = useMutation(CREATE_CONVERSATION);
   const [rooms, setRooms] = useState<RoomsItem[]>([]);
+  const [showAddChatForm, setShowAddChatForm] = useState<boolean>(false);
   const client = useApolloClient()
   let sub: any;
   
@@ -46,13 +47,11 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
         })
         .subscribe((newRoom) => {
           const newRoomFromSub: any = newRoom?.data?.conversationAdded
-          setRooms(prev => [...prev, ...newRoomFromSub])
+          setRooms(prev => [...newRoomFromSub])
         })
     }
   }, [allRooms])
   console.log("ALL ROOMS",allRooms)
-  
-  const [showAddChatForm, setShowAddChatForm] = useState<boolean>(false)
   
   const handleAddRoom = (chatRoomName: string) => {
     AddRoom({ variables: { name: chatRoomName } })
@@ -76,12 +75,14 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
           Rooms
           <button className={styles.plus} onClick={handlePlus}><Plus/></button>
         </div>
-        {
-          rooms.map(room => <Room key={room.id} onClick={() => changeSelectedRoomId(room.id)}
-                                  isActive={room.id === selectedRoomId}>
-              {room.name}
-            </Room>
-          )}
+        <div className={styles.wrapperRoomsList}>
+          {
+            rooms.map(room => <Room key={room.id} onClick={() => changeSelectedRoomId(room.id)}
+                                    isActive={room.id === selectedRoomId}>
+                {room.name}
+              </Room>
+            )}
+        </div>
         {showAddChatForm ? <AddRoomBlockBlock
           addRoom={handleAddRoom}
           currentChatList={allRooms ? allRooms.getAllConversations.map((item: { name: string }) => item.name) : []}

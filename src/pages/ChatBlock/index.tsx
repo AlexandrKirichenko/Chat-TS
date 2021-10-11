@@ -87,7 +87,7 @@ const ChatBlock: React.FC = () => {
           console.log('111111111111111111111',newMessages)
           const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded
           
-          setMessages(prev => [...prev, ...newMessagesFromSub])
+          setMessages([...newMessagesFromSub])
         })
     
     }

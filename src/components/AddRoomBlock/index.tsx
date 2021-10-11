@@ -17,7 +17,6 @@ const AddRoomBlock: React.FC<IAddRoomBlock> = ({
   
   const [newChatName, setNewChatName] = useState<string>('');
   const [error, setError] = useState<string>('')
-  
   const handleChangeNewChatName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setNewChatName(value);
@@ -37,7 +36,6 @@ const AddRoomBlock: React.FC<IAddRoomBlock> = ({
       const value = newChatName.trim();
       if (value.length > 0) {
         addRoom(value);
-        
         setNewChatName('');
         onClose();
       }
@@ -49,17 +47,15 @@ const AddRoomBlock: React.FC<IAddRoomBlock> = ({
   
   return (
     <div className={styles.wrapAddRoom} ref={ref}>
-     
       <form onSubmit={handleAddNewChat}>
         <div>
-          <Input value={newChatName} onChange={handleChangeNewChatName} name={'Input'} inputError={''}/>
+          <Input value={newChatName} onChange={handleChangeNewChatName} name={'Input'} inputError={''} placeholder={"Name"}/>
         </div>
         <ErrorMessage error={error}/>
         <div>
           <Button type={"submit"} color={"primary"} size={'small'} onClick={handleAddNewChat}>Add</Button>
         </div>
       </form>
-    
     </div>
   )
 }
