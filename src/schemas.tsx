@@ -54,18 +54,19 @@ export const ME = gql`
 `;
 
 export const GET_ALL_MESSAGES = gql`
-    query getAllMessages {
-        getAllMessages {
-            id
-            description
-            userId
-            date
-            user{
-                login
-                avatar
+    query getAllMessages($convId:Int) {
+        getAllMessages(convId:$convId)
+             {
+                id
+                description
+                userId
+                date
+                user{
+                    login
+                    avatar
+                }
             }
         }
-    }
 `;
 
 export const MESSAGE_ADDED_SUB = gql`
@@ -87,8 +88,8 @@ export const MESSAGE_ADDED_SUB = gql`
 `;
 
 export const CREATE_MESSAGE = gql`
-    mutation createMessage($description:String!)
-    { createMessage(description:$description){
+    mutation createMessage($description:String!,$convId:Int)
+    { createMessage(description:$description,convId:$convId){
         id
         description
         userId

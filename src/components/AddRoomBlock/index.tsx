@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import styles from '../../pages/ChatBlock/ChatBlock.module.scss'
+import styles from './AddRoomBlock.module.scss'
 import Button from '../Button'
 import Input from "../Input";
 import useOutsideClick from "../hooks/useOutsideClick";
@@ -48,13 +48,13 @@ const AddRoomBlock: React.FC<IAddRoomBlock> = ({
   return (
     <div className={styles.wrapAddRoom} ref={ref}>
       <form onSubmit={handleAddNewChat}>
-        <div>
-          <Input value={newChatName} onChange={handleChangeNewChatName} name={'Input'} inputError={''} placeholder={"Name"}/>
-        </div>
-        <ErrorMessage error={error}/>
-        <div>
-          <Button type={"submit"} color={"primary"} size={'small'} onClick={handleAddNewChat}>Add</Button>
-        </div>
+          <div className={styles.wrapInput}>
+            <Input value={newChatName} onChange={handleChangeNewChatName} name={'Input'} inputError={''} placeholder={"Name"}/>
+          </div>
+          <ErrorMessage error={error}/>
+          <div className={styles.wrapButton}>
+            <Button type={"submit"} color={"primary"} size={'small'} onClick={handleAddNewChat}>Add</Button>
+          </div>
       </form>
     </div>
   )

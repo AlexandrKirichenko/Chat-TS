@@ -1,14 +1,11 @@
 import {useApolloClient, useMutation, useQuery} from '@apollo/client'
 import classnames from 'classnames'
-import React, {useEffect, useMemo, useState} from 'react'
-import styles from './Rooms.module.scss'
-import {CONVERSATION_ADDED_SUB, CREATE_CONVERSATION, GET_ALL_CONVERSATIONS, MESSAGE_ADDED_SUB} from '../../schemas'
-import {InputProps} from '../../types'
-import Message from '../Message'
+import React, {useEffect, useState} from 'react'
+import {ReactComponent as Plus} from '../../img/plus.svg'
+import {CONVERSATION_ADDED_SUB, CREATE_CONVERSATION, GET_ALL_CONVERSATIONS} from '../../schemas'
+import AddRoomBlockBlock from '../AddRoomBlock'
 import Room from '../Room'
-import AddRoomBlockBlock from "../AddRoomBlock";
-import {ReactComponent as Plus} from "../../img/plus.svg";
-import useOutsideClick from "../hooks/useOutsideClick";
+import styles from './Rooms.module.scss'
 
 
 interface RoomsItem {
@@ -19,22 +16,25 @@ interface RoomsItem {
 interface RoomProps {
   selectedRoomId: number | null;
   changeSelectedRoomId: (values: number | null) => void;
-  setConvIdCb : (values: number) => void;
+  setConvId: (values: number) => void;
+  convId: number;
 }
 
 
-const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setConvIdCb}) => {
+const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setConvId}) => {
   const {data: allRooms} = useQuery(GET_ALL_CONVERSATIONS, {
     onCompleted:
       (allRooms) => {
+        
         setRooms([...allRooms.getAllConversations])
       }
-  });
-  const [AddRoom, {data}] = useMutation(CREATE_CONVERSATION);
-  const [rooms, setRooms] = useState<RoomsItem[]>([]);
-  const [showAddChatForm, setShowAddChatForm] = useState<boolean>(false);
+  })
+  const [AddRoom, {data}] = useMutation(CREATE_CONVERSATION)
+  const [rooms, setRooms] = useState<RoomsItem[]>([])
+  // const [isActiv, setIsActiv] = useState<boolean>(false);
+  const [showAddChatForm, setShowAddChatForm] = useState<boolean>(false)
   const client = useApolloClient()
-  let sub: any;
+  let sub: any
   
   
   useEffect(() => {
@@ -47,37 +47,40 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
         })
         .subscribe((newRoom) => {
           const newRoomFromSub: any = newRoom?.data?.conversationAdded
-          setRooms(prev => [...newRoomFromSub])
+          setRooms([...newRoomFromSub])
         })
     }
   }, [allRooms])
-  console.log("ALL ROOMS",allRooms)
+  console.log('ALL ROOMS', rooms)
   
   const handleAddRoom = (chatRoomName: string) => {
-    AddRoom({ variables: { name: chatRoomName } })
-    alert(chatRoomName);
+    AddRoom({variables: {name: chatRoomName}})
+   
   }
   
   const handlePlus = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    setShowAddChatForm(true);
+    setShowAddChatForm(!showAddChatForm)
   }
   
   const handleHideAddRoomForm = () => {
-    setShowAddChatForm(false);
+    setShowAddChatForm(false)
   }
-  
-  
+
   return (
     <>
       <div className={styles.rooms}>
-        <div className={styles.control}>
+        <div className={classnames(styles.control, {[styles.bordered]: !showAddChatForm})}>
           Rooms
           <button className={styles.plus} onClick={handlePlus}><Plus/></button>
         </div>
-        <div className={styles.wrapperRoomsList}>
+        <div className={classnames(styles.wrapperRoomsList, {[styles.hide]: showAddChatForm})}>
           {
-            rooms.map(room => <Room key={room.id} onClick={() => changeSelectedRoomId(room.id)}
+            rooms.map(room => <Room key={room.id} onClick={() => {
+                changeSelectedRoomId(room.id)
+                setConvId(room.id)
+                console.log("ROOM ADDED")
+              }}
                                     isActive={room.id === selectedRoomId}>
                 {room.name}
               </Room>
@@ -93,4 +96,4 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
   )
 }
 
-export default Rooms;
+export default Rooms

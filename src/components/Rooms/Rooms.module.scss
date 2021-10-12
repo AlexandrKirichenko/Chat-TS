@@ -3,7 +3,19 @@
 .rooms {
   font-size: 24px;
   .wrapperRoomsList {
-    display:none;
+    &.hide{
+      display:none;
+    }
+  }
+  .control {
+    padding: 12px 16px 10px;
+    font-size: 24px;
+    background-color: $color-rooms-headerControll;
+    display: flex;
+    justify-content: space-between;
+    &.bordered {
+      border-bottom: $color-chat-border;
+    }
   }
   .plus {
     border: none;
@@ -23,12 +35,5 @@
 }
 
 
-.control {
-  padding: 12px 16px 10px;
-  font-size: 24px;
-  border-bottom: $color-chat-border;
-  background-color: $color-rooms-headerControll;
-  display: flex;
-  justify-content: space-between;
-}
+
 

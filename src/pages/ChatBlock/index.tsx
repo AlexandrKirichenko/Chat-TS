@@ -25,24 +25,26 @@ interface MessageItem {
 }
 
 const ChatBlock: React.FC = () => {
+  const [convId, setConvId] = useState<number> (0)
   const {data: allMessages} = useQuery(GET_ALL_MESSAGES, {
-    variables: {convID: {convId:0}},
+    variables: {convId: convId},
     onCompleted:
       (allMessages) => {
         setMessages([...allMessages.getAllMessages])
       }
-  })
+   })
+  
   const [addMessage] = useMutation(CREATE_MESSAGE)
  
   const myRef = useRef<HTMLDivElement | null>(null)
   const [message, setMessage] = useState('')
-  const [convId, setConvId] = useState<number> (0)
+ 
   const [messages, setMessages] = useState<MessageItem[]>([])
-  const [toglePlus, setToglePlus] = useState<boolean>(false)
-  
   const client = useApolloClient()
   const [selectedRoomId, changeSelectedRoomId] = useState<number | null>(null)
   let sub: any
+  
+  // const handle
   
   const sendMessage = (message: string) => {
     if (message.trim()) {
@@ -52,18 +54,13 @@ const ChatBlock: React.FC = () => {
   }
   
   useEffect(() => {
-    console.log(allMessages)
+    console.log("ALL MESSAGES",allMessages)
   },[])
   
   const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
     sendMessage(message)
   }
-  //
-  // const handlePlus = (e: React.SyntheticEvent<HTMLButtonElement>) => {
-  //   e.preventDefault()
-  //   setToglePlus(!toglePlus)
-  // }
   
   const handleKeyDownEnter = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -84,10 +81,10 @@ const ChatBlock: React.FC = () => {
           context: {'access-token': localStorage.getItem('token')},
         })
         .subscribe((newMessages) => {
-          console.log('111111111111111111111',newMessages)
+        
           const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded
           
-          setMessages([...newMessagesFromSub])
+          setMessages(prev =>[...prev, ...newMessagesFromSub])
         })
     
     }
@@ -132,7 +129,7 @@ const ChatBlock: React.FC = () => {
       <>
         <div className={styles.wrapper}>
           <div className={styles.sidebar}>
-            <Rooms selectedRoomId={selectedRoomId} changeSelectedRoomId={changeSelectedRoomId} setConvIdCb={setConvId} />
+            <Rooms selectedRoomId={selectedRoomId} changeSelectedRoomId={changeSelectedRoomId} setConvId={setConvId} convId={convId}/>
           </div>
           <div className={styles.chatBlock}>
             <div className={styles.messageList} ref={myRef}>
