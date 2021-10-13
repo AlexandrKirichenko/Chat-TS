@@ -55,7 +55,7 @@ export const ME = gql`
 
 export const GET_ALL_MESSAGES = gql`
     query getAllMessages($convId:Int) {
-        getAllMessages(convId:$convId)
+      getAllMessages(convId:$convId)
              {
                 id
                 description

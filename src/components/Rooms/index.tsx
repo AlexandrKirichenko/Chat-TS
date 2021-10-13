@@ -36,6 +36,7 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
   const client = useApolloClient()
   let sub: any
   
+  console.log("ROOOMS",rooms)
   
   useEffect(() => {
     console.log('subscr1')
@@ -55,7 +56,9 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
   
   const handleAddRoom = (chatRoomName: string) => {
     AddRoom({variables: {name: chatRoomName}})
-   
+    // let room=rooms.filter((item) => item.name = chatRoomName)
+    // console.log("RRRRROOOOOM",room)
+    // setConvId(room.id)
   }
   
   const handlePlus = (e: React.SyntheticEvent<HTMLButtonElement>) => {
@@ -67,6 +70,8 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
     setShowAddChatForm(false)
   }
 
+
+  
   return (
     <>
       <div className={styles.rooms}>
@@ -78,8 +83,7 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
           {
             rooms.map(room => <Room key={room.id} onClick={() => {
                 changeSelectedRoomId(room.id)
-                setConvId(room.id)
-                console.log("ROOM ADDED")
+                setConvId(+room.id)
               }}
                                     isActive={room.id === selectedRoomId}>
                 {room.name}

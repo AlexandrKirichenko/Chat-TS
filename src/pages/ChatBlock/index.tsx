@@ -25,14 +25,18 @@ interface MessageItem {
 }
 
 const ChatBlock: React.FC = () => {
-  const [convId, setConvId] = useState<number> (0)
+  const [convId, setConvId] = useState<number> (84)
+  console.log("CDDD",convId);
   const {data: allMessages} = useQuery(GET_ALL_MESSAGES, {
-    variables: {convId: convId},
-    onCompleted:
-      (allMessages) => {
-        setMessages([...allMessages.getAllMessages])
-      }
-   })
+      variables: {convId: convId},
+     onCompleted:
+       (allMessages) => {
+         setMessages([...allMessages.getAllMessages])
+       }
+    })
+
+  console.log({variables: {convId: convId}})
+ 
   
   const [addMessage] = useMutation(CREATE_MESSAGE)
  
@@ -44,7 +48,26 @@ const ChatBlock: React.FC = () => {
   const [selectedRoomId, changeSelectedRoomId] = useState<number | null>(null)
   let sub: any
   
-  // const handle
+  // useEffect(() => {
+  //   getAllMessages({variables: {convId: convId}});
+  //   console.log("========in effect", convId)
+  //   console.log("ALL MESSAGES",allMessages)
+  // },[convId])
+  
+  
+  // useEffect(() => {
+  //   function getAllMessages(){
+  //     setMessages([...allMessages.getAllMessages])
+  //   }
+  //   getAllMessages();
+  // },[convId])
+  
+  // useEffect(() => {
+  //   // const Mess = (allMessages: any) => {
+  //   //   setMessages([...allMessages.getAllMessages])
+  //   // }
+  //
+  // },)
   
   const sendMessage = (message: string) => {
     if (message.trim()) {
@@ -53,9 +76,7 @@ const ChatBlock: React.FC = () => {
     setMessage('')
   }
   
-  useEffect(() => {
-    console.log("ALL MESSAGES",allMessages)
-  },[])
+
   
   const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
