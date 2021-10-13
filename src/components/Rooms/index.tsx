@@ -21,7 +21,7 @@ interface RoomProps {
 }
 
 
-const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setConvId}) => {
+const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setConvId, convId}) => {
   const {data: allRooms} = useQuery(GET_ALL_CONVERSATIONS, {
     onCompleted:
       (allRooms) => {
@@ -31,15 +31,11 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
   })
   const [AddRoom, {data}] = useMutation(CREATE_CONVERSATION)
   const [rooms, setRooms] = useState<RoomsItem[]>([])
-  // const [isActiv, setIsActiv] = useState<boolean>(false);
   const [showAddChatForm, setShowAddChatForm] = useState<boolean>(false)
   const client = useApolloClient()
   let sub: any
   
-  console.log("ROOOMS",rooms)
-  
   useEffect(() => {
-    console.log('subscr1')
     if (allRooms && !sub) {
       sub = client
         .subscribe({
@@ -52,13 +48,10 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
         })
     }
   }, [allRooms])
-  console.log('ALL ROOMS', rooms)
   
   const handleAddRoom = (chatRoomName: string) => {
     AddRoom({variables: {name: chatRoomName}})
-    // let room=rooms.filter((item) => item.name = chatRoomName)
-    // console.log("RRRRROOOOOM",room)
-    // setConvId(room.id)
+    
   }
   
   const handlePlus = (e: React.SyntheticEvent<HTMLButtonElement>) => {
@@ -69,8 +62,7 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
   const handleHideAddRoomForm = () => {
     setShowAddChatForm(false)
   }
-
-
+  
   
   return (
     <>
@@ -83,9 +75,8 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
           {
             rooms.map(room => <Room key={room.id} onClick={() => {
                 changeSelectedRoomId(room.id)
-                setConvId(+room.id)
-              }}
-                                    isActive={room.id === selectedRoomId}>
+                setConvId(Number(room.id))
+              }} isActive={room.id === selectedRoomId}>
                 {room.name}
               </Room>
             )}
