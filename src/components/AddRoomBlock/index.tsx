@@ -20,7 +20,6 @@ const AddRoomBlock: React.FC<IAddRoomBlock> = ({
   const handleChangeNewChatName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setNewChatName(value);
-    
   }
   
   useEffect(() => {

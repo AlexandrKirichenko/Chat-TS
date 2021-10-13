@@ -7,7 +7,6 @@ import AddRoomBlockBlock from '../AddRoomBlock'
 import Room from '../Room'
 import styles from './Rooms.module.scss'
 
-
 interface RoomsItem {
   id: number;
   name: string;
@@ -20,16 +19,14 @@ interface RoomProps {
   convId: number;
 }
 
-
 const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setConvId, convId}) => {
   const {data: allRooms} = useQuery(GET_ALL_CONVERSATIONS, {
     onCompleted:
       (allRooms) => {
-        
         setRooms([...allRooms.getAllConversations])
       }
   })
-  const [AddRoom, {data}] = useMutation(CREATE_CONVERSATION)
+  const [AddRoom] = useMutation(CREATE_CONVERSATION)
   const [rooms, setRooms] = useState<RoomsItem[]>([])
   const [showAddChatForm, setShowAddChatForm] = useState<boolean>(false)
   const [isGeneral, setIsGeneral] = useState<boolean>(true)
@@ -52,7 +49,6 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
   
   const handleAddRoom = (chatRoomName: string) => {
     AddRoom({variables: {name: chatRoomName}})
-    
   }
   
   const handlePlus = (e: React.SyntheticEvent<HTMLButtonElement>) => {
@@ -63,7 +59,6 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
   const handleHideAddRoomForm = () => {
     setShowAddChatForm(false)
   }
-  
   
   return (
     <>
@@ -83,7 +78,7 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
                     onClick={() => {
                       changeSelectedRoomId(room.id)
                       setConvId(Number(room.id))
-                      setIsGeneral(false);
+                      setIsGeneral(false)
                     }}
                     isActive={room.id === selectedRoomId}>
                 {room.name}
