@@ -32,6 +32,7 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
   const [AddRoom, {data}] = useMutation(CREATE_CONVERSATION)
   const [rooms, setRooms] = useState<RoomsItem[]>([])
   const [showAddChatForm, setShowAddChatForm] = useState<boolean>(false)
+  const [isGeneral, setIsGeneral] = useState<boolean>(true)
   const client = useApolloClient()
   let sub: any
   
@@ -72,11 +73,19 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
           <button className={styles.plus} onClick={handlePlus}><Plus/></button>
         </div>
         <div className={classnames(styles.wrapperRoomsList, {[styles.hide]: showAddChatForm})}>
+          <Room onClick={() => {
+            changeSelectedRoomId(0)
+            setConvId(Number(0))
+          }} isActive={selectedRoomId === 0 || isGeneral}>General</Room>
           {
-            rooms.map(room => <Room key={room.id} onClick={() => {
-                changeSelectedRoomId(room.id)
-                setConvId(Number(room.id))
-              }} isActive={room.id === selectedRoomId}>
+            rooms.map(room =>
+              <Room key={room.id}
+                    onClick={() => {
+                      changeSelectedRoomId(room.id)
+                      setConvId(Number(room.id))
+                      setIsGeneral(false);
+                    }}
+                    isActive={room.id === selectedRoomId}>
                 {room.name}
               </Room>
             )}
