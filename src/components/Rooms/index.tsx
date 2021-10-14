@@ -1,4 +1,4 @@
-import {useApolloClient, useMutation, useQuery} from '@apollo/client'
+import {useApolloClient, useMutation, useQuery,useSubscription} from '@apollo/client'
 import classnames from 'classnames'
 import React, {useEffect, useState} from 'react'
 import {ReactComponent as Plus} from '../../img/plus.svg'
@@ -15,24 +15,21 @@ interface RoomsItem {
 interface RoomProps {
   selectedRoomId: number | null;
   changeSelectedRoomId: (values: number | null) => void;
-  setConvId: (values: number) => void;
-  convId: number;
 }
 
-const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setConvId, convId}) => {
+const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId}) => {
   const {data: allRooms} = useQuery(GET_ALL_CONVERSATIONS, {
     onCompleted:
       (allRooms) => {
         setRooms([...allRooms.getAllConversations])
       }
   })
-  const [AddRoom] = useMutation(CREATE_CONVERSATION)
+  const [addRoom] = useMutation(CREATE_CONVERSATION)
   const [rooms, setRooms] = useState<RoomsItem[]>([])
   const [showAddChatForm, setShowAddChatForm] = useState<boolean>(false)
-  const [isGeneral, setIsGeneral] = useState<boolean>(true)
   const client = useApolloClient()
   let sub: any
-  
+
   useEffect(() => {
     if (allRooms && !sub) {
       sub = client
@@ -48,7 +45,7 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
   }, [allRooms])
   
   const handleAddRoom = (chatRoomName: string) => {
-    AddRoom({variables: {name: chatRoomName}})
+    addRoom({variables: {name: chatRoomName}})
   }
   
   const handlePlus = (e: React.SyntheticEvent<HTMLButtonElement>) => {
@@ -70,17 +67,14 @@ const Rooms: React.FC<RoomProps> = ({selectedRoomId, changeSelectedRoomId, setCo
         <div className={classnames(styles.wrapperRoomsList, {[styles.hide]: showAddChatForm})}>
           <Room onClick={() => {
             changeSelectedRoomId(0)
-            setConvId(Number(0))
-          }} isActive={selectedRoomId === 0 || isGeneral}>General</Room>
+          }} isActive={selectedRoomId === 0}>General</Room>
           {
             rooms.map(room =>
               <Room key={room.id}
                     onClick={() => {
-                      changeSelectedRoomId(room.id)
-                      setConvId(Number(room.id))
-                      setIsGeneral(false)
+                      changeSelectedRoomId(Number(room.id))
                     }}
-                    isActive={room.id === selectedRoomId}>
+                    isActive={room.id == selectedRoomId}>
                 {room.name}
               </Room>
             )}

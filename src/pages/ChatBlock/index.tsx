@@ -1,15 +1,12 @@
-import {useApolloClient, useMutation, useQuery,} from '@apollo/client'
+import {useApolloClient, useLazyQuery, useMutation} from '@apollo/client'
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react'
 import {AuthContext} from '../../App'
 import Button from '../../components/Button'
-import Input from '../../components/Input'
 import Message from '../../components/Message'
-import {ReactComponent as Plus} from '../../img/plus.svg'
 import {ReactComponent as TelegramImg} from '../../img/telegram.svg'
-import {CREATE_CONVERSATION, CREATE_MESSAGE, GET_ALL_MESSAGES, MESSAGE_ADDED_SUB, REGISTER} from '../../schemas'
+import {CREATE_MESSAGE, GET_ALL_MESSAGES, MESSAGE_ADDED_SUB} from '../../schemas'
 import styles from './ChatBlock.module.scss'
 import Rooms from '../../components/Rooms'
-import AddRoomBlockBlock from '../../components/AddRoomBlock'
 
 interface MessageItem {
   id: string;
@@ -25,58 +22,61 @@ interface MessageItem {
 }
 
 const ChatBlock: React.FC = () => {
-  const [convId, setConvId] = useState<number> (84)
-  console.log("CDDD",convId);
-  const {data: allMessages} = useQuery(GET_ALL_MESSAGES, {
-      variables: {convId: convId},
-     onCompleted:
-       (allMessages) => {
-         setMessages([...allMessages.getAllMessages])
-       }
-    })
-
-  console.log({variables: {convId: convId}})
- 
-  
   const [addMessage] = useMutation(CREATE_MESSAGE)
- 
   const myRef = useRef<HTMLDivElement | null>(null)
   const [message, setMessage] = useState('')
- 
   const [messages, setMessages] = useState<MessageItem[]>([])
+  const [subMessages, setSubMessages] = useState<MessageItem[]>([])
   const client = useApolloClient()
   const [selectedRoomId, changeSelectedRoomId] = useState<number | null>(null)
   let sub: any
   
-  // useEffect(() => {
-  //   getAllMessages({variables: {convId: convId}});
-  //   console.log("========in effect", convId)
-  //   console.log("ALL MESSAGES",allMessages)
-  // },[convId])
+  const [doGetAllMessage] = useLazyQuery(GET_ALL_MESSAGES, {
+    variables: {convId: selectedRoomId},
+    fetchPolicy: 'network-only',
+    onCompleted:
+      (allMessages) => {
+        setMessages([...allMessages.getAllMessages])
+        sub?.unsubscribe();
+        setSubMessages([]);
+        if (allMessages && !sub) {
+          sub = client
+            .subscribe({
+              query: MESSAGE_ADDED_SUB,
+              fetchPolicy: "network-only",
+              variables: {
+                date: (new Date('2080-1-1')).toString(),
+              },
+              context: {'access-token': localStorage.getItem('token')},
+            })
+            .subscribe((newMessages) => {
+              const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded.filter((mesage: MessageItem) => mesage.convId === selectedRoomId)
+              if (newMessagesFromSub.length > 0) {
+                setSubMessages(prev => {
+                  const check = prev.filter(mesage => mesage.id === newMessagesFromSub[0].id).length === 0;
+                  return [...prev, ...check ? newMessagesFromSub : []]
+                });
+              }
+              
+            })
+          
+        }
+      }
+  })
   
   
-  // useEffect(() => {
-  //   function getAllMessages(){
-  //     setMessages([...allMessages.getAllMessages])
-  //   }
-  //   getAllMessages();
-  // },[convId])
-  
-  // useEffect(() => {
-  //   // const Mess = (allMessages: any) => {
-  //   //   setMessages([...allMessages.getAllMessages])
-  //   // }
-  //
-  // },)
+  useEffect(() => {
+    sub?.unsubscribe();
+    doGetAllMessage();
+  }, [selectedRoomId]);
   
   const sendMessage = (message: string) => {
     if (message.trim()) {
-      addMessage({variables: {description: message}})
+      addMessage({variables: {description: message, selectedRoomId}})
     }
     setMessage('')
   }
   
-
   
   const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -91,27 +91,6 @@ const ChatBlock: React.FC = () => {
   
   const context = useContext(AuthContext)
   
-  useEffect(() => {
-    if (allMessages && !sub) {
-      sub = client
-        .subscribe({
-          query: MESSAGE_ADDED_SUB,
-          variables: {
-            date: (new Date(2080, 1, 1)).toString(),
-          },
-          context: {'access-token': localStorage.getItem('token')},
-        })
-        .subscribe((newMessages) => {
-        
-          const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded
-          
-          setMessages(prev =>[...prev, ...newMessagesFromSub])
-        })
-    
-    }
-   
-  }, [allMessages])
- 
   
   useEffect(() => {
     if (myRef.current) {
@@ -119,11 +98,14 @@ const ChatBlock: React.FC = () => {
     }
   },)
   
+
+  
   const messagesRender = useMemo(
-    () =>
-      messages ? messages.map((Messages) => (
+    () => {
+      const mesages: MessageItem[] = [...messages, ...subMessages]
+      return mesages ? mesages.map((Messages) => (
           <div key={Messages.id}>
-            <div className={styles.sidebar}></div>
+            <div className={styles.sidebar}/>
             <Message key={Messages.id}
                      itsMe={Messages.userId === Number(context?.user?.id)}
                      messageText={Messages.description}
@@ -134,23 +116,16 @@ const ChatBlock: React.FC = () => {
             />
           </div>
         )
-      ) : null,
-    [messages])
+      ) : null
+    },
+    [messages, subMessages])
   
-  if (context === null) {
-    return null
-  }
-  
-  const {user, isAuthorized} = context
-  if (user === null) {
-    return null
-  }
-  
-  return (isAuthorized ?
+  return (
       <>
         <div className={styles.wrapper}>
           <div className={styles.sidebar}>
-            <Rooms selectedRoomId={selectedRoomId} changeSelectedRoomId={changeSelectedRoomId} setConvId={setConvId} convId={convId}/>
+            <Rooms selectedRoomId={selectedRoomId} changeSelectedRoomId={changeSelectedRoomId}
+                 />
           </div>
           <div className={styles.chatBlock}>
             <div className={styles.messageList} ref={myRef}>
@@ -160,17 +135,16 @@ const ChatBlock: React.FC = () => {
                             <textarea onKeyDown={handleKeyDownEnter} name="textarea" value={message}
                                       placeholder="Type your message" onChange={e => {
                               setMessage(e.target.value)
-                            }}></textarea>
+                            }}/>
               <Button type={'submit'} color={'primary'}
                       size={'mediumChat'} onClick={handleSubmit}
               > <TelegramImg/> </Button>
             </div>
           </div>
         </div>
-      </> : <div> You should login </div>
+      </>
   )
 }
 
 export default ChatBlock
-
 
