@@ -1,4 +1,5 @@
 import classnames from 'classnames'
+import placeholder from 'lodash/fp/placeholder'
 import React from 'react'
 import style from './Input.module.scss'
 import './Input.module.scss'
@@ -14,6 +15,7 @@ const Input: React.FC<InputProps> = ({
                                          id = '',
                                          name,
                                          autoComplete = 'off',
+                                         placeholder
                                      }) => {
     return (
         <div className={style.wrap}>
@@ -27,6 +29,7 @@ const Input: React.FC<InputProps> = ({
                 onChange={onChange}
                 autoComplete={autoComplete}
                 onBlur={onBlur}
+                placeholder={placeholder}
             />
             <div className={style.errorMessage}>
                 {inputError && touched ? inputError: null}

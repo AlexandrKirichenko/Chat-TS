@@ -11,7 +11,7 @@ export interface RegistrationUserCredentials {
 
 export interface InputProps {
     type?: "email" | "text" | "password";
-    value: string;
+    value: string ;
     id?: string;
     name: string;
     size?: "small" | "large";
@@ -21,6 +21,7 @@ export interface InputProps {
     onBlur?: (value: React.ChangeEvent<HTMLInputElement>) => void;
     onChange?: (value: React.ChangeEvent<HTMLInputElement>) => void;
     url?: string;
+    placeholder?: string;
 }
 
 
