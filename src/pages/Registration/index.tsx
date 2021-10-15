@@ -12,7 +12,7 @@ import Button from "../../components/Button";
 import {REGISTER} from "../../schemas";
 
 const Registration: React.FC = () => {
-    const context = useContext(AuthContext);
+    // const context = useContext(AuthContext);
     const [registrationUser, {data, loading, error}] = useMutation(REGISTER, {
         errorPolicy: 'all',
     })
@@ -69,9 +69,6 @@ const Registration: React.FC = () => {
     };
     const formik = useFormik<RegistrationUserCredentials>(formikConfig);
     
-    if (context === null) {
-        return null;
-    }
     
     return (
         <div className={style.wrap}>
