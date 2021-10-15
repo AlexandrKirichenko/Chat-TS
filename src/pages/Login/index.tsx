@@ -1,7 +1,6 @@
 import { useLazyQuery} from "@apollo/client";
-import React, {useContext, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {Link, useHistory} from "react-router-dom";
-import {AuthContext} from "../../App";
 import ErrorMessage from '../../components/ErrorMessage'
 import Input from "../../components/Input";
 import "./Login.module.scss";
@@ -11,8 +10,8 @@ import Button from "../../components/Button";
 import * as yup from "yup";
 import {SIGIN} from "../../schemas";
 import {PATH_CHAT_BLOCK} from "../../config";
-import {useAppDispatch, useAppSelector} from '../../store/hooks'
-import {appActions, getIsAuthorized, getUser} from '../../store/appSlice'
+import {useAppDispatch} from '../../store/hooks'
+import {appActions} from '../../store/appSlice'
 
 export interface UserCredentials {
   login: string;
@@ -24,9 +23,6 @@ const Login: React.FC = () => {
   const [doLogin, {loading, error, data}] = useLazyQuery(SIGIN);
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const user = useAppSelector(getUser);
-  
-  
   
   const validationSchema = yup.object({
     login: yup
@@ -61,18 +57,12 @@ const Login: React.FC = () => {
     if (data) {
       const token = data?.signIn?.token
       localStorage.setItem('token', token);
-   
+      
       dispatch(appActions.setIsAuthorized(true));
       dispatch(appActions.setUser(data.signIn.user));
       history.push(PATH_CHAT_BLOCK);
     }
   }, [data])
-  
-  const context = useContext(AuthContext);
-  if (!context) {
-    return null
-  }
-
   
   return (
     <>

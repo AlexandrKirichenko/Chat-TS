@@ -1,6 +1,5 @@
-import React, {useContext, useState, useRef} from 'react'
+import React, {useState, useRef} from 'react'
 import {Link, useHistory} from 'react-router-dom'
-import {AuthContext} from '../../App'
 import {LS_TOKEN_KEY, PATH_CHAT_BLOCK, PATH_LOGIN} from '../../config'
 import Avatar from '../Avatar'
 import style from './Header.module.scss'
@@ -8,7 +7,7 @@ import Dropdown from './../Dropdown'
 import useOutsideClick from './../hooks/useOutsideClick'
 import DropdownSet from './../DropdownSet'
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {appActions, getIsAuthorized} from "../../store/appSlice";
+import {appActions, getIsAuthorized, getUser} from "../../store/appSlice";
 
 interface HeaderProps {
   sizeAvatar?: string;
@@ -19,26 +18,19 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = () => {
-  const context = useContext(AuthContext);
   const ref = useRef(null) as any;
   const [showUserMenu, setShowUserMenu] = useState(false);
   useOutsideClick(ref, () => setShowUserMenu(false))
   const history = useHistory();
   
   const isAuthorized = useAppSelector(getIsAuthorized);
+  const user = useAppSelector(getUser);
   const dispatch = useAppDispatch();
   
-  if (context === null) {
-    return null;
-  }
-  
-  
-  const {user, setUser} = context;
   const handleLogout = () => {
- 
     dispatch(appActions.setIsAuthorized(false));
     history.push(PATH_LOGIN);
-    setUser(null);
+    dispatch(appActions.setUser(null))
     localStorage.removeItem(LS_TOKEN_KEY);
   }
   

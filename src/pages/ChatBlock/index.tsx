@@ -1,12 +1,13 @@
 import {useApolloClient, useLazyQuery, useMutation} from '@apollo/client'
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react'
-import {AuthContext} from '../../App'
+import React, {useEffect, useMemo, useRef, useState} from 'react'
 import Button from '../../components/Button'
 import Message from '../../components/Message'
+import Rooms from '../../components/Rooms'
 import {ReactComponent as TelegramImg} from '../../img/telegram.svg'
 import {CREATE_MESSAGE, GET_ALL_MESSAGES, MESSAGE_ADDED_SUB} from '../../schemas'
+import {getUser} from '../../store/appSlice'
+import {useAppSelector} from '../../store/hooks'
 import styles from './ChatBlock.module.scss'
-import Rooms from '../../components/Rooms'
 
 interface MessageItem {
   id: string;
@@ -29,6 +30,7 @@ const ChatBlock: React.FC = () => {
   const [subMessages, setSubMessages] = useState<MessageItem[]>([])
   const client = useApolloClient()
   const [selectedRoomId, changeSelectedRoomId] = useState<number | null>(null)
+  const user = useAppSelector(getUser)
   let sub: any
   
   const [doGetAllMessage] = useLazyQuery(GET_ALL_MESSAGES, {
@@ -37,13 +39,13 @@ const ChatBlock: React.FC = () => {
     onCompleted:
       (allMessages) => {
         setMessages([...allMessages.getAllMessages])
-        sub?.unsubscribe();
-        setSubMessages([]);
+        sub?.unsubscribe()
+        setSubMessages([])
         if (allMessages && !sub) {
           sub = client
             .subscribe({
               query: MESSAGE_ADDED_SUB,
-              fetchPolicy: "network-only",
+              fetchPolicy: 'network-only',
               variables: {
                 date: (new Date('2080-1-1')).toString(),
               },
@@ -53,9 +55,9 @@ const ChatBlock: React.FC = () => {
               const newMessagesFromSub: MessageItem[] = newMessages?.data?.messageAdded.filter((mesage: MessageItem) => mesage.convId === selectedRoomId)
               if (newMessagesFromSub.length > 0) {
                 setSubMessages(prev => {
-                  const check = prev.filter(mesage => mesage.id === newMessagesFromSub[0].id).length === 0;
+                  const check = prev.filter(mesage => mesage.id === newMessagesFromSub[0].id).length === 0
                   return [...prev, ...check ? newMessagesFromSub : []]
-                });
+                })
               }
               
             })
@@ -64,11 +66,10 @@ const ChatBlock: React.FC = () => {
       }
   })
   
-  
   useEffect(() => {
-    sub?.unsubscribe();
-    doGetAllMessage();
-  }, [selectedRoomId]);
+    sub?.unsubscribe()
+    doGetAllMessage()
+  }, [selectedRoomId])
   
   const sendMessage = (message: string) => {
     if (message.trim()) {
@@ -76,7 +77,6 @@ const ChatBlock: React.FC = () => {
     }
     setMessage('')
   }
-  
   
   const handleSubmit = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -89,16 +89,11 @@ const ChatBlock: React.FC = () => {
     }
   }
   
-  const context = useContext(AuthContext)
-  
-  
   useEffect(() => {
     if (myRef.current) {
       myRef.current.scrollTop = myRef.current?.scrollHeight
     }
   },)
-  
-
   
   const messagesRender = useMemo(
     () => {
@@ -107,7 +102,7 @@ const ChatBlock: React.FC = () => {
           <div key={Messages.id}>
             <div className={styles.sidebar}/>
             <Message key={Messages.id}
-                     itsMe={Messages.userId === Number(context?.user?.id)}
+                     itsMe={Messages.userId === Number(user?.id)}
                      messageText={Messages.description}
                      login={Messages.user.login}
                      userId={Messages.userId}
@@ -121,30 +116,29 @@ const ChatBlock: React.FC = () => {
     [messages, subMessages])
   
   return (
-      <>
-        <div className={styles.wrapper}>
-          <div className={styles.sidebar}>
-            <Rooms selectedRoomId={selectedRoomId} changeSelectedRoomId={changeSelectedRoomId}
-                 />
+    <>
+      <div className={styles.wrapper}>
+        <div className={styles.sidebar}>
+          <Rooms selectedRoomId={selectedRoomId} changeSelectedRoomId={changeSelectedRoomId}
+          />
+        </div>
+        <div className={styles.chatBlock}>
+          <div className={styles.messageList} ref={myRef}>
+            {messagesRender}
           </div>
-          <div className={styles.chatBlock}>
-            <div className={styles.messageList} ref={myRef}>
-              {messagesRender}
-            </div>
-            <div className={styles.messageForm}>
+          <div className={styles.messageForm}>
                             <textarea onKeyDown={handleKeyDownEnter} name="textarea" value={message}
                                       placeholder="Type your message" onChange={e => {
                               setMessage(e.target.value)
                             }}/>
-              <Button type={'submit'} color={'primary'}
-                      size={'mediumChat'} onClick={handleSubmit}
-              > <TelegramImg/> </Button>
-            </div>
+            <Button type={'submit'} color={'primary'}
+                    size={'mediumChat'} onClick={handleSubmit}
+            > <TelegramImg/> </Button>
           </div>
         </div>
-      </>
+      </div>
+    </>
   )
 }
 
 export default ChatBlock
-
