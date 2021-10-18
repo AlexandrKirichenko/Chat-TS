@@ -139,7 +139,14 @@ export const CONVERSATION_ADDED_SUB = gql`
     }
 `;
 
-
+export const GET_MESSAGE_STATISTICS = gql`
+  query {
+    getMessageStatistics {
+      count
+      date
+    }
+  }
+`;
 
 
 
