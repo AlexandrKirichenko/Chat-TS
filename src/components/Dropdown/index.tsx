@@ -9,7 +9,7 @@ interface DropdownProps {
     handleLogout: () => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({children, handleLogout, isShow}) => {
+const Dropdown: React.FC<DropdownProps> = ({children, isShow}) => {
 
     return (
         <div className={classnames(isShow ? style.wrap : style.wrap_active)}>{children}</div>
