@@ -102,7 +102,7 @@ const ChatBlock: React.FC = () => {
           <div key={Messages.id}>
             <div className={styles.sidebar}/>
             <Message key={Messages.id}
-                     itsMe={Messages.userId === Number(user?.id)}
+                     itsMe={Messages.userId == Number(user?.id)}
                      messageText={Messages.description}
                      login={Messages.user.login}
                      userId={Messages.userId}
