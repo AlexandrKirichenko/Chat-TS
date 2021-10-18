@@ -4,10 +4,9 @@ import {Route, Switch, useHistory} from 'react-router-dom'
 import './App.css'
 import Header from './components/Header'
 import Layout from './components/Layout'
-import {PATH_CHAT_BLOCK, PATH_LOGIN, PATH_REGISTRATION, PATH_TO_PROFILE,} from './config'
+import {PATH_CHAT_BLOCK, PATH_LOGIN, PATH_REGISTRATION} from './config'
 import ChatBlock from './pages/ChatBlock'
 import Login from './pages/Login'
-import Profile from './pages/Profile'
 import Registration from './pages/Registration'
 import {ME} from './schemas'
 import {appActions, getIsAuthorized} from './store/appSlice'
@@ -40,9 +39,6 @@ function App() {
           </Route>
           <Route path={PATH_CHAT_BLOCK}>
             {isAuthorized ? <ChatBlock/> : <div>You need to login</div>}
-          </Route>
-          <Route exact path={PATH_TO_PROFILE}>
-            <Profile/>
           </Route>
         </Switch>
       </Layout>
